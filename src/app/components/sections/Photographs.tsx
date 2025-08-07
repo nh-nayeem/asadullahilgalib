@@ -8,6 +8,7 @@ interface PhotoItem {
   title: string;
   date: string;
   image: string;
+  imagethumb?: string;
 }
 
 const photos: PhotoItem[] = [
@@ -24,7 +25,7 @@ const photos: PhotoItem[] = [
   {
     title: "Window",
     date: "2023",
-    image: "/photographs/3. Window.jpg"
+    image: "/photographs/3. Window.jpg",
   },
   {
     title: "I wish",
