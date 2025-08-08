@@ -15,62 +15,74 @@ const photos: PhotoItem[] = [
   {
     title: "July",
     date: "2024",
-    image: "/photographs/1. July.jpg"
+    image: "/photographs/1. July.jpg",
+    imagethumb: "/photographs/1. July-min.jpg"
   },
   {
     title: "The Tomb of Paribibi",
     date: "2024",
-    image: "/photographs/2. The Tomb of Paribibi.jpg"
+    image: "/photographs/2. The Tomb of Paribibi.jpg",
+    imagethumb: "/photographs/2. The Tomb of Paribibi-min.jpg"
   },
   {
     title: "Window",
     date: "2023",
     image: "/photographs/3. Window.jpg",
+    imagethumb: "/photographs/3. Window-min.jpg"
   },
   {
     title: "I wish",
     date: "2023",
-    image: "/photographs/4. I wish.jpg"
+    image: "/photographs/4. I wish.jpg",
+    imagethumb: "/photographs/4. I wish-min.jpg"
   },
   {
     title: "Hope",
     date: "2023",
-    image: "/photographs/5. Hope"
+    image: "/photographs/5. Hope.jpg",
+    imagethumb: "/photographs/5. Hope-min.jpg"
   },
   {
     title: "Afra",
     date: "2023",
-    image: "/photographs/6. Afra.jpg"
+    image: "/photographs/6. Afra.jpg",
+    imagethumb: "/photographs/6. Afra-min.jpg"
   },
   {
     title: "Flow",
     date: "2023",
-    image: "/photographs/7. Flow.jpg"
+    image: "/photographs/7. Flow.jpg",
+    imagethumb: "/photographs/7. Flow-min.jpg"
   },
   {
     title: "Ganer Sawgat",
     date: "2023",
-    image: "/photographs/8. Ganer Sawgat.jpg"
+    image: "/photographs/8. Ganer Sawgat.jpg",
+    imagethumb: "/photographs/8. Ganer Sawgat-min.jpg"
   },
   {
     title: "Lalbagh",
     date: "2023",
-    image: "/photographs/9. Lalbagh.jpg"
+    image: "/photographs/9. Lalbagh.jpg",
+    imagethumb: "/photographs/9. Lalbagh-min.jpg"
   },
   {
     title: "Crow",
     date: "2023",
-    image: "/photographs/10. Crow"
+    image: "/photographs/10. Crow.jpg",
+    imagethumb: "/photographs/10. Crow-min.jpg"
   },
   {
     title: "Dinghy",
     date: "2023",
-    image: "/photographs/11. Dinghy.jpg"
+    image: "/photographs/11. Dinghy.jpg",
+    imagethumb: "/photographs/11. Dinghy-min.jpg"
   },
   {
     title: "Silence",
     date: "2023",
-    image: "/photographs/12. Silence.jpg"
+    image: "/photographs/12. Silence.jpg",
+    imagethumb: "/photographs/12. Silence-min.jpg"
   }
 ];
 
@@ -128,7 +140,7 @@ const Photographs = () => {
             >
               <div className="relative h-80 overflow-hidden">
                 <img
-                  src={photo.image}
+                  src={photo.imagethumb}
                   alt={photo.title}
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                 />
