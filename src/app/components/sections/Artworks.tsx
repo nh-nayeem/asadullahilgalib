@@ -15,7 +15,7 @@ const artworks: ArtworkItem[] = [
   {
     title: "Free Falasteen",
     year: "2024",
-    image: "/artworks/Free Falasteen 3.jpg",
+    image: "/artworks/free Falasteen 3.jpg",
     description: "A powerful piece representing the struggle for freedom in Palestine. Created with mixed media, this artwork captures the resilience and hope of the Palestinian people."
   },
   {
