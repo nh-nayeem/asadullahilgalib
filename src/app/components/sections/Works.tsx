@@ -20,25 +20,18 @@ const works: WorkItem[] = [
     // videoLink: "https://www.youtube.com/watch?v=LVWayznWIlg"
   },
   {
+    title: "ONTOSSHOR",
+    year: "2023",
+    role: "Director and Interview",
+    image: "/works/5 ONTOSSHOR.jpg",
+    videoLink: "https://www.youtube.com/watch?v=mQQ6VeX8e2c"
+  },
+  {
     title: "Khosh Amded Ramadan",
     year: "2024",
     role: "Director",
     image: "/works/2 Qaseeda.jpeg",
     videoLink: "https://www.youtube.com/watch?v=RfcxyMMCwFk"
-  },
-  {
-    title: "Megh o Meghna",
-    year: "2023",
-    role: "Director and Story",
-    image: "/works/3 Megh o Meghna.png",
-    videoLink: "https://www.youtube.com/watch?v=9LfYttJpT-I"
-  },
-  {
-    title: "Ramadan",
-    year: "2023",
-    role: "Director",
-    image: "/works/4 Ramadan by Junayed.jpeg",
-    videoLink: "https://www.youtube.com/watch?v=yB8Argb2WRo"
   }
 ];
 

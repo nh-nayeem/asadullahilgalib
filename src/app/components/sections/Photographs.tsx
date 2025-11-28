@@ -18,72 +18,72 @@ const photos: PhotoItem[] = [
     image: "/photographs/1. July.jpg",
     imagethumb: "/photographs/1. July-min.jpg"
   },
-  {
-    title: "The Tomb of Paribibi",
-    date: "2024",
-    image: "/photographs/2. The Tomb of Paribibi.jpg",
-    imagethumb: "/photographs/2. The Tomb of Paribibi-min.jpg"
-  },
+  // {
+  //   title: "The Tomb of Paribibi",
+  //   date: "2024",
+  //   image: "/photographs/2. The Tomb of Paribibi.jpg",
+  //   imagethumb: "/photographs/2. The Tomb of Paribibi-min.jpg"
+  // },
   {
     title: "Window",
     date: "2023",
     image: "/photographs/3. Window.jpg",
     imagethumb: "/photographs/3. Window-min.jpg"
   },
-  {
-    title: "I wish",
-    date: "2023",
-    image: "/photographs/4. I wish.jpg",
-    imagethumb: "/photographs/4. I wish-min.jpg"
-  },
-  {
-    title: "Hope",
-    date: "2023",
-    image: "/photographs/5. Hope.jpg",
-    imagethumb: "/photographs/5. Hope-min.jpg"
-  },
+  // {
+  //   title: "I wish",
+  //   date: "2023",
+  //   image: "/photographs/4. I wish.jpg",
+  //   imagethumb: "/photographs/4. I wish-min.jpg"
+  // },
+  // {
+  //   title: "Hope",
+  //   date: "2023",
+  //   image: "/photographs/5. Hope.jpg",
+  //   imagethumb: "/photographs/5. Hope-min.jpg"
+  // },
   {
     title: "Afra",
     date: "2023",
     image: "/photographs/6. Afra.jpg",
     imagethumb: "/photographs/6. Afra-min.jpg"
   },
-  {
-    title: "Flow",
-    date: "2023",
-    image: "/photographs/7. Flow.jpg",
-    imagethumb: "/photographs/7. Flow-min.jpg"
-  },
-  {
-    title: "Ganer Sawgat",
-    date: "2023",
-    image: "/photographs/8. Ganer Sawgat.jpg",
-    imagethumb: "/photographs/8. Ganer Sawgat-min.jpg"
-  },
-  {
-    title: "Lalbagh",
-    date: "2023",
-    image: "/photographs/9. Lalbagh.jpg",
-    imagethumb: "/photographs/9. Lalbagh-min.jpg"
-  },
+  // {
+  //   title: "Flow",
+  //   date: "2023",
+  //   image: "/photographs/7. Flow.jpg",
+  //   imagethumb: "/photographs/7. Flow-min.jpg"
+  // },
+  // {
+  //   title: "Ganer Sawgat",
+  //   date: "2023",
+  //   image: "/photographs/8. Ganer Sawgat.jpg",
+  //   imagethumb: "/photographs/8. Ganer Sawgat-min.jpg"
+  // },
+  // {
+  //   title: "Lalbagh",
+  //   date: "2023",
+  //   image: "/photographs/9. Lalbagh.jpg",
+  //   imagethumb: "/photographs/9. Lalbagh-min.jpg"
+  // },
   {
     title: "Crow",
     date: "2023",
     image: "/photographs/10. Crow.jpg",
     imagethumb: "/photographs/10. Crow-min.jpg"
   },
-  {
-    title: "Dinghy",
-    date: "2023",
-    image: "/photographs/11. Dinghy.jpg",
-    imagethumb: "/photographs/11. Dinghy-min.jpg"
-  },
-  {
-    title: "Silence",
-    date: "2023",
-    image: "/photographs/12. Silence.jpg",
-    imagethumb: "/photographs/12. Silence-min.jpg"
-  }
+  // {
+  //   title: "Dinghy",
+  //   date: "2023",
+  //   image: "/photographs/11. Dinghy.jpg",
+  //   imagethumb: "/photographs/11. Dinghy-min.jpg"
+  // },
+  // {
+  //   title: "Silence",
+  //   date: "2023",
+  //   image: "/photographs/12. Silence.jpg",
+  //   imagethumb: "/photographs/12. Silence-min.jpg"
+  // }
 ];
 
 const Photographs = () => {
@@ -127,7 +127,7 @@ const Photographs = () => {
           A selection of my recent photography projects that showcase my storytelling and technical expertise.
         </motion.p>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {photos.map((photo, index) => (
             <motion.div
               key={photo.title}
@@ -138,7 +138,7 @@ const Photographs = () => {
               transition={{ delay: index * 0.1 }}
               onClick={() => openModal(photo)}
             >
-              <div className="relative h-80 overflow-hidden">
+              <div className="relative h-60 overflow-hidden">
                 <img
                   src={photo.imagethumb}
                   alt={photo.title}

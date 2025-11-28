@@ -3,11 +3,22 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const navItems = ['Home', 'About', 'Works', 'Photographs', 'Artworks', 'Contact'];
+  const pathname = usePathname();
+  
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Works', path: '/works' },
+    { name: 'Photographs', path: '/photographs' },
+    { name: 'Artworks', path: '/artworks' },
+    { name: 'Contact', path: '/contact' },
+  ];
 
   // Close menu when clicking outside
   useEffect(() => {
@@ -23,23 +34,8 @@ const Header = () => {
     };
   }, []);
 
-  // Close menu when a navigation link is clicked
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, item: string) => {
-    e.preventDefault();
+  const handleNavClick = () => {
     setIsMenuOpen(false);
-    
-    // Wait for the menu to start closing before scrolling
-    setTimeout(() => {
-      const targetId = item.toLowerCase();
-      const targetElement = document.getElementById(targetId);
-      
-      if (targetElement) {
-        window.scrollTo({
-          top: targetElement.offsetTop - 20, // Add a small offset from the top
-          behavior: 'smooth'
-        });
-      }
-    }, 100); // Small delay to allow menu to start closing
   };
 
   return (
@@ -47,29 +43,34 @@ const Header = () => {
       <div className="backdrop-blur-sm bg-black/30 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <motion.a 
-              href="#" 
-              className="text-xl font-light tracking-tight text-white"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              onClick={(e) => handleNavClick(e, 'Home')}
-            >
-              ASADULLAHIL GALIB
-            </motion.a>
+            <Link href="/" passHref>
+              <motion.span 
+                className="text-xl font-light tracking-tight text-white cursor-pointer"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                onClick={handleNavClick}
+              >
+                ASADULLAHIL GALIB
+              </motion.span>
+            </Link>
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
-                <motion.a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="text-sm uppercase tracking-wider text-gray-300 hover:text-amber-400 transition-colors"
-                  whileHover={{ y: -2 }}
-                  onClick={(e) => handleNavClick(e, item)}
-                >
-                  {item}
-                </motion.a>
+                <Link key={item.name} href={item.path} passHref>
+                  <motion.span
+                    className={`text-sm uppercase tracking-wider ${
+                      pathname === item.path
+                        ? 'text-amber-400'
+                        : 'text-gray-300 hover:text-amber-400'
+                    } transition-colors cursor-pointer`}
+                    whileHover={{ y: -2 }}
+                    onClick={handleNavClick}
+                  >
+                    {item.name}
+                  </motion.span>
+                </Link>
               ))}
             </div>
 
@@ -97,20 +98,24 @@ const Header = () => {
               >
                 <div className="pt-4 pb-6 flex flex-col space-y-4">
                   {navItems.map((item, index) => (
-                    <motion.a
-                      key={item}
-                      href={`#${item.toLowerCase()}`}
-                      className="block py-2 text-base uppercase tracking-wider text-gray-300 hover:text-amber-400 transition-colors"
-                      onClick={(e) => handleNavClick(e, item)}
-                      initial={{ x: -20, opacity: 0 }}
-                      animate={{ x: 0, opacity: 1 }}
-                      transition={{ 
-                        duration: 0.2,
-                        delay: 0.1 * index
-                      }}
-                    >
-                      {item}
-                    </motion.a>
+                    <Link key={item.name} href={item.path} passHref>
+                      <motion.span
+                        className={`block py-2 text-base uppercase tracking-wider ${
+                          pathname === item.path
+                            ? 'text-amber-400'
+                            : 'text-gray-300 hover:text-amber-400'
+                        } transition-colors cursor-pointer`}
+                        onClick={handleNavClick}
+                        initial={{ x: -20, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ 
+                          duration: 0.2,
+                          delay: 0.1 * index
+                        }}
+                      >
+                        {item.name}
+                      </motion.span>
+                    </Link>
                   ))}
                 </div>
               </motion.div>

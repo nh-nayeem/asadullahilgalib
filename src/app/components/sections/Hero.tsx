@@ -1,18 +1,18 @@
 "use client";
 
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const Hero = () => {
   return (
     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover opacity-40"
-          src="/hero-bg.mp4"
+        <Image
+          src="/galib2.JPG"
+          alt="Background"
+          fill
+          className="object-cover opacity-40"
+          priority
         />
       </div>
       <div className="relative z-0 text-center px-4">
@@ -26,7 +26,7 @@ const Hero = () => {
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8">Visual Storyteller & Filmmaker</p>
           <motion.a
-            href="#works"
+            href="works"
             className="inline-block px-8 py-3 bg-amber-400 text-black font-semibold rounded-full hover:bg-white transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
