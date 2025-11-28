@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaFacebook, FaYoutube, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import Link from 'next/link';
 
 const About = () => {
   return (
@@ -40,12 +41,12 @@ const About = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <h3 className="text-2xl mb-4">Crafting Visual Stories That Resonate</h3>
-            <p className="text-gray-300 mb-8">
+            <p className="text-gray-300 mb-8 text-justify">
               I'm Asadullahil Galib, a passionate filmmaker dedicated to creating compelling visual narratives. 
               With a keen eye for detail and a deep understanding of cinematic language, I bring stories to life 
               through the lens of my camera.
             </p>
-            <p className="text-gray-300 mb-8">
+            <p className="text-gray-300 mb-8 text-justify">
               My work focuses on exploring the human condition, capturing raw emotions, and presenting 
               unique perspectives that challenge and inspire audiences.
             </p>
@@ -89,6 +90,21 @@ const About = () => {
             </div>
           </motion.div>
         </div>
+
+        <motion.div 
+          className="text-center mt-12"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+        >
+          <Link 
+            href="/about"
+            className="inline-flex items-center px-8 py-3 bg-amber-400 text-black rounded-full font-medium hover:bg-white transition-colors"
+          >
+            See More
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

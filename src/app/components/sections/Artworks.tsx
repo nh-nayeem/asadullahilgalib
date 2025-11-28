@@ -3,11 +3,13 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface ArtworkItem {
   title: string;
   year: string;
   image: string;
+  thumbnail: string;
   description?: string;
 }
 
@@ -15,14 +17,23 @@ const artworks: ArtworkItem[] = [
   {
     title: "Free Falasteen",
     year: "2024",
-    image: "/artworks/free Falasteen 3.jpg",
+    image: "/artworks/FreeFalasteen3.jpg",
+    thumbnail: "/artworks/FreeFalasteen3-min.jpg",
     description: "A powerful piece representing the struggle for freedom in Palestine. Created with mixed media, this artwork captures the resilience and hope of the Palestinian people."
   },
   {
     title: "Graffiti",
     year: "2024",
     image: "/artworks/Graffiti.jpg",
+    thumbnail: "/artworks/Graffiti-min.jpg",
     description: "An urban art piece that blends street culture with contemporary design. This graffiti work showcases bold colors and dynamic composition."
+  },
+  {
+    title: "Intezar",
+    year: "2025",
+    image: "/artworks/Intezar 01.jpg",
+    thumbnail: "/artworks/Intezar 01-min.jpg",
+    description: "Poster of a visual" 
   }
 ];
 
@@ -76,7 +87,7 @@ const Artworks = () => {
             >
               <div className="relative h-80 overflow-hidden">
                 <img
-                  src={artwork.image}
+                  src={artwork.thumbnail}
                   alt={artwork.title}
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                 />
@@ -93,6 +104,21 @@ const Artworks = () => {
             </motion.div>
           ))}
         </div>
+
+        <motion.div 
+          className="text-center mt-12"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+        >
+          <Link 
+            href="/artworks"
+            className="inline-flex items-center px-8 py-3 bg-amber-400 text-black rounded-full font-medium hover:bg-white transition-colors"
+          >
+            See More
+          </Link>
+        </motion.div>
 
         <AnimatePresence>
           {isModalOpen && selectedArtwork && (
