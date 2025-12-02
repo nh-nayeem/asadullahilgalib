@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaFacebook, FaYoutube, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { FaEnvelope } from 'react-icons/fa';
 import Link from 'next/link';
+import SocialLinks from '@/app/components/common/SocialLinks';
 
 const About = () => {
   return (
@@ -50,44 +51,7 @@ const About = () => {
               My work focuses on exploring the human condition, capturing raw emotions, and presenting 
               unique perspectives that challenge and inspire audiences.
             </p>
-            <div className="flex space-x-4">
-              <a 
-                href="https://www.facebook.com/asadullahil.galib.01/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-amber-400 transition-colors"
-                aria-label="Facebook"
-              >
-                <FaFacebook size={20} />
-              </a>
-              <a 
-                href="https://www.youtube.com/@FilmsByGalib" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-amber-400 transition-colors"
-                aria-label="YouTube"
-              >
-                <FaYoutube size={20} />
-              </a>
-              <a 
-                href="https://www.instagram.com/asadullahil_galib_01/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-amber-400 transition-colors"
-                aria-label="Instagram"
-              >
-                <FaInstagram size={20} />
-              </a>
-              <a 
-                href="https://www.linkedin.com/in/asadullahilgalib01/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-300 hover:text-amber-400 transition-colors"
-                aria-label="LinkedIn"
-              >
-                <FaLinkedin size={20} />
-              </a>
-            </div>
+            <SocialLinks hoverColor="text-amber-400" />
           </motion.div>
         </div>
 

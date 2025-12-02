@@ -8,10 +8,10 @@ const Hero = () => {
     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/galib2.JPG"
+          src="/galib3black.png"
           alt="Background"
           fill
-          className="object-cover opacity-40"
+          className="object-cover opacity-40 scale-x-[-1]"
           priority
         />
       </div>
