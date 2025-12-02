@@ -19,7 +19,7 @@ const works: WorkItem[] = [
     year: "2024",
     role: "Director & Story",
     description: "A compelling narrative that explores the depths of human resilience and the power of community in the face of adversity. This film weaves together intimate personal stories with broader social themes, creating a tapestry of hope and determination.",
-    image: "/works/joar_festival.jpg",
+    image: "/works/Joar_festival.jpg",
     // videoLink: "https://www.youtube.com/watch?v=LVWayznWIlg"
   },
   {

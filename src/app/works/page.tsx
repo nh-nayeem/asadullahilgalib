@@ -20,7 +20,7 @@ const works: WorkItem[] = [
     title: "Joar",
     year: "2024",
     role: "Director & Story",
-    image: "/works/joar_festival.jpg",
+    image: "/works/Joar_festival.jpg",
     category: "filmography",
     description: "A compelling narrative that explores the depths of human resilience and the power of community in the face of adversity. This film weaves together intimate personal stories with broader social themes, creating a tapestry of hope and determination."
   },
