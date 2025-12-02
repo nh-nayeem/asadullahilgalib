@@ -10,21 +10,94 @@ interface ArtworkItem {
   title: string;
   year: string;
   image: string;
+  thumbnail: string;
   description?: string;
 }
 
 const artworks: ArtworkItem[] = [
   {
+    title: "Amanat Book Cover",
+    year: "2024",
+    image: "/artworks/Amanat_book_cover.jpg",
+    thumbnail: "/artworks/Amanat_book_cover.jpg",
+    description: "Book cover design for 'Amanat' - a literary work featuring contemporary visual elements and typography."
+  },
+  {
+    title: "Banda Korei Rakho Poster",
+    year: "2024",
+    image: "/artworks/Banda_korei_rakho_poster.jpg",
+    thumbnail: "/artworks/Banda_korei_rakho_poster.jpg",
+    description: "Poster design for 'Banda Korei Rakho' - a promotional artwork with bold visual composition."
+  },
+  {
     title: "Free Falasteen",
     year: "2024",
-    image: "/artworks/free Falasteen 3.jpg",
+    image: "/artworks/FreeFalasteen3.jpg",
+    thumbnail: "/artworks/FreeFalasteen3.jpg",
     description: "A powerful piece representing the struggle for freedom in Palestine. Created with mixed media, this artwork captures the resilience and hope of the Palestinian people."
   },
   {
     title: "Graffiti",
     year: "2024",
     image: "/artworks/Graffiti.jpg",
+    thumbnail: "/artworks/Graffiti-min.jpg",
     description: "An urban art piece that blends street culture with contemporary design. This graffiti work showcases bold colors and dynamic composition."
+  },
+  {
+    title: "Intezar",
+    year: "2025",
+    image: "/artworks/Intezar 01.jpg",
+    thumbnail: "/artworks/Intezar 01-min.jpg",
+    description: "Poster of a visual - An artistic representation capturing the essence of anticipation and waiting."
+  },
+  {
+    title: "Joar Festival",
+    year: "2024",
+    image: "/artworks/Joar festival.jpg",
+    thumbnail: "/artworks/Joar festival.jpg",
+    description: "Festival promotional artwork for 'Joar' - featuring dynamic visual elements and cultural motifs."
+  },
+  {
+    title: "Joar Music Video Poster",
+    year: "2024",
+    image: "/artworks/Joar_music_video_poster.png",
+    thumbnail: "/artworks/Joar_music_video_poster.png",
+    description: "Music video poster design for 'Joar' - combining musical and visual storytelling elements."
+  },
+  {
+    title: "Joar Poster",
+    year: "2024",
+    image: "/artworks/Joar_poster.png",
+    thumbnail: "/artworks/Joar_poster.png",
+    description: "Official poster design for the film 'Joar' - featuring cinematic visual composition."
+  },
+  {
+    title: "Karjoner Ashar Logo",
+    year: "2024",
+    image: "/artworks/Karjoner_ashar_logo.png",
+    thumbnail: "/artworks/Karjoner_ashar_logo.png",
+    description: "Logo design for 'Karjoner Ashar' - a contemporary brand identity with cultural elements."
+  },
+  {
+    title: "Ontosshor",
+    year: "2024",
+    image: "/artworks/Ontosshor_poster.jpg",
+    thumbnail: "/artworks/Ontosshor_poster.jpg",
+    description: "A poster design representing the concept of solitude and introspection through visual storytelling."
+  },
+  {
+    title: "Reframing Bangladesh Logo",
+    year: "2024",
+    image: "/artworks/Reframing_bangladesh_logo.png",
+    thumbnail: "/artworks/Reframing_bangladesh_logo.png",
+    description: "Logo design for 'Reframing Bangladesh' - a modern identity representing cultural renaissance."
+  },
+  {
+    title: "Sizzle Logo",
+    year: "2024",
+    image: "/artworks/Sizzle_logo.png",
+    thumbnail: "/artworks/Sizzle_logo.png",
+    description: "Contemporary logo design for 'Sizzle' brand - featuring dynamic visual elements."
   }
 ];
 
@@ -81,7 +154,7 @@ export default function ArtworksPage() {
             >
               <div className="relative h-80 overflow-hidden">
                 <img
-                  src={artwork.image}
+                  src={artwork.thumbnail}
                   alt={artwork.title}
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                 />

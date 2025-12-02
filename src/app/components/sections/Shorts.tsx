@@ -153,7 +153,7 @@ const Shorts = () => {
           {/* Left Navigation Button */}
           <motion.button
             onClick={handlePrevious}
-            className="absolute left-0 top-1/3 -translate-y-1/2 -translate-x-4 z-20 bg-amber-400 text-black p-4 rounded-full hover:bg-white transition-colors"
+            className="absolute left-0 top-[40%] -translate-y-1/2 -translate-x-4 z-20 bg-amber-400 text-black p-4 rounded-full hover:bg-white transition-colors"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -166,7 +166,7 @@ const Shorts = () => {
           {/* Right Navigation Button */}
           <motion.button
             onClick={handleNext}
-            className="absolute right-0 top-1/3 -translate-y-1/2 translate-x-4 z-20 bg-amber-400 text-black p-4 rounded-full hover:bg-white transition-colors"
+            className="absolute right-0 top-[40%] -translate-y-1/2 translate-x-4 z-20 bg-amber-400 text-black p-4 rounded-full hover:bg-white transition-colors"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -197,7 +197,7 @@ const Shorts = () => {
                         ? 'scale-90 opacity-70'
                         : ''
                     }`}
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 0 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}

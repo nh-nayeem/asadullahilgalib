@@ -15,11 +15,11 @@ interface ArtworkItem {
 
 const artworks: ArtworkItem[] = [
   {
-    title: "Free Falasteen",
-    year: "2024",
-    image: "/artworks/FreeFalasteen3.jpg",
-    thumbnail: "/artworks/FreeFalasteen3-min.jpg",
-    description: "A powerful piece representing the struggle for freedom in Palestine. Created with mixed media, this artwork captures the resilience and hope of the Palestinian people."
+    title: "Intezar",
+    year: "2025",
+    image: "/artworks/Intezar 01.jpg",
+    thumbnail: "/artworks/Intezar 01-min.jpg",
+    description: "Poster of a visual - An artistic representation capturing the essence of anticipation and waiting."
   },
   {
     title: "Graffiti",
@@ -29,11 +29,11 @@ const artworks: ArtworkItem[] = [
     description: "An urban art piece that blends street culture with contemporary design. This graffiti work showcases bold colors and dynamic composition."
   },
   {
-    title: "Intezar",
-    year: "2025",
-    image: "/artworks/Intezar 01.jpg",
-    thumbnail: "/artworks/Intezar 01-min.jpg",
-    description: "Poster of a visual" 
+    title: "Ontoshor",
+    year: "2024",
+    image: "/artworks/Ontosshor_poster.jpg",
+    thumbnail: "/artworks/Ontosshor_poster.jpg",
+    description: "A poster design representing the concept of solitude and introspection through visual storytelling."
   }
 ];
 
