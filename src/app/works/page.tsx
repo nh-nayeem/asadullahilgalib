@@ -22,7 +22,7 @@ const works: WorkItem[] = [
     role: "Director & Story",
     image: "/works/Joar_festival_laurel.jpg",
     category: "filmography",
-    description: "A compelling narrative that explores the depths of human resilience and the power of community in the face of adversity. This film weaves together intimate personal stories with broader social themes, creating a tapestry of hope and determination."
+    description: ""
   },
   {
     title: "ONTOSSHOR",
@@ -31,7 +31,7 @@ const works: WorkItem[] = [
     image: "/works/5 ONTOSSHOR.jpg",
     videoLink: "https://www.youtube.com/watch?v=mQQ6VeX8e2c",
     category: "filmography",
-    description: "An intimate documentary portrait that captures the essence of artistic struggle and triumph. Through candid interviews and evocative imagery, this piece reveals the creative process and the personal sacrifices behind artistic excellence."
+    description: ""
   },
   {
     title: "Khosh Amded Ramadan",
@@ -40,7 +40,7 @@ const works: WorkItem[] = [
     image: "/works/2 Qaseeda.jpeg",
     videoLink: "https://www.youtube.com/watch?v=RfcxyMMCwFk",
     category: "direction",
-    description: "A celebration of cultural heritage and spiritual devotion during the holy month of Ramadan. This visual journey captures the traditions, emotions, and communal bonds that define this sacred time, bringing together diverse voices in harmony."
+    description: ""
   },
   {
     title: "Ramadan",
@@ -49,7 +49,7 @@ const works: WorkItem[] = [
     image: "/works/4 Ramadan by Junayed.jpeg",
     videoLink: "https://www.youtube.com/watch?v=yB8Argb2WRo",
     category: "direction",
-    description: "A visual celebration of Ramadan traditions and the spiritual significance of the holy month."
+    description: ""
   },
   {
     title: "মেঘ ও মেঘনা",
@@ -58,7 +58,7 @@ const works: WorkItem[] = [
     image: "/works/3 Megh o Meghna.png",
     videoLink: "https://www.youtube.com/watch?v=9LfYttJpT-I",
     category: "travel-shorts",
-    description: "A poetic exploration of the relationship between sky and river, nature and human emotion."
+    description: ""
   },
   {
     title: "পাহাড়, বৃষ্টি আর আমরা",
@@ -67,7 +67,7 @@ const works: WorkItem[] = [
     image: "https://img.youtube.com/vi/IiE0RAQWcIs/maxresdefault.jpg",
     videoLink: "https://www.youtube.com/watch?v=IiE0RAQWcIs",
     category: "travel-shorts",
-    description: "Mountains, rain and us - an intimate exploration of human connection with nature during travels."
+    description: ""
   },
   {
     title: "দিনান্তে!",
@@ -76,7 +76,7 @@ const works: WorkItem[] = [
     image: "https://img.youtube.com/vi/q6ccNYIl9WU/maxresdefault.jpg",
     videoLink: "https://www.youtube.com/watch?v=q6ccNYIl9WU",
     category: "travel-shorts",
-    description: "At day's end - capturing the magical moments of twilight and transition."
+    description: ""
   },
   {
     title: "নৈসর্গিক",
@@ -85,7 +85,7 @@ const works: WorkItem[] = [
     image: "https://img.youtube.com/vi/BeHtfa7ZKeU/maxresdefault.jpg",
     videoLink: "https://www.youtube.com/watch?v=BeHtfa7ZKeU",
     category: "travel-shorts",
-    description: "Natural - a celebration of the raw beauty and serenity of untouched landscapes discovered during travels."
+    description: ""
   },
   {
     title: "পৌষ ১৪৩০ | Poush 1430",
@@ -94,7 +94,7 @@ const works: WorkItem[] = [
     image: "https://img.youtube.com/vi/qSaIH8HF-fk/maxresdefault.jpg",
     videoLink: "https://www.youtube.com/shorts/qSaIH8HF-fk",
     category: "travel-shorts",
-    description: "Celebrating the Bengali harvest festival of Poush 1430 with traditional festivities and cultural travel."
+    description: ""
   },
   {
     title:"THROUGH MY LENS | Episode 01",
