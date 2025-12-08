@@ -8,10 +8,10 @@ const Hero = () => {
     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/Galib3black.png"
+          src="/Galib_art.png"
           alt="Background"
           fill
-          className="object-cover opacity-40 scale-x-[-1]"
+          className="object-cover opacity-40"
           priority
         />
       </div>
@@ -21,7 +21,7 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h1 className="text-6xl mb-6">
+          <h1 className="text-6xl text-gray-300 mb-3">
             <span className="block font-typewriter">ASADULLAHIL GALIB</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 mb-8">Visual Storyteller & Filmmaker</p>

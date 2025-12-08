@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import { FaTimes } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -15,42 +16,53 @@ interface ArtworkItem {
 
 const artworks: ArtworkItem[] = [
   {
-    title: "Intezar",
-    year: "2025",
-    image: "/artworks/Intezar 01.jpg",
-    thumbnail: "/artworks/Intezar 01-min.jpg",
-    description: "Poster of a visual - An artistic representation capturing the essence of anticipation and waiting."
-  },
-  {
-    title: "Graffiti",
+    title: "July Graffiti",
     year: "2024",
-    image: "/artworks/Graffiti.jpg",
-    thumbnail: "/artworks/Graffiti-min.jpg",
+    image: "/artworks/July_Graffitti_02.jpg",
+    thumbnail: "/artworks/July_Graffitti_02.jpg",
     description: "An urban art piece that blends street culture with contemporary design. This graffiti work showcases bold colors and dynamic composition."
   },
   {
-    title: "Ontoshor",
+    title: "Intezar",
+    year: "2025",
+    image: "/artworks/Intezar.png",
+    thumbnail: "/artworks/Intezar.png",
+    description: "Poster of a visual - An artistic representation capturing the essence of anticipation and waiting."
+  },
+  {
+    title: "Joar",
     year: "2024",
-    image: "/artworks/Ontosshor_poster.jpg",
-    thumbnail: "/artworks/Ontosshor_poster.jpg",
+    image: "/artworks/Joar_Poster.jpg",
+    thumbnail: "/artworks/Joar_Poster.jpg",
+    description: "A poster design representing the concept of flow and movement through visual storytelling."
+  },
+  {
+    title: "Ontosshor",
+    year: "2024",
+    image: "/artworks/Ontosshor_Poster.jpg",
+    thumbnail: "/artworks/Ontosshor_Poster.jpg",
     description: "A poster design representing the concept of solitude and introspection through visual storytelling."
   }
 ];
 
 const Artworks = () => {
   const [selectedArtwork, setSelectedArtwork] = useState<ArtworkItem | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (artwork: ArtworkItem) => {
     setSelectedArtwork(artwork);
-    setIsModalOpen(true);
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
     setSelectedArtwork(null);
-    document.body.style.overflow = 'unset';
+    document.body.style.overflow = 'unset'; // Re-enable scrolling
+  };
+
+  // Close modal when clicking outside the image
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
   };
 
   return (
@@ -74,7 +86,7 @@ const Artworks = () => {
           A collection of my artistic works that blend creativity and visual storytelling. Click on any artwork to view details.
         </motion.p>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {artworks.map((artwork, index) => (
             <motion.div
               key={artwork.title}
@@ -85,7 +97,7 @@ const Artworks = () => {
               transition={{ delay: index * 0.1 }}
               onClick={() => openModal(artwork)}
             >
-              <div className="relative h-80 overflow-hidden">
+              <div className="relative w-full aspect-[3/4] overflow-hidden">
                 <img
                   src={artwork.thumbnail}
                   alt={artwork.title}
@@ -121,64 +133,39 @@ const Artworks = () => {
         </motion.div>
 
         <AnimatePresence>
-          {isModalOpen && selectedArtwork && (
-            <motion.div 
-              className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center p-4"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={closeModal}
-            >
-              <motion.div 
-                className="bg-gray-800 dark:bg-gray-900 rounded-xl max-w-5xl w-full max-h-[95vh] overflow-hidden flex flex-col md:flex-row"
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {/* Canvas-like container for the image */}
-                <div className="md:w-1/2 h-96 md:h-[80vh] bg-gray-700 dark:bg-gray-800 flex items-center justify-center p-8">
-                  <div className="relative w-full h-full">
-                    <Image
-                      src={selectedArtwork.image}
-                      alt={selectedArtwork.title}
-                      fill
-                      className="object-contain"
-                      quality={100}
-                      priority
-                    />
-                  </div>
+        {selectedArtwork && (
+          <motion.div
+            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+            onClick={handleBackdropClick}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className="relative max-w-[90vw] max-h-[90vh] flex flex-col items-center">
+              <div className="relative bg-black/80 p-4 rounded-lg flex flex-col items-center">
+                <button
+                  onClick={closeModal}
+                  className="absolute -top-3 -right-3 bg-black/80 rounded-full p-1.5 text-white hover:text-amber-400 transition-colors"
+                  aria-label="Close"
+                >
+                  <FaTimes size={20} />
+                </button>
+                <div className="max-w-[85vw] max-h-[80vh] flex items-center justify-center">
+                  <img
+                    src={selectedArtwork.image}
+                    alt={selectedArtwork.title}
+                    className="max-w-full max-h-[80vh] object-contain"
+                  />
                 </div>
-                
-                {/* Artwork details */}
-                <div className="md:w-1/2 p-6 overflow-y-auto">
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h2 className="text-2xl font-bold">{selectedArtwork.title}</h2>
-                      <p className="text-gray-300">{selectedArtwork.year}</p>
-                    </div>
-                    <button 
-                      onClick={closeModal}
-                      className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-                      aria-label="Close"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                    </button>
-                  </div>
-                  
-                  <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-                    <h3 className="text-lg font-semibold mb-2">About This Artwork</h3>
-                    <p className="text-gray-300 dark:text-gray-300">
-                      {selectedArtwork.description}
-                    </p>
-                  </div>
+                <div className="mt-3 text-center text-white">
+                  <h3 className="text-lg font-bold">{selectedArtwork.title}</h3>
+                  <p className="text-sm text-gray-300">{selectedArtwork.year}</p>
                 </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       </div>
     </section>
   );

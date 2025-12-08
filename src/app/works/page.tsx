@@ -11,7 +11,7 @@ interface WorkItem {
   role: string;
   image: string;
   videoLink?: string; 
-  category: 'filmography' | 'direction' | 'mobile-shorts' | 'travel-shorts';
+  category: 'filmography' | 'direction' | 'travel-shorts';
   description?: string;
 }
 
@@ -20,7 +20,7 @@ const works: WorkItem[] = [
     title: "Joar",
     year: "2024",
     role: "Director & Story",
-    image: "/works/Joar_festival.jpg",
+    image: "/works/Joar_festival_laurel.jpg",
     category: "filmography",
     description: "A compelling narrative that explores the depths of human resilience and the power of community in the face of adversity. This film weaves together intimate personal stories with broader social themes, creating a tapestry of hope and determination."
   },
@@ -75,7 +75,7 @@ const works: WorkItem[] = [
     role: "Director & Cinematographer",
     image: "https://img.youtube.com/vi/q6ccNYIl9WU/maxresdefault.jpg",
     videoLink: "https://www.youtube.com/watch?v=q6ccNYIl9WU",
-    category: "mobile-shorts",
+    category: "travel-shorts",
     description: "At day's end - capturing the magical moments of twilight and transition."
   },
   {
@@ -93,17 +93,8 @@ const works: WorkItem[] = [
     role: "Maker",
     image: "https://img.youtube.com/vi/qSaIH8HF-fk/maxresdefault.jpg",
     videoLink: "https://www.youtube.com/shorts/qSaIH8HF-fk",
-    category: "mobile-shorts",
+    category: "travel-shorts",
     description: "Celebrating the Bengali harvest festival of Poush 1430 with traditional festivities and cultural travel."
-  },
-  {
-    title:"শহরে হাজারো বাতি, তবুও আঁধারো রাতি",
-    year:"2024",
-    role:"Maker",
-    image:"https://img.youtube.com/vi/ucWaA_25FIw/maxresdefault.jpg",
-    videoLink:"https://www.youtube.com/shorts/ucWaA_25FIw",
-    category:"mobile-shorts",
-    description:""
   },
   {
     title:"THROUGH MY LENS | Episode 01",
@@ -111,7 +102,7 @@ const works: WorkItem[] = [
     role:"Maker",
     image:"https://img.youtube.com/vi/r76es8bXYM8/maxresdefault.jpg",
     videoLink:"hhttps://www.youtube.com/shorts/r76es8bXYM8",
-    category:"mobile-shorts",
+    category:"travel-shorts",
     description:""
   },
   {
@@ -120,16 +111,25 @@ const works: WorkItem[] = [
     role:"Maker",
     image:"https://img.youtube.com/vi/h1bMKeFXbh0/maxresdefault.jpg",
     videoLink:"https://www.youtube.com/shorts/h1bMKeFXbh0",
-    category:"mobile-shorts",
+    category:"travel-shorts",
     description:""
   },
   {
-    title:"পাখির কাছে ফুলের কাছে || আসাদুল্লাহিল গালিব | নাসিরুল ইসলাম",
+    title:"পাখির কাছে ফুলের কাছে",
     year:"2024",
     role:"Maker",
     image:"https://img.youtube.com/vi/5LZv01LhKiY/maxresdefault.jpg",
     videoLink:"https://www.youtube.com/watch?v=5LZv01LhKiY",
     category:"filmography",
+    description:""
+  },
+  {
+    title:"রক্ষা কবচ | Rokkha Koboch | Qaseeda",
+    year:"2024",
+    role:"Maker",
+    image:"https://img.youtube.com/vi/FhIzN8UHH3E/maxresdefault.jpg",
+    videoLink:"https://www.youtube.com/watch?v=FhIzN8UHH3E",
+    category:"direction",
     description:""
   }
 ];
@@ -137,14 +137,13 @@ const works: WorkItem[] = [
 const categories = [
   { id: 'filmography', name: 'Filmography', icon: '🎬' },
   { id: 'direction', name: 'Direction', icon: '🎥' },
-  { id: 'mobile-shorts', name: 'Mobile Shorts', icon: '📱' },
   { id: 'travel-shorts', name: 'Travel Shorts', icon: '✈️' }
 ];
 
 const Works = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null);
-  const [activeCategory, setActiveCategory] = useState<'filmography' | 'direction' | 'mobile-shorts' | 'travel-shorts'>('filmography');
+  const [activeCategory, setActiveCategory] = useState<'filmography' | 'direction' | 'travel-shorts' | 'travel-shorts'>('filmography');
 
   const handleWorkClick = (work: WorkItem, e: React.MouseEvent) => {
     if (!work.videoLink) {

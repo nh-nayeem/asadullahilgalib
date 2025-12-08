@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FaChevronLeft, FaChevronRight, FaPlay, FaTimes } from 'react-icons/fa';
 import Link from 'next/link';
 
@@ -46,10 +46,15 @@ const shorts: ShortItem[] = [
 ];
 
 const Shorts = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [pivot, setPivot] = useState(0); // Pivot element (always middle)
+  const [animationOffset, setAnimationOffset] = useState(0); // Continuous offset for animation
   const [modalVideo, setModalVideo] = useState<ShortItem | null>(null);
   const [thumbnailErrors, setThumbnailErrors] = useState<Set<string>>(new Set());
   const [isMobile, setIsMobile] = useState(false);
+  const [slidePercentage, setSlidePercentage] = useState(33.3334); // Dynamic slide distance
+  const elementRef = useRef<HTMLDivElement>(null);
+  const elementRef1 = useRef<HTMLDivElement>(null);
+  const flexContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -61,21 +66,44 @@ const Shorts = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Calculate actual slide distance based on element measurements
+  useEffect(() => {
+    let resizeTimeout: NodeJS.Timeout;
+    
+    const calculateSlideDistance = () => {
+      if (!isMobile && elementRef.current && elementRef1.current && flexContainerRef.current) {
+        const element0Left = elementRef.current.offsetLeft;
+        const element1Left = elementRef1.current.offsetLeft;
+        const flexContainerWidth = flexContainerRef.current.offsetWidth;
+        // Calculate actual distance between two elements including gap
+        const calculatedPercentage = ((element1Left - element0Left) / flexContainerWidth) * 100;
+        setSlidePercentage(calculatedPercentage);
+      } else if (isMobile) {
+        setSlidePercentage(100);
+      }
+    };
+
+    const debouncedResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(calculateSlideDistance, 150);
+    };
+
+    calculateSlideDistance();
+    window.addEventListener('resize', debouncedResize);
+    return () => {
+      window.removeEventListener('resize', debouncedResize);
+      clearTimeout(resizeTimeout);
+    };
+  }, [isMobile]);
+
   const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + shorts.length) % shorts.length);
+    setPivot((prev) => (prev - 1 + shorts.length) % shorts.length);
+    setAnimationOffset((prev) => prev - 1);
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % shorts.length);
-  };
-
-  const getVisibleShorts = () => {
-    const count = isMobile ? 1 : 3;
-    const visible = [];
-    for (let i = 0; i < count; i++) {
-      visible.push(shorts[(currentIndex + i) % shorts.length]);
-    }
-    return visible;
+    setPivot((prev) => (prev + 1) % shorts.length);
+    setAnimationOffset((prev) => prev + 1);
   };
 
   const getThumbnailUrl = (videoId: string, quality: string = 'hqdefault') => {
@@ -86,24 +114,17 @@ const Shorts = () => {
     const target = e.target as HTMLImageElement;
     const currentSrc = target.src;
     
-    console.log('Thumbnail error for video:', videoId, 'Current src:', currentSrc);
-    
     // Fallback chain: maxresdefault -> sddefault -> hqdefault -> mqdefault -> default
     if (currentSrc.includes('maxresdefault')) {
-      console.log('Trying sddefault...');
       target.src = getThumbnailUrl(videoId, 'sddefault');
     } else if (currentSrc.includes('sddefault')) {
-      console.log('Trying hqdefault...');
       target.src = getThumbnailUrl(videoId, 'hqdefault');
     } else if (currentSrc.includes('hqdefault')) {
-      console.log('Trying mqdefault...');
       target.src = getThumbnailUrl(videoId, 'mqdefault');
     } else if (currentSrc.includes('mqdefault')) {
-      console.log('Trying default...');
       target.src = getThumbnailUrl(videoId, 'default');
     } else {
       // All fallbacks failed, mark as error to prevent infinite loops
-      console.log('All fallbacks failed for video:', videoId);
       const errorKey = `${videoId}-thumbnail`;
       setThumbnailErrors(prev => new Set([...prev, errorKey]));
     }
@@ -178,72 +199,73 @@ const Shorts = () => {
 
           {/* Film Reel Carousel */}
           <div className={`overflow-hidden py-4 ${isMobile ? 'px-4' : 'px-20'}`}>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentIndex}
-                className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center"
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -100 }}
-                transition={{ duration: 0.5 }}
-              >
-                {getVisibleShorts().map((short, index) => (
-                  <motion.div
-                    key={`${short.title}-${currentIndex}-${index}`}
-                    className={`relative transition-all duration-300 ${
-                      !isMobile && index === 1 
-                        ? 'scale-110 z-10' 
-                        : !isMobile && index !== 1
-                        ? 'scale-90 opacity-70'
-                        : ''
-                    }`}
-                    initial={{ opacity: 0, y: 0 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    {/* Film Frame */}
-                    <div className="relative bg-black p-4 rounded-lg shadow-2xl border-2 border-white">
-                      {/* Video Container */}
-                      <div className="relative aspect-video overflow-hidden bg-black rounded">
-                        <div 
-                          onClick={() => handleVideoPlay(short)}
-                          className="block cursor-pointer w-full h-full relative group"
-                        >
-                          <img
-                            src={getThumbnailUrl(short.videoId)}
-                            alt={short.title}
-                            className="w-full h-full object-cover"
-                            onError={(e) => handleImageError(short.videoId, e)}
-                          />
-                          {/* Film Overlay */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                          <div className="absolute inset-0 opacity-20">
-                            <div className="h-full w-full" style={{
-                              backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)',
-                            }}></div>
-                          </div>
-                          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <div className="px-6 py-3 bg-amber-400 text-black rounded-full font-medium hover:bg-white transition-colors flex items-center gap-2">
-                              <FaPlay size={16} />
-                              Play
-                            </div>
+            <motion.div
+              ref={flexContainerRef}
+              className="flex gap-8 items-center"
+              animate={{
+                x: isMobile ? `-${animationOffset * 100}%` : `-${animationOffset * slidePercentage}%`
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+                duration: 0.5
+              }}
+            >
+              {/* Render all shorts for continuous sliding */}
+              {[...shorts, ...shorts, ...shorts].map((short, index) => (
+                <motion.div
+                  key={`${short.title}-${index}`}
+                  ref={index === 0 ? elementRef : index === 1 ? elementRef1 : undefined}
+                  className={`relative transition-all duration-300 flex-shrink-0 ${
+                    isMobile ? 'w-full' : 'w-[calc(33.333%-21.333px)]'
+                  }`}
+                  initial={{ opacity: 0, y: 0 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  {/* Film Frame */}
+                  <div className="relative bg-black p-4 rounded-lg shadow-2xl border-2 border-white">
+                    {/* Video Container */}
+                    <div className="relative aspect-video overflow-hidden bg-black rounded">
+                      <div 
+                        onClick={() => handleVideoPlay(short)}
+                        className="block cursor-pointer w-full h-full relative group"
+                      >
+                        <img
+                          src={getThumbnailUrl(short.videoId)}
+                          alt={short.title}
+                          className="w-full h-full object-cover"
+                          onError={(e) => handleImageError(short.videoId, e)}
+                        />
+                        {/* Film Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                        <div className="absolute inset-0 opacity-20">
+                          <div className="h-full w-full" style={{
+                            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)',
+                          }}></div>
+                        </div>
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <div className="px-6 py-3 bg-amber-400 text-black rounded-full font-medium hover:bg-white transition-colors flex items-center gap-2">
+                            <FaPlay size={16} />
+                            Play
                           </div>
                         </div>
                       </div>
-                      
-                      {/* Film Info */}
-                      <div className="mt-4 text-center">
-                        <h3 className={`text-lg font-bold ${
-                          index === 1 ? 'text-white' : 'text-gray-300'
-                        }`}>{short.title}</h3>
-                        <p className="text-gray-400">{short.year}</p>
-                      </div>
                     </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </AnimatePresence>
+                    
+                    {/* Film Info */}
+                    <div className="mt-4 text-center">
+                      <h3 className={`text-lg font-bold ${
+                        index === 1 ? 'text-white' : 'text-gray-300'
+                      }`}>{short.title}</h3>
+                      <p className="text-gray-400">{short.year}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
           </div>
 
           {/* Bottom Film Strip */}
