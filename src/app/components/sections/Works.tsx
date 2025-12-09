@@ -18,7 +18,7 @@ const works: WorkItem[] = [
     title: "Joar",
     year: "2024",
     role: "Director & Story",
-    description: "A compelling narrative that explores the depths of human resilience and the power of community in the face of adversity. This film weaves together intimate personal stories with broader social themes, creating a tapestry of hope and determination.",
+    description: "Joar — My first fiction film. Made with minimal resources and beginner’s experience, yet carried by passion and sincerity. Despite its imperfections, the film found its own path and received remarkable appreciation, earning multiple selections in international film festivals.",
     image: "/works/Joar_festival_laurel.jpg",
     // videoLink: "https://www.youtube.com/watch?v=LVWayznWIlg"
   },
@@ -26,7 +26,7 @@ const works: WorkItem[] = [
     title: "ONTOSSHOR",
     year: "2023",
     role: "Director and Interview",
-    description: "An intimate documentary portrait that captures the essence of artistic struggle and triumph. Through candid interviews and evocative imagery, this piece reveals the creative process and the personal sacrifices behind artistic excellence.",
+    description: "A documentary that uncovers the harsh reality of guestroom culture in Bangladeshi universities. Through Rakib’s harrowing story of survival, the film sheds light on a silenced chapter of student life before the 2024 uprising. Its raw honesty sparked powerful conversations and received an overwhelming audience response online",
     image: "/works/5 ONTOSSHOR.jpg",
     videoLink: "https://www.youtube.com/watch?v=mQQ6VeX8e2c"
   },
@@ -34,7 +34,7 @@ const works: WorkItem[] = [
     title: "Khosh Amded Ramadan",
     year: "2024",
     role: "Director",
-    description: "A celebration of cultural heritage and spiritual devotion during the holy month of Ramadan. This visual journey captures the traditions, emotions, and communal bonds that define this sacred time, bringing together diverse voices in harmony.",
+    description: "Khosh Amded Ramadan is a music video that celebrates the spirit of Ramadan with a fresh, cinematic approach. Blending festive visuals, warm cultural aesthetics, and heartfelt performances, the video redefined the style of Ramadan-themed productions in Bangladesh. The project reached a wide audience and received an enthusiastic response across social media platforms",
     image: "/works/2 Qaseeda.jpeg",
     videoLink: "https://www.youtube.com/watch?v=RfcxyMMCwFk"
   }
@@ -77,7 +77,7 @@ const Works = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          A selection of my recent film projects that showcase my storytelling and technical expertise.
+          A selection of my recent film projects.
         </motion.p>
         
         <div className="space-y-16">

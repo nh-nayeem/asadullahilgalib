@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
-import { FaEnvelope, FaGraduationCap, FaAward, FaCertificate, FaFilm, FaCamera, FaVideo, FaEdit, FaLightbulb, FaPalette, FaMusic, FaClock, FaUsers, FaStar, FaProjectDiagram, FaComments, FaImage } from 'react-icons/fa';
+import { FaEnvelope, FaGraduationCap, FaAward, FaCertificate, FaFilm, FaCamera, FaVideo, FaEdit, FaLightbulb, FaPalette, FaMusic, FaClock, FaUsers, FaStar, FaProjectDiagram, FaComments, FaImage, FaBriefcase } from 'react-icons/fa';
 import Header from '@/app/components/layout/Header';
 import Footer from '@/app/components/layout/Footer';
 import SocialLinks from '@/app/components/common/SocialLinks';
@@ -120,11 +120,14 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="bg-gray-900 p-6 rounded-lg border border-gray-700"
+                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-start space-x-4"
               >
-                <h3 className="text-xl font-semibold text-white mb-2">Bachelor of Arts in Islamic History & Culture</h3>
-                <p className="text-gray-400 mb-2">University of Dhaka</p>
-                <p className="text-gray-500 text-sm">2022 - present</p>
+                <img src="/logos/DU_Logo.png" alt="University of Dhaka" className="w-16 h-16 object-contain rounded-lg flex-shrink-0" />
+                <div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Bachelor of Arts in Islamic History & Culture</h3>
+                  <p className="text-gray-400 mb-2">University of Dhaka</p>
+                  <p className="text-gray-500 text-sm">2022 - present</p>
+                </div>
               </motion.div>
             </div>
           </div>
@@ -267,8 +270,81 @@ const About = () => {
           </div>
         </section>
 
-        {/* Certification Section */}
+        {/* Experiences Section */}
         <section className="py-20 px-4 md:px-8 bg-gray-800">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <FaBriefcase className="text-4xl text-white mx-auto mb-4" />
+              <h2 className="text-3xl font-bold text-white">Experiences</h2>
+            </motion.div>
+            <div className="grid md:grid-cols-2 gap-6">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-start space-x-4"
+              >
+                <img src="/logos/Post_Baksho_Logo.png" alt="Post Baksho" className="w-16 h-16 object-contain rounded-lg flex-shrink-0" />
+                <div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Post Baksho - Founder</h3>
+                  <p className="text-gray-300 text-sm">A platform producing film and visuals content with enthusiastic young filmmakers.</p>
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-start space-x-4"
+              >
+                <img src="/logos/YO_Logo.png" alt="Youth Opportunities" className="w-16 h-16 object-contain rounded-lg flex-shrink-0" />
+                <div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Youth Opportunities - Internship</h3>
+                  <p className="text-gray-400 text-sm mb-2">6-month internship</p>
+                  <p className="text-gray-300 text-sm">An Award winning international youth organization.</p>
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-start space-x-4"
+              >
+                <img src="/logos/Qaseeda_Logo.png" alt="Qaseeda" className="w-16 h-16 object-contain rounded-lg flex-shrink-0" />
+                <div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Qaseeda - Co-Founder</h3>
+                  <p className="text-gray-300 text-sm">One of the founders of the famous music band Qaseeda.</p>
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5 }}
+                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-start space-x-4"
+              >
+                <div className="w-16 h-16 bg-gray-800 rounded-lg flex-shrink-0 flex items-center justify-center">
+                  <FaFilm className="text-3xl text-amber-400" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-white mb-2">Visual Projects Portfolio</h3>
+                  <p className="text-gray-400 text-sm mb-2">5 years of experience</p>
+                  <p className="text-gray-300 text-sm">Worked on 50+ visual projects across various domains.</p>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* Certification Section */}
+        <section className="py-20 px-4 md:px-8 bg-gray-900">
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -285,7 +361,7 @@ const About = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-white transition-colors"
+                className="bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors"
               >
                 <h3 className="text-base font-semibold text-white mb-2">Digital Film and Drama Direction</h3>
                 <p className="text-gray-400 text-sm mb-2">CT Media</p>
@@ -297,7 +373,7 @@ const About = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-white transition-colors"
+                className="bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors"
               >
                 <h3 className="text-base font-semibold text-white mb-2">Masterclass with Dr. Shi Chuan, Majid Majidi, Anjan Dutt</h3>
                 <p className="text-gray-400 text-sm mb-2">Rainbow Film Society</p>
@@ -309,7 +385,7 @@ const About = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
-                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-white transition-colors"
+                className="bg-gray-800 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors"
               >
                 <h3 className="text-base font-semibold text-white mb-2">Aspire Leaders Program</h3>
                 <p className="text-gray-400 text-sm mb-2">Aspire Institute</p>
@@ -321,7 +397,7 @@ const About = () => {
         </section>
 
         {/* Awards Section */}
-        <section className="py-20 px-4 md:px-8 bg-gray-900">
+        <section className="py-20 px-4 md:px-8 bg-gray-800">
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -338,7 +414,7 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="bg-gray-800 p-6 rounded-lg border border-gray-700 flex items-center space-x-6"
+                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-center space-x-6"
               >
                 <div className="text-4xl text-white">⭐</div>
                 <div className="flex-1">
@@ -352,7 +428,7 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="bg-gray-800 p-6 rounded-lg border border-gray-700 flex items-center space-x-6"
+                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-center space-x-6"
               >
                 <div className="text-4xl text-white">⭐</div>
                 <div className="flex-1">
@@ -366,7 +442,7 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.4 }}
-                className="bg-gray-800 p-6 rounded-lg border border-gray-700 flex items-center space-x-6"
+                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-center space-x-6"
               >
                 <div className="text-4xl text-white">⭐</div>
                 <div className="flex-1">
@@ -380,7 +456,7 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5 }}
-                className="bg-gray-800 p-6 rounded-lg border border-gray-700 flex items-center space-x-6"
+                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-center space-x-6"
               >
                 <div className="text-4xl text-white">🥈</div>
                 <div className="flex-1">
@@ -394,7 +470,7 @@ const About = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.6 }}
-                className="bg-gray-800 p-6 rounded-lg border border-gray-700 flex items-center space-x-6"
+                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-center space-x-6"
               >
                 <div className="text-4xl text-white">🥈</div>
                 <div className="flex-1">

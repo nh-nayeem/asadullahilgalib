@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaEye } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -83,7 +83,7 @@ const Artworks = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          A collection of my artistic works that blend creativity and visual storytelling. Click on any artwork to view details.
+          A collection of my creative designs.
         </motion.p>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -103,10 +103,9 @@ const Artworks = () => {
                   alt={artwork.title}
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                  <span className="text-white opacity-0 group-hover:opacity-100 text-lg font-medium transition-opacity duration-300">
-                    View Details
-                  </span>
+                {/* Eye icon overlay */}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <FaEye className="text-white/50 text-5xl drop-shadow-lg" />
                 </div>
               </div>
               <div className="p-4">

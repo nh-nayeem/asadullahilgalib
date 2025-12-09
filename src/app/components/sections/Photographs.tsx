@@ -2,89 +2,36 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaEye } from 'react-icons/fa';
 import Link from 'next/link';
 
 interface PhotoItem {
   title: string;
-  date: string;
   image: string;
-  thumbnail?: string;
+  imagethumb?: string;
 }
 
 const photos: PhotoItem[] = [
   {
     title: "July",
-    date: "2024",
-    image: "/photographs/1. July.jpg",
-    thumbnail: "/photographs/1. July-min.jpg"
+    image: "/photographs/July.jpg",
+    imagethumb: "/photographs/July-min.jpg"
   },
-  // {
-  //   title: "The Tomb of Paribibi",
-  //   date: "2024",
-  //   image: "/photographs/2. The Tomb of Paribibi.jpg",
-  //   thumbnail: "/photographs/2. The Tomb of Paribibi-min.jpg"
-  // },
   {
-    title: "Window",
-    date: "2023",
-    image: "/photographs/3. Window.jpg",
-    thumbnail: "/photographs/3. Window-min.jpg"
+    title: "Flow",
+    image: "/photographs/Flow.jpg",
+    imagethumb: "/photographs/Flow-min.jpg"
   },
-  // {
-  //   title: "I wish",
-  //   date: "2023",
-  //   image: "/photographs/4. I wish.jpg",
-  //   thumbnail: "/photographs/4. I wish-min.jpg"
-  // },
-  // {
-  //   title: "Hope",
-  //   date: "2023",
-  //   image: "/photographs/5. Hope.jpg",
-  //   thumbnail: "/photographs/5. Hope-min.jpg"
-  // },
   {
     title: "Afra",
-    date: "2023",
-    image: "/photographs/6. Afra.jpg",
-    thumbnail: "/photographs/6. Afra-min.jpg"
+    image: "/photographs/Afra.jpg",
+    imagethumb: "/photographs/Afra-min.jpg"
   },
-  // {
-  //   title: "Flow",
-  //   date: "2023",
-  //   image: "/photographs/7. Flow.jpg",
-  //   thumbnail: "/photographs/7. Flow-min.jpg"
-  // },
-  // {
-  //   title: "Ganer Sawgat",
-  //   date: "2023",
-  //   image: "/photographs/8. Ganer Sawgat.jpg",
-  //   thumbnail: "/photographs/8. Ganer Sawgat-min.jpg"
-  // },
-  // {
-  //   title: "Lalbagh",
-  //   date: "2023",
-  //   image: "/photographs/9. Lalbagh.jpg",
-  //   thumbnail: "/photographs/9. Lalbagh-min.jpg"
-  // },
   {
-    title: "Crow",
-    date: "2023",
-    image: "/photographs/10. Crow.jpg",
-    thumbnail: "/photographs/10. Crow-min.jpg"
-  },
-  // {
-  //   title: "Dinghy",
-  //   date: "2023",
-  //   image: "/photographs/11. Dinghy.jpg",
-  //   thumbnail: "/photographs/11. Dinghy-min.jpg"
-  // },
-  // {
-  //   title: "Silence",
-  //   date: "2023",
-  //   image: "/photographs/12. Silence.jpg",
-  //   thumbnail: "/photographs/12. Silence-min.jpg"
-  // }
+    title: "Rest",
+    image: "/photographs/Rest.jpg",
+    imagethumb: "/photographs/Rest.jpg"
+  }
 ];
 
 const Photographs = () => {
@@ -125,7 +72,7 @@ const Photographs = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          A selection of my recent photography projects that showcase my storytelling and technical expertise.
+          A selection of my clicks capturing moments.
         </motion.p>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -141,15 +88,17 @@ const Photographs = () => {
             >
               <div className="relative h-60 overflow-hidden">
                 <img
-                  src={photo.thumbnail}
+                  src={photo.imagethumb}
                   alt={photo.title}
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                 />
-
+                {/* Eye icon overlay */}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <FaEye className="text-white/50 text-5xl drop-shadow-lg" />
+                </div>
               </div>
               <div className="p-4">
-                <h3 className="text-xl font-bold">{photo.title}</h3>
-                <p className="text-gray-400">{photo.date}</p>
+                <h3 className="text-xl text-gray-400">{photo.title}</h3>
               </div>
             </motion.div>
           ))}
@@ -199,7 +148,6 @@ const Photographs = () => {
                 </div>
                 <div className="mt-3 text-center text-white">
                   <h3 className="text-lg font-bold">{selectedPhoto.title}</h3>
-                  <p className="text-sm text-gray-300">{selectedPhoto.date}</p>
                 </div>
               </div>
             </div>

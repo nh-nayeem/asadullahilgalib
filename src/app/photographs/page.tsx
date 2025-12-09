@@ -2,13 +2,12 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaEye } from 'react-icons/fa';
 import Header from '@/app/components/layout/Header';
 import Footer from '@/app/components/layout/Footer';
 
 interface PhotoItem {
   title: string;
-  date: string;
   image: string;
   imagethumb?: string;
 }
@@ -16,75 +15,98 @@ interface PhotoItem {
 const photos: PhotoItem[] = [
   {
     title: "July",
-    date: "2024",
-    image: "/photographs/1. July.jpg",
-    imagethumb: "/photographs/1. July-min.jpg"
-  },
-  {
-    title: "The Tomb of Paribibi",
-    date: "2024",
-    image: "/photographs/2. The Tomb of Paribibi.jpg",
-    imagethumb: "/photographs/2. The Tomb of Paribibi-min.jpg"
-  },
-  {
-    title: "Window",
-    date: "2023",
-    image: "/photographs/3. Window.jpg",
-    imagethumb: "/photographs/3. Window-min.jpg"
-  },
-  {
-    title: "I wish",
-    date: "2023",
-    image: "/photographs/4. I wish.jpg",
-    imagethumb: "/photographs/4. I wish-min.jpg"
-  },
-  {
-    title: "Hope",
-    date: "2023",
-    image: "/photographs/5. Hope.jpg",
-    imagethumb: "/photographs/5. Hope-min.jpg"
+    image: "/photographs/July.jpg",
+    imagethumb: "/photographs/July-min.jpg"
   },
   {
     title: "Afra",
-    date: "2023",
-    image: "/photographs/6. Afra.jpg",
-    imagethumb: "/photographs/6. Afra-min.jpg"
-  },
-  {
-    title: "Flow",
-    date: "2023",
-    image: "/photographs/7. Flow.jpg",
-    imagethumb: "/photographs/7. Flow-min.jpg"
-  },
-  {
-    title: "Ganer Sawgat",
-    date: "2023",
-    image: "/photographs/8. Ganer Sawgat.jpg",
-    imagethumb: "/photographs/8. Ganer Sawgat-min.jpg"
-  },
-  {
-    title: "Lalbagh",
-    date: "2023",
-    image: "/photographs/9. Lalbagh.jpg",
-    imagethumb: "/photographs/9. Lalbagh-min.jpg"
-  },
-  {
-    title: "Crow",
-    date: "2023",
-    image: "/photographs/10. Crow.jpg",
-    imagethumb: "/photographs/10. Crow-min.jpg"
+    image: "/photographs/Afra.jpg",
+    imagethumb: "/photographs/Afra-min.jpg"
   },
   {
     title: "Dinghy",
-    date: "2023",
-    image: "/photographs/11. Dinghy.jpg",
-    imagethumb: "/photographs/11. Dinghy-min.jpg"
+    image: "/photographs/Dinghy.jpg",
+    imagethumb: "/photographs/Dinghy-min.jpg"
   },
   {
-    title: "Silence",
-    date: "2023",
-    image: "/photographs/12. Silence.jpg",
-    imagethumb: "/photographs/12. Silence-min.jpg"
+    title: "Flow",
+    image: "/photographs/Flow.jpg",
+    imagethumb: "/photographs/Flow-min.jpg"
+  },
+  {
+    title: "Gaaner Sawgat",
+    image: "/photographs/Gaaner Sawgat.jpg",
+    imagethumb: "/photographs/Gaaner Sawgat-min.jpg"
+  },
+  {
+    title: "Hope",
+    image: "/photographs/Hope.jpg",
+    imagethumb: "/photographs/Hope-min.jpg"
+  },
+  {
+    title: "I Wish",
+    image: "/photographs/I Wish.jpg",
+    imagethumb: "/photographs/I Wish-min.jpg"
+  },
+  {
+    title: "Jahajer Janala",
+    image: "/photographs/Jahajer Janala.jpg",
+    imagethumb: "/photographs/Jahajer Janala-min.jpg"
+  },
+  {
+    title: "Lalbagh",
+    image: "/photographs/Lalbagh.jpg",
+    imagethumb: "/photographs/Lalbagh-min.jpg"
+  },
+  {
+    title: "A Morning",
+    image: "/photographs/A Morning.jpg",
+    imagethumb: "/photographs/A Morning.jpg"
+  },
+  {
+    title: "Gaze",
+    image: "/photographs/Gaze.jpg",
+    imagethumb: "/photographs/Gaze.jpg"
+  },
+  {
+    title: "Minar",
+    image: "/photographs/Minar.jpg",
+    imagethumb: "/photographs/Minar.jpg"
+  },
+  {
+    title: "Mist",
+    image: "/photographs/Mist.jpg",
+    imagethumb: "/photographs/Mist.jpg"
+  },
+  {
+    title: "Naya Char",
+    image: "/photographs/Naya Char.jpg",
+    imagethumb: "/photographs/Naya Char.jpg"
+  },
+  {
+    title: "Phul",
+    image: "/photographs/Phul.jpg",
+    imagethumb: "/photographs/Phul.jpg"
+  },
+  {
+    title: "Reflection",
+    image: "/photographs/Reflection.jpg",
+    imagethumb: "/photographs/Reflection.jpg"
+  },
+  {
+    title: "Rest",
+    image: "/photographs/Rest.jpg",
+    imagethumb: "/photographs/Rest.jpg"
+  },
+  {
+    title: "Stairs",
+    image: "/photographs/Stairs.jpg",
+    imagethumb: "/photographs/Stairs.jpg"
+  },
+  {
+    title: "The Door of Peace",
+    image: "/photographs/The Door of Peace.jpg",
+    imagethumb: "/photographs/The Door of Peace.jpg"
   }
 ];
 
@@ -129,7 +151,7 @@ export default function Photographs() {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          A selection of my recent photography projects that showcase my storytelling and technical expertise.
+          A selection of my clicks capturing moments.
         </motion.p>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -143,16 +165,19 @@ export default function Photographs() {
               transition={{ delay: index * 0.1 }}
               onClick={() => openModal(photo)}
             >
-              <div className="relative h-80 overflow-hidden">
+              <div className="relative h-96 overflow-hidden">
                 <img
                   src={photo.imagethumb}
                   alt={photo.title}
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                 />
+                {/* Eye icon overlay */}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <FaEye className="text-white/50 text-5xl drop-shadow-lg" />
+                </div>
               </div>
               <div className="p-4">
-                <h3 className="text-xl font-bold">{photo.title}</h3>
-                <p className="text-gray-400">{photo.date}</p>
+                <h3 className="text-xl text-gray-400">{photo.title}</h3>
               </div>
             </motion.div>
           ))}
@@ -191,7 +216,6 @@ export default function Photographs() {
                 </div>
                 <div className="mt-3 text-center text-white">
                   <h3 className="text-lg font-bold">{selectedPhoto.title}</h3>
-                  <p className="text-sm text-gray-300">{selectedPhoto.date}</p>
                 </div>
               </div>
             </div>

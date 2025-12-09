@@ -11,7 +11,7 @@ const Hero = () => {
           src="/Galib_art.png"
           alt="Background"
           fill
-          className="object-cover opacity-40"
+          className="object-cover opacity-40 md:object-center object-right"
           priority
         />
       </div>

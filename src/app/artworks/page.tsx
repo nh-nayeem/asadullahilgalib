@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaEye } from 'react-icons/fa';
 import Image from 'next/image';
 import Header from '@/app/components/layout/Header';
 import Footer from '@/app/components/layout/Footer';
@@ -16,34 +16,6 @@ interface ArtworkItem {
 }
 
 const artworks: ArtworkItem[] = [
-  {
-    title: "Amanat Book Cover",
-    year: "2024",
-    image: "/artworks/Amanat_Book_Cover.jpg",
-    thumbnail: "/artworks/Amanat_Book_Cover.jpg",
-    description: "Book cover design for 'Amanat' - a literary work featuring contemporary visual elements and typography."
-  },
-  {
-    title: "Banda Korei Rakho",
-    year: "2024",
-    image: "/artworks/Banda_Korei_Rakho.jpg",
-    thumbnail: "/artworks/Banda_Korei_Rakho.jpg",
-    description: "Poster design for 'Banda Korei Rakho' - a promotional artwork with bold visual composition."
-  },
-  {
-    title: "Banglanama Pathcokro",
-    year: "2024",
-    image: "/artworks/Banglanama_Pathcokro.jpg",
-    thumbnail: "/artworks/Banglanama_Pathcokro.jpg",
-    description: "Cultural design piece representing Bangla language and heritage through visual storytelling."
-  },
-  {
-    title: "Curzoner Ashar",
-    year: "2024",
-    image: "/artworks/Curzoner_Ashar.png",
-    thumbnail: "/artworks/Curzoner_Ashar.png",
-    description: "Logo design for 'Curzoner Ashar' - a contemporary brand identity with cultural elements."
-  },
   {
     title: "Intezar",
     year: "2025",
@@ -59,18 +31,39 @@ const artworks: ArtworkItem[] = [
     description: "A poster design representing the concept of flow and movement through visual storytelling."
   },
   {
-    title: "July Graffiti",
-    year: "2024",
-    image: "/artworks/July_Graffitti_02.jpg",
-    thumbnail: "/artworks/July_Graffitti_02.jpg",
-    description: "An urban art piece that blends street culture with contemporary design. This graffiti work showcases bold colors and dynamic composition."
-  },
-  {
     title: "Ontosshor",
     year: "2024",
     image: "/artworks/Ontosshor_Poster.jpg",
     thumbnail: "/artworks/Ontosshor_Poster.jpg",
     description: "A poster design representing the concept of solitude and introspection through visual storytelling."
+  },
+  {
+    title: "Banda Korei Rakho",
+    year: "2024",
+    image: "/artworks/Banda_Korei_Rakho.jpg",
+    thumbnail: "/artworks/Banda_Korei_Rakho.jpg",
+    description: "Poster design for 'Banda Korei Rakho' - a promotional artwork with bold visual composition."
+  },
+  {
+    title: "Amanat Book Cover",
+    year: "2024",
+    image: "/artworks/Amanat_Book_Cover.jpg",
+    thumbnail: "/artworks/Amanat_Book_Cover.jpg",
+    description: "Book cover design for 'Amanat' - a literary work featuring contemporary visual elements and typography."
+  },
+  {
+    title: "Banglanama Pathcokro",
+    year: "2024",
+    image: "/artworks/Banglanama_Pathcokro.jpg",
+    thumbnail: "/artworks/Banglanama_Pathcokro.jpg",
+    description: "Cultural design piece representing Bangla language and heritage through visual storytelling."
+  },
+  {
+    title: "Curzoner Ashar",
+    year: "2024",
+    image: "/artworks/Curzoner_Ashar.png",
+    thumbnail: "/artworks/Curzoner_Ashar.png",
+    description: "Logo design for 'Curzoner Ashar' - a contemporary brand identity with cultural elements."
   },
   {
     title: "Reframing Bangladesh Podcast",
@@ -136,7 +129,7 @@ export default function ArtworksPage() {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          A collection of my artistic works that blend creativity and visual storytelling. Click on any artwork to view details.
+          A collection of my creative designs.
         </motion.p>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -156,10 +149,9 @@ export default function ArtworksPage() {
                   alt={artwork.title}
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                  <span className="text-white opacity-0 group-hover:opacity-100 text-lg font-medium transition-opacity duration-300">
-                    View Details
-                  </span>
+                {/* Eye icon overlay */}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <FaEye className="text-white/50 text-5xl drop-shadow-lg" />
                 </div>
               </div>
               <div className="p-4">
