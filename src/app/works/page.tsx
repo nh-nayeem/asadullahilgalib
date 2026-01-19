@@ -28,7 +28,7 @@ const works: WorkItem[] = [
     title: "ONTOSSHOR",
     year: "2025",
     role: "Director and Interview",
-    image: "/works/5 ONTOSSHOR.jpg",
+    image: "https://img.youtube.com/vi/mQQ6VeX8e2c/maxresdefault.jpg",
     videoLink: "https://www.youtube.com/watch?v=mQQ6VeX8e2c",
     category: "filmography",
     description: ""
@@ -193,7 +193,7 @@ const Works = () => {
             >
               <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">Works</h1>
               <p className="text-center text-gray-400 max-w-2xl mx-auto">
-                Explore my complete collection of works including filmography, direction projects, mobile cinematography, and travel documentaries that showcase diverse storytelling approaches and visual styles.
+                Explore a collection of my works including filmography, direction projects, mobile cinematography, and travel documentaries that showcase diverse storytelling approaches and visual styles.
               </p>
             </motion.div>
 

@@ -25,21 +25,21 @@ const artworks: ArtworkItem[] = [
   },
   {
     title: "Joar",
-    year: "2024",
+    year: "2025",
     image: "/artworks/Joar_Poster.jpg",
     thumbnail: "/artworks/Joar_Poster.jpg",
     description: "A poster design representing the concept of flow and movement through visual storytelling."
   },
   {
     title: "Ontosshor",
-    year: "2024",
+    year: "2025",
     image: "/artworks/Ontosshor_Poster.jpg",
     thumbnail: "/artworks/Ontosshor_Poster.jpg",
     description: "A poster design representing the concept of solitude and introspection through visual storytelling."
   },
   {
     title: "Banda Korei Rakho",
-    year: "2024",
+    year: "2023",
     image: "/artworks/Banda_Korei_Rakho.jpg",
     thumbnail: "/artworks/Banda_Korei_Rakho.jpg",
     description: "Poster design for 'Banda Korei Rakho' - a promotional artwork with bold visual composition."
@@ -60,14 +60,14 @@ const artworks: ArtworkItem[] = [
   },
   {
     title: "Rokkha Koboch",
-    year: "2024",
+    year: "2025",
     image: "/artworks/Rokkha_Koboch.png",
     thumbnail: "/artworks/Rokkha_Koboch.png",
     description: "A powerful visual piece representing protection and rights through contemporary artistic expression."
   },
   {
     title: "Logo for Sizzle",
-    year: "2024",
+    year: "2025",
     image: "/artworks/Sizzle_Logo.png",
     thumbnail: "/artworks/Sizzle_Logo.png",
     description: "Contemporary logo design for 'Sizzle' brand - featuring dynamic visual elements."

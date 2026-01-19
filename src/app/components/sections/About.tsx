@@ -41,15 +41,10 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h3 className="text-2xl mb-4">Crafting Visual Stories That Resonate</h3>
             <p className="text-gray-300 mb-8 text-justify">
-              I'm Asadullahil Galib, a passionate filmmaker dedicated to creating compelling visual narratives. 
-              With a keen eye for detail and a deep understanding of cinematic language, I bring stories to life 
-              through the lens of my camera.
-            </p>
-            <p className="text-gray-300 mb-8 text-justify">
-              My work focuses on exploring the human condition, capturing raw emotions, and presenting 
-              unique perspectives that challenge and inspire audiences.
+              I am an award-winning filmmaker and cultural activist, driven by a deep love for art and visual storytelling. My work explores human emotion, memory, place, and culture, inspired by everyday life and timeless artistic traditions.
+
+Through cinema, I strive to create intimate, poetic, and visually resonant stories, where image, sound, and rhythm come together to evoke feeling and meaning. For me, filmmaking is an artistic journey of observation and sensitivity, translating lived moments into honest works that connect with people beyond language and borders.
             </p>
             <SocialLinks hoverColor="text-amber-400" />
           </motion.div>

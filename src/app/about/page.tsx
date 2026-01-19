@@ -57,13 +57,11 @@ const About = () => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                <h3 className="text-2xl md:text-3xl font-semibold text-white mb-6">About Asadullahil Galib</h3>
+                <h3 className="text-2xl md:text-3xl font-semibold text-white mb-6">About Galib</h3>
                 <div className="space-y-4 mb-8">
                   <p className="text-gray-300 leading-relaxed">
-                    I'm a passionate filmmaker dedicated to creating compelling visual narratives that captivate audiences and evoke deep emotional responses. With years of experience in cinematography and storytelling, I transform ordinary moments into extraordinary cinematic experiences.
-                  </p>
-                  <p className="text-gray-300 leading-relaxed">
-                    My journey in filmmaking is driven by a relentless pursuit of visual excellence and a commitment to authentic storytelling that resonates with diverse audiences worldwide.
+                    I am an award-winning filmmaker and cultural activist, driven by a deep love for art and visual storytelling. My work explores human emotion, memory, place, and culture, inspired by everyday life and timeless artistic traditions.
+Through cinema, I strive to create intimate, poetic, and visually resonant stories, where image, sound, and rhythm come together to evoke feeling and meaning. For me, filmmaking is an artistic journey of observation and sensitivity, translating lived moments into honest works that connect with people beyond language and borders.
                   </p>
                 </div>
                 <SocialLinks hoverColor="text-amber-400" />
