@@ -59,7 +59,7 @@ const About = () => {
               >
                 <h3 className="text-2xl md:text-3xl font-semibold text-white mb-6">About Galib</h3>
                 <div className="space-y-4 mb-8">
-                  <p className="text-gray-300 leading-relaxed">
+                  <p className="text-gray-300 leading-relaxed text-justify">
                     I am an award-winning filmmaker and cultural activist, driven by a deep love for art and visual storytelling. My work explores human emotion, memory, place, and culture, inspired by everyday life and timeless artistic traditions.
 Through cinema, I strive to create intimate, poetic, and visually resonant stories, where image, sound, and rhythm come together to evoke feeling and meaning. For me, filmmaking is an artistic journey of observation and sensitivity, translating lived moments into honest works that connect with people beyond language and borders.
                   </p>

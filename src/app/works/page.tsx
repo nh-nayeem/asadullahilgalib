@@ -17,6 +17,24 @@ interface WorkItem {
 
 const works: WorkItem[] = [
   {
+    title:"হাট",
+    year:"2026",
+    role:"Maker",
+    image:"https://img.youtube.com/vi/4IjWfYvtGkg/maxresdefault.jpg",
+    videoLink:"https://www.youtube.com/shorts/4IjWfYvtGkg",
+    category:"shorts",
+    description:""
+  },
+  {
+    title: "Insaaf for Hadi",
+    image:"https://img.youtube.com/vi/dJJEYwF9El0/maxresdefault.jpg",
+    videoLink:"https://www.youtube.com/watch?v=dJJEYwF9El0",
+    category:"shorts",
+    year:"2025",
+    role:"Maker",
+    description:""
+  },
+  {
     title: "Joar - The Tide",
     year: "2025",
     role: "Director & Story",
@@ -130,24 +148,6 @@ const works: WorkItem[] = [
     image:"https://img.youtube.com/vi/FhIzN8UHH3E/maxresdefault.jpg",
     videoLink:"https://www.youtube.com/watch?v=FhIzN8UHH3E",
     category:"direction",
-    description:""
-  },
-  {
-    title:"হাট",
-    year:"2026",
-    role:"Maker",
-    image:"https://img.youtube.com/vi/4IjWfYvtGkg/maxresdefault.jpg",
-    videoLink:"https://www.youtube.com/shorts/4IjWfYvtGkg",
-    category:"shorts",
-    description:""
-  },
-  {
-    title: "Insaaf for Hadi",
-    image:"https://img.youtube.com/vi/dJJEYwF9El0/maxresdefault.jpg",
-    videoLink:"https://www.youtube.com/watch?v=dJJEYwF9El0",
-    category:"shorts",
-    year:"2025",
-    role:"Maker",
     description:""
   }
 ];
