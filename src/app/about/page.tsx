@@ -413,12 +413,26 @@ const About = () => {
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-center space-x-6"
+              >
+                <div className="text-4xl text-white">🏆</div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold text-white mb-1">Best National Short</h3>
+                  <p className="text-gray-400 mb-2">6th Bogura International Film Festival - BIFF 2026, Bangladesh</p>
+                  <p className="text-gray-300 text-sm">Selected for the film "Joar"</p>
+                </div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
                 className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-center space-x-6"
               >
                 <div className="text-4xl text-white">⭐</div>
                 <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-white mb-1">Nominee for Best Film</h3>
+                  <h3 className="text-xl font-semibold text-white mb-1">Official Nomination</h3>
                   <p className="text-gray-400 mb-2">Northwest International Film Festival (NIFF) 2025, USA</p>
                   <p className="text-gray-300 text-sm">Recognized for the film "Joar"</p>
                 </div>
@@ -434,20 +448,6 @@ const About = () => {
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold text-white mb-1">Official Selection</h3>
                   <p className="text-gray-400 mb-2">Cinemaking International Film Festival 2025, Bangladesh</p>
-                  <p className="text-gray-300 text-sm">Selected for the film "Joar"</p>
-                </div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.4 }}
-                className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-center space-x-6"
-              >
-                <div className="text-4xl text-white">⭐</div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-white mb-1">Official Selection</h3>
-                  <p className="text-gray-400 mb-2">Bogura International Film Festival - BIFF2026, Bangladesh</p>
                   <p className="text-gray-300 text-sm">Selected for the film "Joar"</p>
                 </div>
               </motion.div>

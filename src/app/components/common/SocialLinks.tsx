@@ -25,7 +25,7 @@ const SocialLinks = ({
         <FaFacebook size={iconSize} />
       </a>
       <a 
-        href="https://www.youtube.com/@FilmsByGalib" 
+        href="https://www.youtube.com/@GalibOnLens" 
         target="_blank" 
         rel="noopener noreferrer"
         className={`text-gray-300 hover:${hoverColor} transition-colors`}

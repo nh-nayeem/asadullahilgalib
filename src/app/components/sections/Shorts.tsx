@@ -42,6 +42,18 @@ const shorts: ShortItem[] = [
     year: "2024", 
     videoId: "qSaIH8HF-fk",
     videoLink: "https://www.youtube.com/shorts/qSaIH8HF-fk"
+  },
+  {
+    title:"হাট",
+    year:"2024",
+    videoId:"4IjWfYvtGkg",
+    videoLink:"https://www.youtube.com/shorts/4IjWfYvtGkg",
+  },
+  {
+    title: "Insaaf for Hadi",
+    videoId:"dJJEYwF9El0",
+    videoLink:"https://www.youtube.com/watch?v=dJJEYwF9El0",
+    year:"2024",
   }
 ];
 

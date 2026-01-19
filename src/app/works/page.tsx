@@ -11,14 +11,14 @@ interface WorkItem {
   role: string;
   image: string;
   videoLink?: string; 
-  category: 'filmography' | 'direction' | 'travel-shorts';
+  category: 'filmography' | 'direction' | 'shorts';
   description?: string;
 }
 
 const works: WorkItem[] = [
   {
-    title: "Joar",
-    year: "2024",
+    title: "Joar - The Tide",
+    year: "2025",
     role: "Director & Story",
     image: "/works/Joar_festival_laurel.jpg",
     category: "filmography",
@@ -26,7 +26,7 @@ const works: WorkItem[] = [
   },
   {
     title: "ONTOSSHOR",
-    year: "2023",
+    year: "2025",
     role: "Director and Interview",
     image: "/works/5 ONTOSSHOR.jpg",
     videoLink: "https://www.youtube.com/watch?v=mQQ6VeX8e2c",
@@ -53,70 +53,70 @@ const works: WorkItem[] = [
   },
   {
     title: "মেঘ ও মেঘনা",
-    year: "2023",
-    role: "Director and Story",
+    year: "2025",
+    role: "Cinematographer",
     image: "/works/3 Megh o Meghna.png",
     videoLink: "https://www.youtube.com/watch?v=9LfYttJpT-I",
-    category: "travel-shorts",
+    category: "shorts",
     description: ""
   },
   {
     title: "পাহাড়, বৃষ্টি আর আমরা",
-    year: "2024",
-    role: "Director & Cinematographer",
+    year: "2025",
+    role: "Cinematographer",
     image: "https://img.youtube.com/vi/IiE0RAQWcIs/maxresdefault.jpg",
     videoLink: "https://www.youtube.com/watch?v=IiE0RAQWcIs",
-    category: "travel-shorts",
+    category: "shorts",
     description: ""
   },
   {
     title: "দিনান্তে!",
-    year: "2023",
-    role: "Director & Cinematographer",
+    year: "2025",
+    role: "Cinematographer",
     image: "https://img.youtube.com/vi/q6ccNYIl9WU/maxresdefault.jpg",
     videoLink: "https://www.youtube.com/watch?v=q6ccNYIl9WU",
-    category: "travel-shorts",
+    category: "shorts",
     description: ""
   },
   {
     title: "নৈসর্গিক",
-    year: "2023",
-    role: "Director & Cinematographer",
+    year: "2024",
+    role: "Cinematographer",
     image: "https://img.youtube.com/vi/BeHtfa7ZKeU/maxresdefault.jpg",
     videoLink: "https://www.youtube.com/watch?v=BeHtfa7ZKeU",
-    category: "travel-shorts",
+    category: "shorts",
     description: ""
   },
   {
     title: "পৌষ ১৪৩০ | Poush 1430",
-    year: "2024", 
+    year: "2023", 
     role: "Maker",
     image: "https://img.youtube.com/vi/qSaIH8HF-fk/maxresdefault.jpg",
     videoLink: "https://www.youtube.com/shorts/qSaIH8HF-fk",
-    category: "travel-shorts",
+    category: "shorts",
     description: ""
   },
   {
-    title:"THROUGH MY LENS | Episode 01",
-    year:"2024",
+    title:"TEA",
+    year:"2023",
     role:"Maker",
     image:"https://img.youtube.com/vi/r76es8bXYM8/maxresdefault.jpg",
-    videoLink:"hhttps://www.youtube.com/shorts/r76es8bXYM8",
-    category:"travel-shorts",
+    videoLink:"https://www.youtube.com/shorts/r76es8bXYM8",
+    category:"shorts",
     description:""
   },
   {
     title:"Tumi Aar Nei Se Tumi",
-    year:"2024",
+    year:"2023",
     role:"Maker",
     image:"https://img.youtube.com/vi/h1bMKeFXbh0/maxresdefault.jpg",
     videoLink:"https://www.youtube.com/shorts/h1bMKeFXbh0",
-    category:"travel-shorts",
+    category:"shorts",
     description:""
   },
   {
     title:"পাখির কাছে ফুলের কাছে",
-    year:"2024",
+    year:"2021",
     role:"Maker",
     image:"https://img.youtube.com/vi/5LZv01LhKiY/maxresdefault.jpg",
     videoLink:"https://www.youtube.com/watch?v=5LZv01LhKiY",
@@ -125,11 +125,29 @@ const works: WorkItem[] = [
   },
   {
     title:"রক্ষা কবচ | Rokkha Koboch | Qaseeda",
-    year:"2024",
+    year:"2025",
     role:"Maker",
     image:"https://img.youtube.com/vi/FhIzN8UHH3E/maxresdefault.jpg",
     videoLink:"https://www.youtube.com/watch?v=FhIzN8UHH3E",
     category:"direction",
+    description:""
+  },
+  {
+    title:"হাট",
+    year:"2026",
+    role:"Maker",
+    image:"https://img.youtube.com/vi/4IjWfYvtGkg/maxresdefault.jpg",
+    videoLink:"https://www.youtube.com/shorts/4IjWfYvtGkg",
+    category:"shorts",
+    description:""
+  },
+  {
+    title: "Insaaf for Hadi",
+    image:"https://img.youtube.com/vi/dJJEYwF9El0/maxresdefault.jpg",
+    videoLink:"https://www.youtube.com/watch?v=dJJEYwF9El0",
+    category:"shorts",
+    year:"2025",
+    role:"Maker",
     description:""
   }
 ];
@@ -137,13 +155,13 @@ const works: WorkItem[] = [
 const categories = [
   { id: 'filmography', name: 'Filmography', icon: '🎬' },
   { id: 'direction', name: 'Direction', icon: '🎥' },
-  { id: 'travel-shorts', name: 'Travel Shorts', icon: '✈️' }
+  { id: 'shorts', name: 'Shorts', icon: '✈️' }
 ];
 
 const Works = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null);
-  const [activeCategory, setActiveCategory] = useState<'filmography' | 'direction' | 'travel-shorts' | 'travel-shorts'>('filmography');
+  const [activeCategory, setActiveCategory] = useState<'filmography' | 'direction' | 'shorts' | 'shorts'>('filmography');
 
   const handleWorkClick = (work: WorkItem, e: React.MouseEvent) => {
     if (!work.videoLink) {

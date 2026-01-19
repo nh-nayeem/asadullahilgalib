@@ -52,21 +52,7 @@ const artworks: ArtworkItem[] = [
     description: "Book cover design for 'Amanat' - a literary work featuring contemporary visual elements and typography."
   },
   {
-    title: "Banglanama Pathcokro",
-    year: "2024",
-    image: "/artworks/Banglanama_Pathcokro.jpg",
-    thumbnail: "/artworks/Banglanama_Pathcokro.jpg",
-    description: "Cultural design piece representing Bangla language and heritage through visual storytelling."
-  },
-  {
-    title: "Curzoner Ashar",
-    year: "2024",
-    image: "/artworks/Curzoner_Ashar.png",
-    thumbnail: "/artworks/Curzoner_Ashar.png",
-    description: "Logo design for 'Curzoner Ashar' - a contemporary brand identity with cultural elements."
-  },
-  {
-    title: "Reframing Bangladesh Podcast",
+    title: "RBP Logo",
     year: "2024",
     image: "/artworks/Reframing_Bangladesh_Podcast.png",
     thumbnail: "/artworks/Reframing_Bangladesh_Podcast.png",
@@ -80,7 +66,7 @@ const artworks: ArtworkItem[] = [
     description: "A powerful visual piece representing protection and rights through contemporary artistic expression."
   },
   {
-    title: "Sizzle Logo",
+    title: "Logo for Sizzle",
     year: "2024",
     image: "/artworks/Sizzle_Logo.png",
     thumbnail: "/artworks/Sizzle_Logo.png",

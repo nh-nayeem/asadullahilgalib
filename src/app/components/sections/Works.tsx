@@ -15,16 +15,16 @@ interface WorkItem {
 
 const works: WorkItem[] = [
   {
-    title: "Joar",
-    year: "2024",
+    title: "Joar - The Tide",
+    year: "2025",
     role: "Director & Story",
-    description: "Joar — My first fiction film. Made with minimal resources and beginner’s experience, yet carried by passion and sincerity. Despite its imperfections, the film found its own path and received remarkable appreciation, earning multiple selections in international film festivals.",
+    description: "Joar (The Tide)— My first fiction film. Made with minimal resources and beginner’s experience, yet carried by passion and sincerity. Despite its imperfections, the film found its own path and received remarkable appreciation, earning multiple selections in international film festivals. It has been honored with the BIFF Best Film Award in the National Short category at the 6th Bogura International Film Festival 2026.",
     image: "/works/Joar_festival_laurel.jpg",
     // videoLink: "https://www.youtube.com/watch?v=LVWayznWIlg"
   },
   {
     title: "ONTOSSHOR",
-    year: "2023",
+    year: "2025",
     role: "Director and Interview",
     description: "A documentary that uncovers the harsh reality of guestroom culture in Bangladeshi universities. Through Rakib’s harrowing story of survival, the film sheds light on a silenced chapter of student life before the 2024 uprising. Its raw honesty sparked powerful conversations and received an overwhelming audience response online",
     image: "/works/5 ONTOSSHOR.jpg",
@@ -32,7 +32,7 @@ const works: WorkItem[] = [
   },
   {
     title: "Khosh Amded Ramadan",
-    year: "2024",
+    year: "2025",
     role: "Director",
     description: "Khosh Amded Ramadan is a music video that celebrates the spirit of Ramadan with a fresh, cinematic approach. Blending festive visuals, warm cultural aesthetics, and heartfelt performances, the video redefined the style of Ramadan-themed productions in Bangladesh. The project reached a wide audience and received an enthusiastic response across social media platforms",
     image: "/works/2 Qaseeda.jpeg",
