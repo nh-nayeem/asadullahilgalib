@@ -11,7 +11,7 @@ const Hero = () => {
           src="/Galib_art.png"
           alt="Background"
           fill
-          className="object-cover opacity-40 md:object-right object-right"
+          className="object-cover opacity-40 md:object-center object-[85%_center]"
           priority
         />
       </div>
@@ -21,10 +21,10 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h1 className="text-6xl text-gray-300 mb-3">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-gray-300 mb-3">
             <span className="block font-typewriter">ASADULLAHIL GALIB</span>
           </h1>
-          <p className="text-xl md:text-2xl text-gray-300 mb-8">Visual Storyteller & Filmmaker</p>
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8">Visual Storyteller & Filmmaker</p>
           <motion.a
             href="works"
             className="inline-block px-8 py-3 bg-amber-400 text-black font-semibold rounded-full hover:bg-white transition-colors"
