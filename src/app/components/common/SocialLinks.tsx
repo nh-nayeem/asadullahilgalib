@@ -9,12 +9,12 @@ interface SocialLinksProps {
 }
 
 const SocialLinks = ({ 
-  iconSize = 20, 
+  iconSize = 30, 
   hoverColor = "text-white", 
   className = "" 
 }: SocialLinksProps) => {
   return (
-    <div className={`flex space-x-4 ${className}`}>
+    <div className={`flex space-x-6 ${className}`}>
       <a 
         href="https://www.facebook.com/asadullahil.galib.01/" 
         target="_blank" 
