@@ -1,0 +1,59 @@
+.shorts-swiper .swiper-button-next,
+.shorts-swiper .swiper-button-prev {
+  background: #facc15;
+  color: #000;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  margin-top: -24px;
+  transition: all 0.3s ease;
+}
+
+.shorts-swiper .swiper-button-next:hover,
+.shorts-swiper .swiper-button-prev:hover {
+  background: #fff;
+  transform: scale(1.1);
+}
+
+.shorts-swiper .swiper-button-next:active,
+.shorts-swiper .swiper-button-prev:active {
+  transform: scale(0.9);
+}
+
+.shorts-swiper .swiper-button-next::after,
+.shorts-swiper .swiper-button-prev::after {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.shorts-swiper .swiper-button-prev {
+  left: -16px;
+}
+
+.shorts-swiper .swiper-button-next {
+  right: -16px;
+}
+
+.shorts-swiper .swiper-slide {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.shorts-swiper .swiper-slide-active {
+  opacity: 1;
+}
+
+.shorts-swiper .swiper-slide-next,
+.shorts-swiper .swiper-slide-prev {
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  .shorts-swiper .swiper-button-prev {
+    left: 8px;
+  }
+  
+  .shorts-swiper .swiper-button-next {
+    right: 8px;
+  }
+}
