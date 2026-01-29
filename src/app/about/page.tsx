@@ -318,7 +318,8 @@ Through cinema, I strive to create intimate, poetic, and visually resonant stori
                 <img src="/logos/Qaseeda_Logo.png" alt="Qaseeda" className="w-16 h-16 object-contain rounded-lg flex-shrink-0" />
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-2">Qaseeda - Co-Founder</h3>
-                  <p className="text-gray-300 text-sm">One of the founders of the famous music band Qaseeda.</p>
+                  <p className="text-gray-400 text-sm mb-2">August 2024 - January 2026</p>
+                  <p className="text-gray-300 text-sm">One of the founders of the famous music band Qaseeda. Worked as an Executive Manager and Creative Director.</p>
                 </div>
               </motion.div>
               <motion.div
