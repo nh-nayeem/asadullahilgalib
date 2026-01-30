@@ -68,15 +68,22 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
         body: JSON.stringify({ section: selectedSection, content }),
       });
 
+      const data = await response.json();
+
       if (response.ok) {
         onUpdate(selectedSection, content);
         alert('Content saved successfully!');
       } else {
-        alert('Failed to save content');
+        if (data.gitError) {
+          // Specific GitHub error
+          alert(`${data.message}\n\nPlease check your GitHub environment variables:\n- GITHUB_TOKEN\n- GITHUB_REPO\n- GITHUB_BRANCH\n\nCheck Vercel logs for more details.`);
+        } else {
+          alert(`Failed to save content: ${data.error || 'Unknown error'}`);
+        }
       }
     } catch (error) {
       console.error('Save error:', error);
-      alert('Error saving content');
+      alert('Error saving content. Please check your connection and try again.');
     }
   };
 

@@ -9,8 +9,20 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
   const repo = process.env.GITHUB_REPO; // format: owner/repo
   const branch = process.env.GITHUB_BRANCH || 'main';
 
+  console.log('GitHub API Debug:', {
+    hasToken: !!token,
+    tokenLength: token?.length,
+    repo,
+    branch,
+    filePath: file.path,
+    contentLength: file.content.length,
+  });
+
   if (!token || !repo) {
-    console.log('GitHub credentials not configured');
+    console.error('GitHub credentials not configured:', {
+      hasToken: !!token,
+      hasRepo: !!repo,
+    });
     return false;
   }
 
@@ -30,15 +42,19 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
           }
         );
 
+        console.log('Get file response status:', getFileResponse.status);
+
         if (getFileResponse.ok) {
           const fileData = await getFileResponse.json();
           sha = fileData.sha;
+          console.log('File SHA found:', sha);
         } else {
-          console.log('File not found in GitHub, nothing to delete');
+          const errorText = await getFileResponse.text();
+          console.log('File not found in GitHub, response:', errorText);
           return true;
         }
       } catch (error) {
-        console.log('File not found in GitHub, nothing to delete');
+        console.log('Error getting file from GitHub:', error);
         return true;
       }
 
@@ -60,12 +76,14 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
         }
       );
 
+      console.log('Delete response status:', response.status);
+
       if (response.ok) {
         console.log(`Successfully deleted ${file.path} from GitHub`);
         return true;
       } else {
         const errorData = await response.json();
-        console.error('GitHub API error:', errorData);
+        console.error('GitHub API delete error:', errorData);
         return false;
       }
     } else {
@@ -82,11 +100,18 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
           }
         );
 
+        console.log('Get existing file response status:', getFileResponse.status);
+
         if (getFileResponse.ok) {
           const fileData = await getFileResponse.json();
           sha = fileData.sha;
+          console.log('Existing file SHA found:', sha);
+        } else {
+          const errorText = await getFileResponse.text();
+          console.log('File does not exist in GitHub:', errorText);
         }
       } catch (error) {
+        console.log('Error checking existing file:', error);
         // File doesn't exist, that's okay
       }
 
@@ -97,6 +122,13 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
         branch,
         ...(sha && { sha }),
       };
+
+      console.log('Committing to GitHub:', {
+        path: file.path,
+        hasSha: !!sha,
+        contentLength: content.length,
+        message: file.message,
+      });
 
       const response = await fetch(
         `https://api.github.com/repos/${repo}/contents/${file.path}`,
@@ -111,12 +143,14 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
         }
       );
 
+      console.log('Commit response status:', response.status);
+
       if (response.ok) {
         console.log(`Successfully committed ${file.path} to GitHub`);
         return true;
       } else {
         const errorData = await response.json();
-        console.error('GitHub API error:', errorData);
+        console.error('GitHub API commit error:', errorData);
         return false;
       }
     }

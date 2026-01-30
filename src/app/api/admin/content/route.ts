@@ -55,17 +55,35 @@ export async function POST(request: NextRequest) {
     } else {
       // Production (Vercel) - use GitHub API
       try {
+        console.log('Attempting to commit to GitHub...');
         const success = await commitToGitHub({
           path: `public/${section}/${section}.json`,
           content: jsonContent,
           message: `Update ${section} content`,
         });
         
-        if (!success) {
-          console.log('GitHub commit failed, but content was saved locally');
+        if (success) {
+          console.log('GitHub commit successful');
+        } else {
+          console.error('GitHub commit failed, but content was saved locally');
+          return NextResponse.json({
+            success: false,
+            message: 'Content saved locally but failed to commit to GitHub. Please check your GitHub credentials.',
+            section,
+            count: content.length,
+            gitError: true,
+          }, { status: 500 });
         }
       } catch (githubError) {
         console.error('GitHub API error:', githubError);
+        return NextResponse.json({
+          success: false,
+          message: 'Content saved locally but GitHub API error occurred. Please check your GitHub credentials.',
+          section,
+          count: content.length,
+          gitError: true,
+          error: githubError instanceof Error ? githubError.message : 'Unknown GitHub error',
+        }, { status: 500 });
       }
     }
 
