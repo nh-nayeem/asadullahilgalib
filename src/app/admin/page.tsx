@@ -7,16 +7,12 @@ import FileUpload from '@/components/admin/FileUpload';
 import ContentManager from '@/components/admin/ContentManager';
 
 export default function AdminPanel() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
-  const [stats, setStats] = useState({
-    totalContent: 0,
-    totalMedia: 0,
-    totalMessages: 45,
-  });
+  const [stats, setStats] = useState({ totalContent: 0, totalMedia: 0, totalMessages: 45 });
 
   useEffect(() => {
     checkAuth();
@@ -118,6 +114,22 @@ export default function AdminPanel() {
     console.log(`Updated ${section} content:`, content);
   };
 
+  const checkEnvironment = async () => {
+    try {
+      const response = await fetch('/api/admin/debug/env');
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Environment Debug:', data);
+        alert(`Environment Check:\n\nNODE_ENV: ${data.NODE_ENV}\nGitHub Token: ${data.hasGitHubToken ? '✓ Set' : '✗ Missing'}\nGitHub Repo: ${data.gitHubRepo || 'Not set'}\nGitHub Branch: ${data.gitHubBranch || 'Not set'}\nRepo Format: ${data.repoFormat}\n\nCheck console for details.`);
+      } else {
+        alert('Failed to check environment');
+      }
+    } catch (error) {
+      console.error('Environment check error:', error);
+      alert('Error checking environment');
+    }
+  };
+
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: FiBarChart2 },
     { id: 'content', label: 'Content', icon: FiFileText },
@@ -214,6 +226,20 @@ export default function AdminPanel() {
         return (
           <div className="space-y-6">
             <h2 className="text-3xl font-bold text-gray-900">Settings</h2>
+            <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold mb-4">Environment Debug</h3>
+              <div className="space-y-4">
+                <p className="text-sm text-gray-600">
+                  Check if your GitHub environment variables are properly configured for production.
+                </p>
+                <button
+                  onClick={checkEnvironment}
+                  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
+                >
+                  Check Environment Variables
+                </button>
+              </div>
+            </div>
             <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
               <h3 className="text-lg font-semibold mb-4">General Settings</h3>
               <div className="space-y-4">
