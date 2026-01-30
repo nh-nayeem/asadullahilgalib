@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '@/app/components/layout/Header';
 import Footer from '@/app/components/layout/Footer';
 
@@ -15,143 +15,6 @@ interface WorkItem {
   description?: string;
 }
 
-const works: WorkItem[] = [
-  {
-    title:"হাট",
-    year:"2026",
-    role:"Maker",
-    image:"https://img.youtube.com/vi/4IjWfYvtGkg/maxresdefault.jpg",
-    videoLink:"https://www.youtube.com/shorts/4IjWfYvtGkg",
-    category:"shorts",
-    description:""
-  },
-  {
-    title: "Insaaf for Hadi",
-    image:"https://img.youtube.com/vi/dJJEYwF9El0/maxresdefault.jpg",
-    videoLink:"https://www.youtube.com/watch?v=dJJEYwF9El0",
-    category:"shorts",
-    year:"2025",
-    role:"Maker",
-    description:""
-  },
-  {
-    title: "Joar - The Tide",
-    year: "2025",
-    role: "Director & Story",
-    image: "/works/Joar_festival_laurel.jpg",
-    category: "filmography",
-    description: ""
-  },
-  {
-    title: "ONTOSSHOR",
-    year: "2025",
-    role: "Director and Interview",
-    image: "https://img.youtube.com/vi/mQQ6VeX8e2c/maxresdefault.jpg",
-    videoLink: "https://www.youtube.com/watch?v=mQQ6VeX8e2c",
-    category: "filmography",
-    description: ""
-  },
-  {
-    title: "Khosh Amded Ramadan",
-    year: "2024",
-    role: "Director",
-    image: "/works/2 Qaseeda.jpeg",
-    videoLink: "https://www.youtube.com/watch?v=RfcxyMMCwFk",
-    category: "direction",
-    description: ""
-  },
-  {
-    title: "Ramadan",
-    year: "2023",
-    role: "Director",
-    image: "/works/4 Ramadan by Junayed.jpeg",
-    videoLink: "https://www.youtube.com/watch?v=yB8Argb2WRo",
-    category: "direction",
-    description: ""
-  },
-  {
-    title: "মেঘ ও মেঘনা",
-    year: "2025",
-    role: "Cinematographer",
-    image: "/works/3 Megh o Meghna.png",
-    videoLink: "https://www.youtube.com/watch?v=9LfYttJpT-I",
-    category: "shorts",
-    description: ""
-  },
-  {
-    title: "পাহাড়, বৃষ্টি আর আমরা",
-    year: "2025",
-    role: "Cinematographer",
-    image: "https://img.youtube.com/vi/IiE0RAQWcIs/maxresdefault.jpg",
-    videoLink: "https://www.youtube.com/watch?v=IiE0RAQWcIs",
-    category: "shorts",
-    description: ""
-  },
-  {
-    title: "দিনান্তে!",
-    year: "2025",
-    role: "Cinematographer",
-    image: "https://img.youtube.com/vi/q6ccNYIl9WU/maxresdefault.jpg",
-    videoLink: "https://www.youtube.com/watch?v=q6ccNYIl9WU",
-    category: "shorts",
-    description: ""
-  },
-  {
-    title: "নৈসর্গিক",
-    year: "2024",
-    role: "Cinematographer",
-    image: "https://img.youtube.com/vi/BeHtfa7ZKeU/maxresdefault.jpg",
-    videoLink: "https://www.youtube.com/watch?v=BeHtfa7ZKeU",
-    category: "shorts",
-    description: ""
-  },
-  {
-    title: "পৌষ ১৪৩০ | Poush 1430",
-    year: "2023", 
-    role: "Maker",
-    image: "https://img.youtube.com/vi/qSaIH8HF-fk/maxresdefault.jpg",
-    videoLink: "https://www.youtube.com/shorts/qSaIH8HF-fk",
-    category: "shorts",
-    description: ""
-  },
-  {
-    title:"TEA",
-    year:"2023",
-    role:"Maker",
-    image:"https://img.youtube.com/vi/r76es8bXYM8/maxresdefault.jpg",
-    videoLink:"https://www.youtube.com/shorts/r76es8bXYM8",
-    category:"shorts",
-    description:""
-  },
-  {
-    title:"Tumi Aar Nei Se Tumi",
-    year:"2023",
-    role:"Maker",
-    image:"https://img.youtube.com/vi/h1bMKeFXbh0/maxresdefault.jpg",
-    videoLink:"https://www.youtube.com/shorts/h1bMKeFXbh0",
-    category:"shorts",
-    description:""
-  },
-  {
-    title:"পাখির কাছে ফুলের কাছে",
-    year:"2021",
-    role:"Maker",
-    image:"https://img.youtube.com/vi/5LZv01LhKiY/maxresdefault.jpg",
-    videoLink:"https://www.youtube.com/watch?v=5LZv01LhKiY",
-    category:"filmography",
-    description:""
-  },
-  {
-    title:"রক্ষা কবচ | Rokkha Koboch | Qaseeda",
-    year:"2025",
-    role:"Maker",
-    image:"https://img.youtube.com/vi/FhIzN8UHH3E/maxresdefault.jpg",
-    videoLink:"https://www.youtube.com/watch?v=FhIzN8UHH3E",
-    category:"direction",
-    description:""
-  }
-];
-
 const categories = [
   { id: 'filmography', name: 'Filmography', icon: '🎬' },
   { id: 'direction', name: 'Direction', icon: '🎥' },
@@ -162,6 +25,21 @@ const Works = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null);
   const [activeCategory, setActiveCategory] = useState<'filmography' | 'direction' | 'shorts' | 'shorts'>('filmography');
+  const [works, setWorks] = useState<WorkItem[]>([]);
+
+  useEffect(() => {
+    const fetchWorks = async () => {
+      try {
+        const response = await fetch('/works.json');
+        const data = await response.json();
+        setWorks(data);
+      } catch (error) {
+        console.error('Error loading works:', error);
+      }
+    };
+
+    fetchWorks();
+  }, []);
 
   const handleWorkClick = (work: WorkItem, e: React.MouseEvent) => {
     if (!work.videoLink) {
