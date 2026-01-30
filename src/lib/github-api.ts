@@ -26,6 +26,21 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
     return false;
   }
 
+  // Parse owner and repo from GITHUB_REPO
+  const [owner, repoName] = repo.split('/');
+  if (!owner || !repoName) {
+    console.error('Invalid GITHUB_REPO format. Expected: owner/repo');
+    return false;
+  }
+
+  const baseUrl = 'https://api.github.com';
+  const headers = {
+    'Authorization': `Bearer ${token}`,
+    'Accept': 'application/vnd.github.v3+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'Content-Type': 'application/json',
+  };
+
   try {
     // Check if this is a deletion (empty content)
     if (file.content === '') {
@@ -33,13 +48,8 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
       let sha: string | undefined;
       try {
         const getFileResponse = await fetch(
-          `https://api.github.com/repos/${repo}/contents/${file.path}?ref=${branch}`,
-          {
-            headers: {
-              'Authorization': `token ${token}`,
-              'Accept': 'application/vnd.github.v3+json',
-            },
-          }
+          `${baseUrl}/repos/${owner}/${repoName}/contents/${file.path}?ref=${branch}`,
+          { headers }
         );
 
         console.log('Get file response status:', getFileResponse.status);
@@ -51,28 +61,28 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
         } else {
           const errorText = await getFileResponse.text();
           console.log('File not found in GitHub, response:', errorText);
-          return true;
+          return true; // File doesn't exist, nothing to delete
         }
       } catch (error) {
         console.log('Error getting file from GitHub:', error);
-        return true;
+        return true; // File doesn't exist, nothing to delete
       }
 
       // Delete the file
+      const deleteBody = {
+        message: file.message,
+        sha,
+        branch,
+      };
+
+      console.log('Deleting file with body:', deleteBody);
+
       const response = await fetch(
-        `https://api.github.com/repos/${repo}/contents/${file.path}`,
+        `${baseUrl}/repos/${owner}/${repoName}/contents/${file.path}`,
         {
           method: 'DELETE',
-          headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            message: file.message,
-            sha,
-            branch,
-          }),
+          headers,
+          body: JSON.stringify(deleteBody),
         }
       );
 
@@ -91,13 +101,8 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
       let sha: string | undefined;
       try {
         const getFileResponse = await fetch(
-          `https://api.github.com/repos/${repo}/contents/${file.path}?ref=${branch}`,
-          {
-            headers: {
-              'Authorization': `token ${token}`,
-              'Accept': 'application/vnd.github.v3+json',
-            },
-          }
+          `${baseUrl}/repos/${owner}/${repoName}/contents/${file.path}?ref=${branch}`,
+          { headers }
         );
 
         console.log('Get existing file response status:', getFileResponse.status);
@@ -115,7 +120,8 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
         // File doesn't exist, that's okay
       }
 
-      const content = Buffer.from(file.content).toString('base64');
+      // Encode content to base64
+      const content = Buffer.from(file.content, 'utf8').toString('base64');
       const body = {
         message: file.message,
         content,
@@ -128,17 +134,14 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
         hasSha: !!sha,
         contentLength: content.length,
         message: file.message,
+        body: { ...body, content: '[BASE64_CONTENT]' }, // Don't log actual content
       });
 
       const response = await fetch(
-        `https://api.github.com/repos/${repo}/contents/${file.path}`,
+        `${baseUrl}/repos/${owner}/${repoName}/contents/${file.path}`,
         {
           method: 'PUT',
-          headers: {
-            'Authorization': `token ${token}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json',
-          },
+          headers,
           body: JSON.stringify(body),
         }
       );

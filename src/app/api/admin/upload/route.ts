@@ -68,6 +68,7 @@ export async function POST(request: NextRequest) {
     } else {
       // Production (Vercel) - use GitHub API
       try {
+        console.log('Attempting to commit file to GitHub...');
         const fileContent = buffer.toString('base64');
         const success = await commitToGitHub({
           path: `public/${folder}/${fileName}`,
@@ -75,11 +76,26 @@ export async function POST(request: NextRequest) {
           message: `Upload ${fileName} to ${folder}`,
         });
         
-        if (!success) {
-          console.log('GitHub commit failed, but file was saved locally');
+        if (success) {
+          console.log('GitHub file commit successful');
+        } else {
+          console.error('GitHub file commit failed, but file was saved locally');
+          return NextResponse.json({
+            success: false,
+            message: 'File uploaded locally but failed to commit to GitHub. Please check your GitHub credentials.',
+            path: `/${folder}/${fileName}`,
+            gitError: true,
+          }, { status: 500 });
         }
       } catch (githubError) {
         console.error('GitHub API error:', githubError);
+        return NextResponse.json({
+          success: false,
+          message: 'File uploaded locally but GitHub API error occurred. Please check your GitHub credentials.',
+          path: `/${folder}/${fileName}`,
+          gitError: true,
+          error: githubError instanceof Error ? githubError.message : 'Unknown GitHub error',
+        }, { status: 500 });
       }
     }
 

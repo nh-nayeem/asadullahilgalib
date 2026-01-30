@@ -94,14 +94,21 @@ export default function AdminPanel() {
         body: formData,
       });
 
+      const data = await response.json();
+
       if (response.ok) {
         alert('File uploaded successfully!');
       } else {
-        alert('Failed to upload file');
+        if (data.gitError) {
+          // Specific GitHub error
+          alert(`${data.message}\n\nPlease check your GitHub environment variables:\n- GITHUB_TOKEN\n- GITHUB_REPO\n- GITHUB_BRANCH\n\nCheck Vercel logs for more details.`);
+        } else {
+          alert(`Failed to upload file: ${data.error || 'Unknown error'}`);
+        }
       }
     } catch (error) {
       console.error('Upload error:', error);
-      alert('Error uploading file');
+      alert('Error uploading file. Please check your connection and try again.');
     } finally {
       setIsUploading(false);
     }
