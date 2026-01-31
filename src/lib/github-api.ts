@@ -68,14 +68,18 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
         return true; // File doesn't exist, nothing to delete
       }
 
-      // Delete the file
+      // Delete the file using official GitHub API format
       const deleteBody = {
         message: file.message,
         sha,
         branch,
+        committer: {
+          name: 'Admin Panel',
+          email: 'admin@asadullahilgalib.com',
+        },
       };
 
-      console.log('Deleting file with body:', deleteBody);
+      console.log('Deleting file with body:', { ...deleteBody, sha: '[SHA]' });
 
       const response = await fetch(
         `${baseUrl}/repos/${owner}/${repoName}/contents/${file.path}`,
@@ -97,7 +101,7 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
         return false;
       }
     } else {
-      // Create or update file
+      // Create or update file using official GitHub API format
       let sha: string | undefined;
       try {
         const getFileResponse = await fetch(
@@ -126,6 +130,10 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
         message: file.message,
         content,
         branch,
+        committer: {
+          name: 'Admin Panel',
+          email: 'admin@asadullahilgalib.com',
+        },
         ...(sha && { sha }),
       };
 
@@ -134,7 +142,7 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
         hasSha: !!sha,
         contentLength: content.length,
         message: file.message,
-        body: { ...body, content: '[BASE64_CONTENT]' }, // Don't log actual content
+        body: { ...body, content: '[BASE64_CONTENT]', sha: sha ? '[SHA]' : undefined },
       });
 
       const response = await fetch(
