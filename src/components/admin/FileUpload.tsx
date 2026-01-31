@@ -86,8 +86,8 @@ export default function FileUpload({ onUpload, onUpdate, isLoading = false, isUp
       const fullFileName = `${fileName}.${fileExtension}`;
       
       if (editingFile) {
-        // Update existing file
-        onUpdate(selectedFolder, editingFile, selectedFile);
+        // Update existing file - use the same filename logic as upload
+        onUpdate(selectedFolder, fullFileName, selectedFile);
         setEditingFile(null);
       } else {
         // Upload new file

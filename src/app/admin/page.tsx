@@ -119,8 +119,9 @@ export default function AdminPanel() {
       formData.append('folder', folder);
       formData.append('fileName', fileName);
 
-      const response = await fetch('/api/admin/media/files', {
-        method: 'PUT',
+      // Use the same upload endpoint - GitHub API handles both create and update
+      const response = await fetch('/api/admin/upload', {
+        method: 'POST',
         body: formData,
       });
 
