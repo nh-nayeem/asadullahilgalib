@@ -42,8 +42,13 @@ export async function DELETE(request: NextRequest) {
 
     const filePath = join(process.cwd(), 'public', folder, fileName);
 
-    // Delete file from local storage
-    await unlink(filePath);
+    // Delete file from local storage (development only)
+    if (process.env.NODE_ENV === 'development') {
+      await unlink(filePath);
+    } else {
+      // In production (Vercel), skip local file deletion - filesystem is read-only
+      console.log('Skipping local file deletion in production (read-only filesystem)');
+    }
 
     // Commit deletion to GitHub
     if (process.env.NODE_ENV === 'development') {
@@ -69,11 +74,28 @@ export async function DELETE(request: NextRequest) {
           message: `Delete ${fileName} from ${folder}`,
         });
         
-        if (!success) {
-          console.log('GitHub commit failed, but file was deleted locally');
+        if (success) {
+          console.log('GitHub file deletion successful');
+        } else {
+          console.error('GitHub file deletion failed');
+          return NextResponse.json({
+            success: false,
+            message: 'Failed to delete file from GitHub. Please check your GitHub credentials.',
+            fileName,
+            folder,
+            gitError: true,
+          }, { status: 500 });
         }
       } catch (githubError) {
         console.error('GitHub API error:', githubError);
+        return NextResponse.json({
+          success: false,
+          message: 'GitHub API error occurred. Please check your GitHub credentials.',
+          fileName,
+          folder,
+          gitError: true,
+          error: githubError instanceof Error ? githubError.message : 'Unknown GitHub error',
+        }, { status: 500 });
       }
     }
 

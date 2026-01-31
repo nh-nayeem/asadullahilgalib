@@ -32,10 +32,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Write content to local storage and commit to GitHub
+    // Write content to local storage (development only) and commit to GitHub
     const filePath = join(process.cwd(), 'public', section, `${section}.json`);
     const jsonContent = JSON.stringify(content, null, 2);
-    await writeFile(filePath, jsonContent, 'utf8');
+    
+    if (process.env.NODE_ENV === 'development') {
+      // Only write to local filesystem in development
+      await writeFile(filePath, jsonContent, 'utf8');
+    } else {
+      // In production (Vercel), skip local file writing - filesystem is read-only
+      console.log('Skipping local file write in production (read-only filesystem)');
+    }
 
     // Commit and push to GitHub
     if (process.env.NODE_ENV === 'development') {
@@ -65,10 +72,10 @@ export async function POST(request: NextRequest) {
         if (success) {
           console.log('GitHub commit successful');
         } else {
-          console.error('GitHub commit failed, but content was saved locally');
+          console.error('GitHub commit failed');
           return NextResponse.json({
             success: false,
-            message: 'Content saved locally but failed to commit to GitHub. Please check your GitHub credentials.',
+            message: 'Failed to commit content to GitHub. Please check your GitHub credentials.',
             section,
             count: content.length,
             gitError: true,
@@ -78,7 +85,7 @@ export async function POST(request: NextRequest) {
         console.error('GitHub API error:', githubError);
         return NextResponse.json({
           success: false,
-          message: 'Content saved locally but GitHub API error occurred. Please check your GitHub credentials.',
+          message: 'GitHub API error occurred. Please check your GitHub credentials.',
           section,
           count: content.length,
           gitError: true,

@@ -46,9 +46,16 @@ export async function POST(request: NextRequest) {
       // Folder might already exist, ignore error
     }
 
-    // Write file to local storage and commit to GitHub
+    // Write file to local storage (development only) and commit to GitHub
     const filePath = join(publicDir, fileName);
-    await writeFile(filePath, buffer);
+    
+    if (process.env.NODE_ENV === 'development') {
+      // Only write to local filesystem in development
+      await writeFile(filePath, buffer);
+    } else {
+      // In production (Vercel), skip local file writing - filesystem is read-only
+      console.log('Skipping local file write in production (read-only filesystem)');
+    }
 
     // Commit and push to GitHub
     if (process.env.NODE_ENV === 'development') {
@@ -79,10 +86,10 @@ export async function POST(request: NextRequest) {
         if (success) {
           console.log('GitHub file commit successful');
         } else {
-          console.error('GitHub file commit failed, but file was saved locally');
+          console.error('GitHub file commit failed');
           return NextResponse.json({
             success: false,
-            message: 'File uploaded locally but failed to commit to GitHub. Please check your GitHub credentials.',
+            message: 'Failed to commit file to GitHub. Please check your GitHub credentials.',
             path: `/${folder}/${fileName}`,
             gitError: true,
           }, { status: 500 });
@@ -91,7 +98,7 @@ export async function POST(request: NextRequest) {
         console.error('GitHub API error:', githubError);
         return NextResponse.json({
           success: false,
-          message: 'File uploaded locally but GitHub API error occurred. Please check your GitHub credentials.',
+          message: 'GitHub API error occurred. Please check your GitHub credentials.',
           path: `/${folder}/${fileName}`,
           gitError: true,
           error: githubError instanceof Error ? githubError.message : 'Unknown GitHub error',
