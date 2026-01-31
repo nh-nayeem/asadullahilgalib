@@ -124,8 +124,9 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
         // File doesn't exist, that's okay
       }
 
-      // Encode content to base64
-      const content = Buffer.from(file.content, 'utf8').toString('base64');
+      // Content is already base64
+      const content = file.content;
+
       const body = {
         message: file.message,
         content,
