@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { FiUpload, FiFolder, FiFile, FiTrash2, FiRefreshCw } from 'react-icons/fi';
+import { FiUpload, FiFolder, FiFile, FiTrash2, FiRefreshCw, FiEdit } from 'react-icons/fi';
 
 interface FileUploadProps {
   onUpload: (folder: string, fileName: string, file: File) => void;
+  onUpdate: (folder: string, fileName: string, file: File) => void;
   isLoading?: boolean;
+  isUpdating?: boolean;
 }
 
 interface MediaFile {
@@ -15,12 +17,13 @@ interface MediaFile {
   type: string;
 }
 
-export default function FileUpload({ onUpload, isLoading = false }: FileUploadProps) {
+export default function FileUpload({ onUpload, onUpdate, isLoading = false, isUpdating = false }: FileUploadProps) {
   const [selectedFolder, setSelectedFolder] = useState('');
   const [fileName, setFileName] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [mediaFiles, setMediaFiles] = useState<MediaFile[]>([]);
   const [isLoadingFiles, setIsLoadingFiles] = useState(false);
+  const [editingFile, setEditingFile] = useState<string | null>(null);
 
   const folders = ['works', 'artworks', 'photographs', 'images', 'logos'];
 
@@ -60,13 +63,37 @@ export default function FileUpload({ onUpload, isLoading = false }: FileUploadPr
     }
   };
 
+  const handleEdit = (fileName: string) => {
+    setEditingFile(fileName);
+    // Extract filename without extension for editing
+    const nameWithoutExt = fileName.replace(/\.[^/.]+$/, '');
+    setFileName(nameWithoutExt);
+    // Scroll to upload form
+    document.querySelector('.upload-form')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleCancelEdit = () => {
+    setEditingFile(null);
+    setSelectedFile(null);
+    setFileName('');
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (selectedFolder && fileName && selectedFile) {
       // Get the original file extension
       const fileExtension = selectedFile.name.split('.').pop() || '';
       const fullFileName = `${fileName}.${fileExtension}`;
-      onUpload(selectedFolder, fullFileName, selectedFile);
+      
+      if (editingFile) {
+        // Update existing file
+        onUpdate(selectedFolder, editingFile, selectedFile);
+        setEditingFile(null);
+      } else {
+        // Upload new file
+        onUpload(selectedFolder, fullFileName, selectedFile);
+      }
+      
       // Reset form and reload files
       setSelectedFile(null);
       setFileName('');
@@ -107,10 +134,10 @@ export default function FileUpload({ onUpload, isLoading = false }: FileUploadPr
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
+      <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6 upload-form">
         <h3 className="text-lg font-semibold mb-4 flex items-center">
           <FiUpload className="mr-2" />
-          Upload File
+          {editingFile ? `Update File: ${editingFile}` : 'Upload File'}
         </h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -176,21 +203,30 @@ export default function FileUpload({ onUpload, isLoading = false }: FileUploadPr
 
           <button
             type="submit"
-            disabled={isLoading || !selectedFolder || !fileName || !selectedFile}
+            disabled={isLoading || isUpdating || !selectedFolder || !fileName || !selectedFile}
             className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
           >
-            {isLoading ? (
+            {(isLoading || isUpdating) ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                Uploading...
+                {editingFile ? 'Updating...' : 'Uploading...'}
               </>
             ) : (
               <>
                 <FiUpload className="mr-2" />
-                Upload File
+                {editingFile ? 'Update File' : 'Upload File'}
               </>
             )}
           </button>
+          {editingFile && (
+            <button
+              type="button"
+              onClick={handleCancelEdit}
+              className="w-full bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center"
+            >
+              Cancel Edit
+            </button>
+          )}
         </form>
       </div>
 
@@ -231,13 +267,22 @@ export default function FileUpload({ onUpload, isLoading = false }: FileUploadPr
                       </p>
                       <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
                     </div>
-                    <button
-                      onClick={() => handleDelete(file.name)}
-                      className="text-red-500 hover:text-red-700 p-1 rounded hover:bg-red-50"
-                      title="Delete file"
-                    >
-                      <FiTrash2 size={16} />
-                    </button>
+                    <div className="flex space-x-1">
+                      <button
+                        onClick={() => handleEdit(file.name)}
+                        className="text-blue-500 hover:text-blue-700 p-1 rounded hover:bg-blue-50"
+                        title="Edit file"
+                      >
+                        <FiEdit size={16} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(file.name)}
+                        className="text-red-500 hover:text-red-700 p-1 rounded hover:bg-red-50"
+                        title="Delete file"
+                      >
+                        <FiTrash2 size={16} />
+                      </button>
+                    </div>
                   </div>
                   {file.type.startsWith('image/') && (
                     <div className="mt-2">

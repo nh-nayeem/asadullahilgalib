@@ -317,7 +317,7 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                     ) : (
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
-                          <h5 className="font-semibold">{item.title}</h5>
+                          <h5 className="font-semibold text-gray-700">{item.title}</h5>
                           <p className="text-sm text-gray-600">
                             {item.year} • {item.role} • {item.category}
                           </p>

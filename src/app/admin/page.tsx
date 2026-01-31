@@ -12,6 +12,7 @@ export default function AdminPanel() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [stats, setStats] = useState({ totalContent: 0, totalMedia: 0, totalMessages: 45 });
 
   useEffect(() => {
@@ -110,6 +111,39 @@ export default function AdminPanel() {
     }
   };
 
+  const handleFileUpdate = async (folder: string, fileName: string, file: File) => {
+    setIsUpdating(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('folder', folder);
+      formData.append('fileName', fileName);
+
+      const response = await fetch('/api/admin/media/files', {
+        method: 'PUT',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('File updated successfully!');
+      } else {
+        if (data.gitError) {
+          // Specific GitHub error
+          alert(`${data.message}\n\nPlease check your GitHub environment variables:\n- GITHUB_TOKEN\n- GITHUB_REPO\n- GITHUB_BRANCH\n\nCheck Vercel logs for more details.`);
+        } else {
+          alert(`Failed to update file: ${data.error || 'Unknown error'}`);
+        }
+      }
+    } catch (error) {
+      console.error('Update error:', error);
+      alert('Error updating file. Please check your connection and try again.');
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+
   const handleContentUpdate = async (section: string, content: any[]) => {
     console.log(`Updated ${section} content:`, content);
   };
@@ -201,7 +235,12 @@ export default function AdminPanel() {
         return (
           <div className="space-y-6">
             <h2 className="text-3xl font-bold text-gray-900">Media Library</h2>
-            <FileUpload onUpload={handleFileUpload} isLoading={isUploading} />
+            <FileUpload 
+              onUpload={handleFileUpload} 
+              onUpdate={handleFileUpdate}
+              isLoading={isUploading} 
+              isUpdating={isUpdating} 
+            />
           </div>
         );
       case 'messages':
