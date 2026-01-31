@@ -125,7 +125,35 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
       }
 
       // Content is already base64
-      const content = file.content;
+      let content = file.content;
+      
+      console.log('Content validation:', {
+        contentLength: content.length,
+        isEmpty: !content,
+        isString: typeof content === 'string',
+        containsInvalidChars: /[^A-Za-z0-9+/=]/.test(content),
+        endsWithEquals: content.endsWith('='),
+        first20Chars: content.substring(0, 20),
+        last20Chars: content.substring(content.length - 20)
+      });
+      
+      // Ensure content is properly Base64 encoded
+      if (typeof content !== 'string' || /[^A-Za-z0-9+/=]/.test(content)) {
+        console.log('Invalid Base64 detected, attempting to fix...');
+        try {
+          // Try to convert from buffer if it's not a string
+          if (Buffer.isBuffer(content)) {
+            content = content.toString('base64');
+          } else {
+            // Last resort - convert to string then to base64
+            content = Buffer.from(String(content)).toString('base64');
+          }
+          console.log('Fixed Base64 content length:', content.length);
+        } catch (error) {
+          console.error('Failed to fix Base64 encoding:', error);
+          return false;
+        }
+      }
 
       const body = {
         message: file.message,

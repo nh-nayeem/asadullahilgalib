@@ -76,7 +76,21 @@ export async function POST(request: NextRequest) {
       // Production (Vercel) - use GitHub API
       try {
         console.log('Attempting to commit file to GitHub...');
-        const fileContent = buffer.toString('base64');
+        console.log('Buffer info:', {
+          size: buffer.length,
+          type: typeof buffer,
+          isArrayBuffer: buffer instanceof ArrayBuffer,
+          isBuffer: Buffer.isBuffer(buffer)
+        });
+        
+        // Convert buffer to Base64 properly - ensure clean encoding
+        const fileContent = Buffer.from(buffer).toString('base64');
+        console.log('Base64 content info:', {
+          length: fileContent.length,
+          isEmpty: !fileContent,
+          first50Chars: fileContent.substring(0, 50)
+        });
+        
         const success = await commitToGitHub({
           path: `public/${folder}/${fileName}`,
           content: fileContent,
