@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { FiSettings, FiFileText, FiImage, FiMail, FiBarChart2, FiLogOut, FiMenu, FiX } from 'react-icons/fi';
+import { FiSettings, FiFileText, FiImage, FiMail, FiBarChart2, FiLogOut, FiMenu, FiX, FiTool } from 'react-icons/fi';
 import LoginForm from '@/components/admin/LoginForm';
 import FileUpload from '@/components/admin/FileUpload';
 import ContentManager from '@/components/admin/ContentManager';
+import Utilities from '@/components/admin/Utilities';
 
 export default function AdminPanel() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -173,6 +174,7 @@ export default function AdminPanel() {
     { id: 'content', label: 'Content', icon: FiFileText },
     { id: 'media', label: 'Media', icon: FiImage },
     { id: 'messages', label: 'Messages', icon: FiMail },
+    { id: 'utilities', label: 'Utilities', icon: FiTool },
     { id: 'settings', label: 'Settings', icon: FiSettings },
   ];
 
@@ -247,6 +249,8 @@ export default function AdminPanel() {
             />
           </div>
         );
+      case 'utilities':
+        return <Utilities />;
       case 'messages':
         return (
           <div className="space-y-6">
