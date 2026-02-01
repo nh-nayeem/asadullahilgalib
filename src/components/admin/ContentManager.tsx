@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { FiEdit2, FiTrash2, FiPlus, FiSave, FiX } from 'react-icons/fi';
+import { FiEdit2, FiTrash2, FiPlus, FiSave, FiX, FiChevronUp, FiChevronDown } from 'react-icons/fi';
 
 interface ContentItem {
   title: string;
@@ -117,6 +117,20 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
         description: '',
       });
     }
+  };
+
+  const moveItemUp = (index: number) => {
+    if (index === 0) return;
+    const updatedContent = [...content];
+    [updatedContent[index - 1], updatedContent[index]] = [updatedContent[index], updatedContent[index - 1]];
+    setContent(updatedContent);
+  };
+
+  const moveItemDown = (index: number) => {
+    if (index === content.length - 1) return;
+    const updatedContent = [...content];
+    [updatedContent[index], updatedContent[index + 1]] = [updatedContent[index + 1], updatedContent[index]];
+    setContent(updatedContent);
   };
 
   return (
@@ -316,14 +330,34 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                       </div>
                     ) : (
                       <div className="flex justify-between items-start">
-                        <div className="flex-1">
-                          <h5 className="font-semibold text-gray-700">{item.title}</h5>
-                          <p className="text-sm text-gray-600">
-                            {item.year} • {item.role} • {item.category}
-                          </p>
-                          {item.description && (
-                            <p className="text-sm text-gray-700 mt-1">{item.description}</p>
-                          )}
+                        <div className="flex items-start space-x-3 flex-1">
+                          <div className="flex flex-col space-y-1">
+                            <button
+                              onClick={() => moveItemUp(index)}
+                              disabled={index === 0}
+                              className={`p-1 rounded ${index === 0 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'}`}
+                              title="Move up"
+                            >
+                              <FiChevronUp size={16} />
+                            </button>
+                            <button
+                              onClick={() => moveItemDown(index)}
+                              disabled={index === content.length - 1}
+                              className={`p-1 rounded ${index === content.length - 1 ? 'text-gray-300 cursor-not-allowed' : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'}`}
+                              title="Move down"
+                            >
+                              <FiChevronDown size={16} />
+                            </button>
+                          </div>
+                          <div className="flex-1">
+                            <h5 className="font-semibold text-gray-700">{item.title}</h5>
+                            <p className="text-sm text-gray-600">
+                              {item.year} • {item.role} • {item.category}
+                            </p>
+                            {item.description && (
+                              <p className="text-sm text-gray-700 mt-1">{item.description}</p>
+                            )}
+                          </div>
                         </div>
                         <div className="flex space-x-2">
                           <button
