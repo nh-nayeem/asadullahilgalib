@@ -132,23 +132,5 @@
     "videoLink": "https://www.youtube.com/watch?v=FhIzN8UHH3E",
     "category": "direction",
     "description": ""
-  },
-  {
-    "title": "Fish",
-    "year": "2026",
-    "role": "pc",
-    "image": "/works/fish_rush_2.jpeg",
-    "videoLink": "/works/fish_rush_2.jpeg",
-    "category": "shorts",
-    "description": "Fishing"
-  },
-  {
-    "title": "Nayeem",
-    "year": "2026",
-    "role": "Photographer",
-    "image": "/works/nayeem.jpg",
-    "videoLink": "https://www.youtube.com/watch?v=rMBEKJATU-I",
-    "category": "shorts",
-    "description": "dota2 x nayeem"
   }
 ]
