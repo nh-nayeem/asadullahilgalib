@@ -2,7 +2,55 @@ import { NextRequest, NextResponse } from 'next/server';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
 import { validateAdminAuth } from '@/lib/admin-auth';
-import { commitToGitHub } from '@/lib/github-api';
+import { commitToGitHub, getJsonContentFromGitHub } from '@/lib/github-api';
+
+export async function GET(request: NextRequest) {
+  // Validate admin authentication
+  if (!validateAdminAuth(request)) {
+    return NextResponse.json(
+      { error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
+
+  try {
+    const { searchParams } = new URL(request.url);
+    const section = searchParams.get('section');
+
+    if (!section) {
+      return NextResponse.json(
+        { error: 'Section parameter is required' },
+        { status: 400 }
+      );
+    }
+
+    // Validate section name
+    const allowedSections = ['works', 'artworks', 'photographs'];
+    if (!allowedSections.includes(section)) {
+      return NextResponse.json(
+        { error: 'Invalid section' },
+        { status: 400 }
+      );
+    }
+
+    // Fetch content from GitHub repository
+    const content = await getJsonContentFromGitHub(section);
+
+    return NextResponse.json({
+      success: true,
+      section,
+      content,
+      count: content.length,
+    });
+
+  } catch (error) {
+    console.error('Content fetch error:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch content' },
+      { status: 500 }
+    );
+  }
+}
 
 export async function POST(request: NextRequest) {
   // Validate admin authentication

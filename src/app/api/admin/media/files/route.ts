@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { validateAdminAuth } from '@/lib/admin-auth';
 import { readdir, stat, writeFile, unlink } from 'fs/promises';
 import { join } from 'path';
-import { commitToGitHub } from '@/lib/github-api';
+import { commitToGitHub, getFilesFromGitHub } from '@/lib/github-api';
 
 export async function GET(request: NextRequest) {
   // Validate admin authentication
@@ -33,50 +33,27 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const publicDir = join(process.cwd(), 'public', folder);
+    // Fetch files from GitHub repository
+    const githubFiles = await getFilesFromGitHub(folder);
     
-    try {
-      const files = await readdir(publicDir);
-      const fileList = [];
+    // Transform GitHub file format to match expected response format
+    const fileList = githubFiles.map(file => ({
+      name: file.name,
+      path: `/${folder}/${file.name}`,
+      size: file.size,
+      type: 'application/octet-stream', // Default type, could be enhanced
+      modified: new Date(), // GitHub doesn't provide modification date in contents API
+    }));
 
-      for (const file of files) {
-        // Skip JSON files
-        if (file.endsWith('.json')) continue;
+    // Sort files by name
+    fileList.sort((a, b) => a.name.localeCompare(b.name));
 
-        const filePath = join(publicDir, file);
-        const stats = await stat(filePath);
-        
-        // Only include files, not directories
-        if (stats.isFile()) {
-          fileList.push({
-            name: file,
-            path: `/${folder}/${file}`,
-            size: stats.size,
-            type: 'application/octet-stream', // Default type, could be enhanced
-            modified: stats.mtime,
-          });
-        }
-      }
-
-      // Sort files by name
-      fileList.sort((a, b) => a.name.localeCompare(b.name));
-
-      return NextResponse.json({
-        success: true,
-        folder,
-        files: fileList,
-        count: fileList.length,
-      });
-
-    } catch (error) {
-      // Folder doesn't exist or is empty
-      return NextResponse.json({
-        success: true,
-        folder,
-        files: [],
-        count: 0,
-      });
-    }
+    return NextResponse.json({
+      success: true,
+      folder,
+      files: fileList,
+      count: fileList.length,
+    });
 
   } catch (error) {
     console.error('Media files fetch error:', error);

@@ -4,6 +4,14 @@ export interface GitHubFile {
   message: string;
 }
 
+export interface GitHubRepoFile {
+  name: string;
+  path: string;
+  type: string;
+  size: number;
+  download_url: string;
+}
+
 export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
   const token = process.env.GITHUB_TOKEN;
   const repo = process.env.GITHUB_REPO; // format: owner/repo
@@ -197,5 +205,103 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
   } catch (error) {
     console.error('Error committing to GitHub:', error);
     return false;
+  }
+}
+
+export async function getFilesFromGitHub(folder: string): Promise<GitHubRepoFile[]> {
+  const token = process.env.GITHUB_TOKEN;
+  const repo = process.env.GITHUB_REPO; // format: owner/repo
+  const branch = process.env.GITHUB_BRANCH || 'main';
+
+  if (!token || !repo) {
+    console.error('GitHub credentials not configured');
+    return [];
+  }
+
+  const [owner, repoName] = repo.split('/');
+  if (!owner || !repoName) {
+    console.error('Invalid GITHUB_REPO format. Expected: owner/repo');
+    return [];
+  }
+
+  const baseUrl = 'https://api.github.com';
+  const headers = {
+    'Authorization': `Bearer ${token}`,
+    'Accept': 'application/vnd.github.v3+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+  };
+
+  try {
+    const response = await fetch(
+      `${baseUrl}/repos/${owner}/${repoName}/contents/public/${folder}?ref=${branch}`,
+      { headers }
+    );
+
+    if (!response.ok) {
+      console.log(`Folder ${folder} not found or not accessible in GitHub`);
+      return [];
+    }
+
+    const files: GitHubRepoFile[] = await response.json();
+    
+    // Filter out JSON files and directories, return only files
+    return files.filter(file => 
+      file.type === 'file' && 
+      !file.name.endsWith('.json')
+    );
+
+  } catch (error) {
+    console.error(`Error fetching files from GitHub for folder ${folder}:`, error);
+    return [];
+  }
+}
+
+export async function getJsonContentFromGitHub(section: string): Promise<any[]> {
+  const token = process.env.GITHUB_TOKEN;
+  const repo = process.env.GITHUB_REPO; // format: owner/repo
+  const branch = process.env.GITHUB_BRANCH || 'main';
+
+  if (!token || !repo) {
+    console.error('GitHub credentials not configured');
+    return [];
+  }
+
+  const [owner, repoName] = repo.split('/');
+  if (!owner || !repoName) {
+    console.error('Invalid GITHUB_REPO format. Expected: owner/repo');
+    return [];
+  }
+
+  const baseUrl = 'https://api.github.com';
+  const headers = {
+    'Authorization': `Bearer ${token}`,
+    'Accept': 'application/vnd.github.v3+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+  };
+
+  try {
+    const response = await fetch(
+      `${baseUrl}/repos/${owner}/${repoName}/contents/public/${section}/${section}.json?ref=${branch}`,
+      { headers }
+    );
+
+    if (!response.ok) {
+      console.log(`JSON content for ${section} not found in GitHub`);
+      return [];
+    }
+
+    const fileData = await response.json();
+    
+    if (fileData.content) {
+      // Decode base64 content
+      const content = Buffer.from(fileData.content, 'base64').toString('utf8');
+      return JSON.parse(content);
+    }
+
+    return [];
+
+  } catch (error) {
+    console.error(`Error fetching JSON content from GitHub for section ${section}:`, error);
+    return [];
   }
 }
