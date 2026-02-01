@@ -20,7 +20,9 @@ export async function GET(request: NextRequest) {
     for (const folder of folders) {
       try {
         const files = await getFilesFromGitHub(folder);
-        totalFiles += files.length;
+        // Filter out JSON files for the count
+        const nonJsonFiles = files.filter(file => !file.name.endsWith('.json'));
+        totalFiles += nonJsonFiles.length;
       } catch (error) {
         // Folder might not exist or not be accessible, continue with others
         console.log(`Folder ${folder} not found or not accessible in GitHub`);
