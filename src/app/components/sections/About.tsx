@@ -27,7 +27,7 @@ const About = () => {
             <div className="relative">
               <div className="w-full h-96 bg-gray-800 rounded-lg overflow-hidden">
                 <img
-                  src="/galib.jpg"
+                  src="/images/galib.jpg"
                   alt="Asadullahil Galib"
                   className="w-full h-full object-cover"
                 />

@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateAdminAuth } from '@/lib/admin-auth';
-import { readdir } from 'fs/promises';
-import { join } from 'path';
 import { getFilesFromGitHub } from '@/lib/github-api';
 
 export async function GET(request: NextRequest) {

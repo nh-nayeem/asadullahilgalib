@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
 import { validateAdminAuth } from '@/lib/admin-auth';
 import { commitToGitHub, getJsonContentFromGitHub } from '@/lib/github-api';
 
@@ -80,66 +78,38 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Write content to local storage (development only) and commit to GitHub
-    const filePath = join(process.cwd(), 'public', section, `${section}.json`);
-    const jsonContent = JSON.stringify(content, null, 2);
-    
-    if (process.env.NODE_ENV === 'development') {
-      // Only write to local filesystem in development
-      await writeFile(filePath, jsonContent, 'utf8');
-    } else {
-      // In production (Vercel), skip local file writing - filesystem is read-only
-      console.log('Skipping local file write in production (read-only filesystem)');
-    }
-
     // Commit and push to GitHub
-    if (process.env.NODE_ENV === 'development') {
-      // Local development - use local git
-      const { execSync } = require('child_process');
-      try {
-        execSync(`git add public/${section}/${section}.json`, { cwd: process.cwd() });
-        execSync(`git commit -m "Update ${section} content"`, { cwd: process.cwd() });
-        
-        const gitRemote = process.env.GIT_REMOTE || 'origin';
-        const gitBranch = process.env.GIT_BRANCH || 'main';
-        execSync(`git push ${gitRemote} ${gitBranch}`, { cwd: process.cwd() });
-        
-      } catch (gitError) {
-        console.error('Git operations failed:', gitError);
-      }
-    } else {
-      // Production (Vercel) - use GitHub API
-      try {
-        console.log('Attempting to commit to GitHub...');
-        const success = await commitToGitHub({
-          path: `public/${section}/${section}.json`,
-          content: jsonContent,
-          message: `Update ${section} content`,
-        });
-        
-        if (success) {
-          console.log('GitHub commit successful');
-        } else {
-          console.error('GitHub commit failed');
-          return NextResponse.json({
-            success: false,
-            message: 'Failed to commit content to GitHub. Please check your GitHub credentials.',
-            section,
-            count: content.length,
-            gitError: true,
-          }, { status: 500 });
-        }
-      } catch (githubError) {
-        console.error('GitHub API error:', githubError);
+    const jsonContent = JSON.stringify(content, null, 2);
+    try {
+      console.log('Attempting to commit to GitHub...');
+      const success = await commitToGitHub({
+        path: `public/${section}/${section}.json`,
+        content: jsonContent,
+        message: `Update ${section} content`,
+      });
+      
+      if (success) {
+        console.log('GitHub commit successful');
+      } else {
+        console.error('GitHub commit failed');
         return NextResponse.json({
           success: false,
-          message: 'GitHub API error occurred. Please check your GitHub credentials.',
+          message: 'Failed to commit content to GitHub. Please check your GitHub credentials.',
           section,
           count: content.length,
           gitError: true,
-          error: githubError instanceof Error ? githubError.message : 'Unknown GitHub error',
         }, { status: 500 });
       }
+    } catch (githubError) {
+      console.error('GitHub API error:', githubError);
+      return NextResponse.json({
+        success: false,
+        message: 'GitHub API error occurred. Please check your GitHub credentials.',
+        section,
+        count: content.length,
+        gitError: true,
+        error: githubError instanceof Error ? githubError.message : 'Unknown GitHub error',
+      }, { status: 500 });
     }
 
     return NextResponse.json({

@@ -40,7 +40,7 @@ const About = () => {
                 <div className="relative max-w-sm mx-auto">
                   <div className="aspect-square rounded-lg overflow-hidden border-2 border-gray-700">
                     <img
-                      src="/galib.jpg"
+                      src="/images/galib.jpg"
                       alt="Asadullahil Galib"
                       className="w-full h-full object-cover"
                     />

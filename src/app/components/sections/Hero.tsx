@@ -8,7 +8,7 @@ const Hero = () => {
     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/Galib_art.png"
+          src="/images/galib_hero.png"
           alt="Background"
           fill
           className="object-cover opacity-40 md:object-center object-[85%_center]"

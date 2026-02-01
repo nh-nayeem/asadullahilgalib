@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateAdminAuth } from '@/lib/admin-auth';
-import { readdir, stat, writeFile, unlink } from 'fs/promises';
-import { join } from 'path';
 import { commitToGitHub, getFilesFromGitHub } from '@/lib/github-api';
 
 export async function GET(request: NextRequest) {
@@ -36,14 +34,16 @@ export async function GET(request: NextRequest) {
     // Fetch files from GitHub repository (including JSON files)
     const githubFiles = await getFilesFromGitHub(folder);
     
-    // Transform GitHub file format to match expected response format
-    const fileList = githubFiles.map(file => ({
-      name: file.name,
-      path: `/${folder}/${file.name}`,
-      size: file.size,
-      type: file.name.endsWith('.json') ? 'application/json' : 'application/octet-stream',
-      modified: new Date(), // GitHub doesn't provide modification date in contents API
-    }));
+    // Transform GitHub file format to match expected response format and filter out JSON files
+    const fileList = githubFiles
+      .filter(file => !file.name.endsWith('.json'))
+      .map(file => ({
+        name: file.name,
+        path: `/${folder}/${file.name}`,
+        size: file.size,
+        type: 'application/octet-stream',
+        modified: new Date(), // GitHub doesn't provide modification date in contents API
+      }));
 
     // Sort files by name
     fileList.sort((a, b) => a.name.localeCompare(b.name));
@@ -106,64 +106,36 @@ export async function PUT(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Write file to local storage (development only) and commit to GitHub
-    const filePath = join(process.cwd(), 'public', folder, fileName);
-    
-    if (process.env.NODE_ENV === 'development') {
-      // Only write to local filesystem in development
-      await writeFile(filePath, buffer);
-    } else {
-      // In production (Vercel), skip local file writing - filesystem is read-only
-      console.log('Skipping local file write in production (read-only filesystem)');
-    }
-
     // Commit and push to GitHub
-    if (process.env.NODE_ENV === 'development') {
-      // Local development - use local git
-      const { execSync } = require('child_process');
-      try {
-        execSync(`git add public/${folder}/${fileName}`, { cwd: process.cwd() });
-        execSync(`git commit -m "Update ${fileName} in ${folder}"`, { cwd: process.cwd() });
-        
-        const gitRemote = process.env.GIT_REMOTE || 'origin';
-        const gitBranch = process.env.GIT_BRANCH || 'main';
-        execSync(`git push ${gitRemote} ${gitBranch}`, { cwd: process.cwd() });
-        
-      } catch (gitError) {
-        console.error('Git operations failed:', gitError);
-      }
-    } else {
-      // Production (Vercel) - use GitHub API
-      try {
-        console.log('Attempting to update file in GitHub...');
-        const fileContent = buffer.toString('base64');
-        const success = await commitToGitHub({
-          path: `public/${folder}/${fileName}`,
-          content: fileContent,
-          message: `Update ${fileName} in ${folder}`,
-        });
-        
-        if (success) {
-          console.log('GitHub file update successful');
-        } else {
-          console.error('GitHub file update failed');
-          return NextResponse.json({
-            success: false,
-            message: 'Failed to update file in GitHub. Please check your GitHub credentials.',
-            path: `/${folder}/${fileName}`,
-            gitError: true,
-          }, { status: 500 });
-        }
-      } catch (githubError) {
-        console.error('GitHub API error:', githubError);
+    try {
+      console.log('Attempting to update file in GitHub...');
+      const fileContent = buffer.toString('base64');
+      const success = await commitToGitHub({
+        path: `public/${folder}/${fileName}`,
+        content: fileContent,
+        message: `Update ${fileName} in ${folder}`,
+      });
+      
+      if (success) {
+        console.log('GitHub file update successful');
+      } else {
+        console.error('GitHub file update failed');
         return NextResponse.json({
           success: false,
-          message: 'GitHub API error occurred. Please check your GitHub credentials.',
+          message: 'Failed to update file in GitHub. Please check your GitHub credentials.',
           path: `/${folder}/${fileName}`,
           gitError: true,
-          error: githubError instanceof Error ? githubError.message : 'Unknown GitHub error',
         }, { status: 500 });
       }
+    } catch (githubError) {
+      console.error('GitHub API error:', githubError);
+      return NextResponse.json({
+        success: false,
+        message: 'GitHub API error occurred. Please check your GitHub credentials.',
+        path: `/${folder}/${fileName}`,
+        gitError: true,
+        error: githubError instanceof Error ? githubError.message : 'Unknown GitHub error',
+      }, { status: 500 });
     }
 
     return NextResponse.json({
