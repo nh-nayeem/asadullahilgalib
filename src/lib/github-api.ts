@@ -276,14 +276,19 @@ export async function getJsonContentFromGitHub(section: string): Promise<any[]> 
     'X-GitHub-Api-Version': '2022-11-28',
   };
 
+  // Handle special case for home sections
+  const filePath = section.includes('-home') 
+    ? `public/content/${section.replace('-', '_')}.json`
+    : `public/content/${section}.json`;
+
   try {
     const response = await fetch(
-      `${baseUrl}/repos/${owner}/${repoName}/contents/public/${section}/${section}.json?ref=${branch}`,
+      `${baseUrl}/repos/${owner}/${repoName}/contents/${filePath}?ref=${branch}`,
       { headers }
     );
 
     if (!response.ok) {
-      console.log(`JSON content for ${section} not found in GitHub`);
+      console.log(`JSON content for ${section} not found in GitHub at path: ${filePath}`);
       return [];
     }
 

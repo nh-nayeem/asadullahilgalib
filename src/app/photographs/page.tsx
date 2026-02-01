@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaTimes, FaEye } from 'react-icons/fa';
 import Header from '@/app/components/layout/Header';
 import Footer from '@/app/components/layout/Footer';
@@ -12,106 +12,26 @@ interface PhotoItem {
   imagethumb?: string;
 }
 
-const photos: PhotoItem[] = [
-  {
-    title: "July",
-    image: "/photographs/July.jpg",
-    imagethumb: "/photographs/July-min.jpg"
-  },
-  {
-    title: "Afra",
-    image: "/photographs/Afra.jpg",
-    imagethumb: "/photographs/Afra-min.jpg"
-  },
-  {
-    title: "Dinghy",
-    image: "/photographs/Dinghy.jpg",
-    imagethumb: "/photographs/Dinghy-min.jpg"
-  },
-  {
-    title: "Flow",
-    image: "/photographs/Flow.jpg",
-    imagethumb: "/photographs/Flow-min.jpg"
-  },
-  {
-    title: "Gaaner Sawgat",
-    image: "/photographs/Gaaner Sawgat.jpg",
-    imagethumb: "/photographs/Gaaner Sawgat-min.jpg"
-  },
-  {
-    title: "Hope",
-    image: "/photographs/Hope.jpg",
-    imagethumb: "/photographs/Hope-min.jpg"
-  },
-  {
-    title: "I Wish",
-    image: "/photographs/I Wish.jpg",
-    imagethumb: "/photographs/I Wish-min.jpg"
-  },
-  {
-    title: "Jahajer Janala",
-    image: "/photographs/Jahajer Janala.jpg",
-    imagethumb: "/photographs/Jahajer Janala-min.jpg"
-  },
-  {
-    title: "Lalbagh",
-    image: "/photographs/Lalbagh.jpg",
-    imagethumb: "/photographs/Lalbagh-min.jpg"
-  },
-  {
-    title: "A Morning",
-    image: "/photographs/A Morning.jpg",
-    imagethumb: "/photographs/A Morning.jpg"
-  },
-  {
-    title: "Gaze",
-    image: "/photographs/Gaze.jpg",
-    imagethumb: "/photographs/Gaze.jpg"
-  },
-  {
-    title: "Minar",
-    image: "/photographs/Minar.jpg",
-    imagethumb: "/photographs/Minar.jpg"
-  },
-  {
-    title: "Mist",
-    image: "/photographs/Mist.jpg",
-    imagethumb: "/photographs/Mist.jpg"
-  },
-  {
-    title: "Naya Char",
-    image: "/photographs/Naya Char.jpg",
-    imagethumb: "/photographs/Naya Char.jpg"
-  },
-  {
-    title: "Phul",
-    image: "/photographs/Phul.jpg",
-    imagethumb: "/photographs/Phul.jpg"
-  },
-  {
-    title: "Reflection",
-    image: "/photographs/Reflection.jpg",
-    imagethumb: "/photographs/Reflection.jpg"
-  },
-  {
-    title: "Rest",
-    image: "/photographs/Rest.jpg",
-    imagethumb: "/photographs/Rest.jpg"
-  },
-  {
-    title: "Stairs",
-    image: "/photographs/Stairs.jpg",
-    imagethumb: "/photographs/Stairs.jpg"
-  },
-  {
-    title: "The Door of Peace",
-    image: "/photographs/The Door of Peace.jpg",
-    imagethumb: "/photographs/The Door of Peace.jpg"
-  }
-];
-
 export default function Photographs() {
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoItem | null>(null);
+  const [photos, setPhotos] = useState<PhotoItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      try {
+        const response = await fetch('/content/photographs.json');
+        const data = await response.json();
+        setPhotos(data);
+      } catch (error) {
+        console.error('Error loading photographs:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPhotos();
+  }, []);
 
   const openModal = (photo: PhotoItem) => {
     setSelectedPhoto(photo);
@@ -154,8 +74,13 @@ export default function Photographs() {
           A selection of my clicks capturing moments.
         </motion.p>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {photos.map((photo, index) => (
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-amber-400"></div>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {photos.map((photo, index) => (
             <motion.div
               key={photo.title}
               className="group relative overflow-hidden rounded-lg cursor-pointer"
@@ -180,8 +105,9 @@ export default function Photographs() {
                 <h3 className="text-xl text-gray-400">{photo.title}</h3>
               </div>
             </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       </section>

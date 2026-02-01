@@ -23,12 +23,15 @@ export default function AdminPanel() {
   const fetchStats = async () => {
     try {
       // Fetch content stats
-      const sections = ['works', 'artworks', 'photographs'];
+      const sections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'shorts-home'];
       let totalContent = 0;
       
       for (const section of sections) {
         try {
-          const response = await fetch(`/${section}/${section}.json`);
+          const filePath = section.includes('-home') 
+            ? `/content/${section.replace('-', '_')}.json`
+            : `/content/${section}.json`;
+          const response = await fetch(filePath);
           if (response.ok) {
             const data = await response.json();
             totalContent += Array.isArray(data) ? data.length : 0;

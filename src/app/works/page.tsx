@@ -30,7 +30,7 @@ const Works = () => {
   useEffect(() => {
     const fetchWorks = async () => {
       try {
-        const response = await fetch('works/works.json');
+        const response = await fetch('/content/works.json');
         const data = await response.json();
         setWorks(data);
       } catch (error) {

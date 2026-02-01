@@ -3,21 +3,44 @@
 import { useState, useEffect } from 'react';
 import { FiEdit2, FiTrash2, FiPlus, FiSave, FiX, FiChevronUp, FiChevronDown } from 'react-icons/fi';
 
-interface ContentItem {
+interface WorkItem {
   title: string;
   year: string;
   role: string;
+  description: string;
   image: string;
   videoLink?: string;
-  category: string;
-  description: string;
+  category?: string;
 }
+
+interface ArtworkItem {
+  title: string;
+  year: string;
+  image: string;
+  thumbnail: string;
+  description?: string;
+}
+
+interface PhotoItem {
+  title: string;
+  image: string;
+  imagethumb?: string;
+}
+
+interface ShortItem {
+  title: string;
+  year: string;
+  videoId: string;
+  videoLink: string;
+}
+
+type ContentItem = WorkItem | ArtworkItem | PhotoItem | ShortItem;
 
 interface ContentManagerProps {
   onUpdate: (section: string, content: ContentItem[]) => void;
 }
 
-const sections = ['works', 'artworks', 'photographs'];
+const sections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'shorts-home'];
 
 const workCategories = ['shorts', 'filmography', 'direction'];
 
@@ -26,15 +49,55 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
   const [content, setContent] = useState<ContentItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [newItem, setNewItem] = useState<ContentItem>({
-    title: '',
-    year: '',
-    role: '',
-    image: '',
-    videoLink: '',
-    category: 'shorts',
-    description: '',
-  });
+
+  // Helper functions to determine content type
+  const isWorkSection = (section: string) => section.includes('works');
+  const isArtworkSection = (section: string) => section.includes('artworks');
+  const isPhotoSection = (section: string) => section.includes('photographs');
+  const isShortSection = (section: string) => section.includes('shorts');
+
+  // Create new item based on section type
+  const createNewItem = (): ContentItem => {
+    if (isShortSection(selectedSection)) {
+      return {
+        title: '',
+        year: '',
+        videoId: '',
+        videoLink: ''
+      } as ShortItem;
+    } else if (isPhotoSection(selectedSection)) {
+      return {
+        title: '',
+        image: '',
+        imagethumb: ''
+      } as PhotoItem;
+    } else if (isArtworkSection(selectedSection)) {
+      return {
+        title: '',
+        year: '',
+        image: '',
+        thumbnail: '',
+        description: ''
+      } as ArtworkItem;
+    } else {
+      return {
+        title: '',
+        year: '',
+        role: '',
+        description: '',
+        image: '',
+        videoLink: '',
+        category: ''
+      } as WorkItem;
+    }
+  };
+
+  const [newItem, setNewItem] = useState<ContentItem>(createNewItem());
+
+  // Reset new item when section changes
+  useEffect(() => {
+    setNewItem(createNewItem());
+  }, [selectedSection]);
 
   useEffect(() => {
     if (selectedSection) {
@@ -91,7 +154,7 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
     setEditingIndex(index);
   };
 
-  const handleUpdateItem = (index: number, field: keyof ContentItem, value: string) => {
+  const handleUpdateItem = (index: number, field: string, value: string) => {
     const updatedContent = [...content];
     updatedContent[index] = { ...updatedContent[index], [field]: value };
     setContent(updatedContent);
@@ -105,17 +168,25 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
   };
 
   const handleAddItem = () => {
-    if (newItem.title && newItem.year && newItem.role) {
+    // Validation based on content type
+    let isValid = false;
+    if (isShortSection(selectedSection)) {
+      const shortItem = newItem as ShortItem;
+      isValid = !!(shortItem.title && shortItem.year && shortItem.videoId && shortItem.videoLink);
+    } else if (isPhotoSection(selectedSection)) {
+      const photoItem = newItem as PhotoItem;
+      isValid = !!(photoItem.title && photoItem.image);
+    } else if (isArtworkSection(selectedSection)) {
+      const artworkItem = newItem as ArtworkItem;
+      isValid = !!(artworkItem.title && artworkItem.year && artworkItem.image && artworkItem.thumbnail);
+    } else {
+      const workItem = newItem as WorkItem;
+      isValid = !!(workItem.title && workItem.year && workItem.role && workItem.description);
+    }
+
+    if (isValid) {
       setContent([...content, { ...newItem }]);
-      setNewItem({
-        title: '',
-        year: '',
-        role: '',
-        image: '',
-        videoLink: '',
-        category: 'shorts',
-        description: '',
-      });
+      setNewItem(createNewItem());
     }
   };
 
@@ -150,7 +221,10 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
             <option value="">Choose a section...</option>
             {sections.map((section) => (
               <option key={section} value={section}>
-                {section.charAt(0).toUpperCase() + section.slice(1)}
+                {section.includes('-home') 
+                  ? `${section.split('-')[0].charAt(0).toUpperCase() + section.split('-')[0].slice(1)} Home`
+                  : section.charAt(0).toUpperCase() + section.slice(1)
+                }
               </option>
             ))}
           </select>
@@ -162,6 +236,7 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
             <div className="bg-white rounded-lg shadow-md border border-gray-200 p-6">
               <h4 className="font-semibold mb-4">Add New Content</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Common fields */}
                 <input
                   type="text"
                   value={newItem.title}
@@ -169,70 +244,153 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                   className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
                   placeholder="Title"
                 />
-                <input
-                  type="text"
-                  value={newItem.year}
-                  onChange={(e) => setNewItem({ ...newItem, year: e.target.value })}
-                  className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
-                  placeholder="Year"
-                />
-                <input
-                  type="text"
-                  value={newItem.role}
-                  onChange={(e) => setNewItem({ ...newItem, role: e.target.value })}
-                  className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
-                  placeholder="Role"
-                />
-                <input
-                  type="text"
-                  value={newItem.image}
-                  onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
-                  className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
-                  placeholder="Image URL"
-                />
-                {selectedSection === 'works' && (
+                
+                {/* Conditional fields based on content type */}
+                {isShortSection(selectedSection) && (
                   <>
                     <input
                       type="text"
-                      value={newItem.videoLink}
+                      value={(newItem as ShortItem).year}
+                      onChange={(e) => setNewItem({ ...newItem, year: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Year"
+                    />
+                    <input
+                      type="text"
+                      value={(newItem as ShortItem).videoId}
+                      onChange={(e) => setNewItem({ ...newItem, videoId: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Video ID"
+                    />
+                    <input
+                      type="text"
+                      value={(newItem as ShortItem).videoLink}
+                      onChange={(e) => setNewItem({ ...newItem, videoLink: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Video Link"
+                    />
+                  </>
+                )}
+                
+                {isPhotoSection(selectedSection) && (
+                  <>
+                    <input
+                      type="text"
+                      value={(newItem as PhotoItem).image}
+                      onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Image URL"
+                    />
+                    <input
+                      type="text"
+                      value={(newItem as PhotoItem).imagethumb || ''}
+                      onChange={(e) => setNewItem({ ...newItem, imagethumb: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Thumbnail URL"
+                    />
+                  </>
+                )}
+                
+                {isArtworkSection(selectedSection) && (
+                  <>
+                    <input
+                      type="text"
+                      value={(newItem as ArtworkItem).year}
+                      onChange={(e) => setNewItem({ ...newItem, year: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Year"
+                    />
+                    <input
+                      type="text"
+                      value={(newItem as ArtworkItem).image}
+                      onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Image URL"
+                    />
+                    <input
+                      type="text"
+                      value={(newItem as ArtworkItem).thumbnail}
+                      onChange={(e) => setNewItem({ ...newItem, thumbnail: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Thumbnail URL"
+                    />
+                    <textarea
+                      value={(newItem as ArtworkItem).description || ''}
+                      onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400 md:col-span-2"
+                      placeholder="Description"
+                      rows={3}
+                    />
+                  </>
+                )}
+                
+                {isWorkSection(selectedSection) && !isArtworkSection(selectedSection) && !isPhotoSection(selectedSection) && !isShortSection(selectedSection) && (
+                  <>
+                    <input
+                      type="text"
+                      value={(newItem as WorkItem).year}
+                      onChange={(e) => setNewItem({ ...newItem, year: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Year"
+                    />
+                    <input
+                      type="text"
+                      value={(newItem as WorkItem).role}
+                      onChange={(e) => setNewItem({ ...newItem, role: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Role"
+                    />
+                    <input
+                      type="text"
+                      value={(newItem as WorkItem).image}
+                      onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Image URL"
+                    />
+                    <input
+                      type="text"
+                      value={(newItem as WorkItem).videoLink || ''}
                       onChange={(e) => setNewItem({ ...newItem, videoLink: e.target.value })}
                       className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
                       placeholder="Video Link"
                     />
                     <select
-                      value={newItem.category}
+                      value={(newItem as WorkItem).category || ''}
                       onChange={(e) => setNewItem({ ...newItem, category: e.target.value })}
                       className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900"
                     >
-                      {workCategories.map((cat) => (
-                        <option key={cat} value={cat}>
-                          {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                        </option>
+                      <option value="">Select Category</option>
+                      {workCategories.map(cat => (
+                        <option key={cat} value={cat}>{cat}</option>
                       ))}
                     </select>
+                    <textarea
+                      value={(newItem as WorkItem).description}
+                      onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400 md:col-span-2"
+                      placeholder="Description"
+                      rows={3}
+                    />
                   </>
                 )}
-                <textarea
-                  value={newItem.description}
-                  onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
-                  className="px-3 py-2 border border-gray-300 rounded md:col-span-2 bg-white text-gray-900 placeholder:text-gray-400"
-                  placeholder="Description"
-                  rows={2}
-                />
-                <div className="md:col-span-2 flex justify-end">
-                  <button
-                    onClick={handleAddItem}
-                    className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
-                  >
-                    Add Content
-                  </button>
-                </div>
+              </div>
+              
+              <div className="md:col-span-2 flex justify-end">
+                <button
+                  onClick={handleAddItem}
+                  className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors"
+                >
+                  Add Content
+                </button>
               </div>
             </div>
 
             <div className="flex justify-between items-center mb-4">
               <h4 className="font-medium">
-                {selectedSection.charAt(0).toUpperCase() + selectedSection.slice(1)} Content
+                {selectedSection.includes('-home') 
+                  ? `${selectedSection.split('-')[0].charAt(0).toUpperCase() + selectedSection.split('-')[0].slice(1)} Home`
+                  : selectedSection.charAt(0).toUpperCase() + selectedSection.slice(1)
+                } Content
               </h4>
               <button
                 onClick={handleSave}
@@ -261,56 +419,136 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                           className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
                           placeholder="Title"
                         />
-                        <input
-                          type="text"
-                          value={item.year}
-                          onChange={(e) => handleUpdateItem(index, 'year', e.target.value)}
-                          className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
-                          placeholder="Year"
-                        />
-                        <input
-                          type="text"
-                          value={item.role}
-                          onChange={(e) => handleUpdateItem(index, 'role', e.target.value)}
-                          className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
-                          placeholder="Role"
-                        />
-                        <input
-                          type="text"
-                          value={item.image}
-                          onChange={(e) => handleUpdateItem(index, 'image', e.target.value)}
-                          className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
-                          placeholder="Image URL"
-                        />
-                        {selectedSection === 'works' && (
+                        
+                        {/* Conditional fields for editing based on content type */}
+                        {isShortSection(selectedSection) && (
                           <>
                             <input
                               type="text"
-                              value={item.videoLink || ''}
+                              value={(item as ShortItem).year}
+                              onChange={(e) => handleUpdateItem(index, 'year', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Year"
+                            />
+                            <input
+                              type="text"
+                              value={(item as ShortItem).videoId}
+                              onChange={(e) => handleUpdateItem(index, 'videoId', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Video ID"
+                            />
+                            <input
+                              type="text"
+                              value={(item as ShortItem).videoLink}
+                              onChange={(e) => handleUpdateItem(index, 'videoLink', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Video Link"
+                            />
+                          </>
+                        )}
+                        
+                        {isPhotoSection(selectedSection) && (
+                          <>
+                            <input
+                              type="text"
+                              value={(item as PhotoItem).image}
+                              onChange={(e) => handleUpdateItem(index, 'image', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Image URL"
+                            />
+                            <input
+                              type="text"
+                              value={(item as PhotoItem).imagethumb || ''}
+                              onChange={(e) => handleUpdateItem(index, 'imagethumb', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Thumbnail URL"
+                            />
+                          </>
+                        )}
+                        
+                        {isArtworkSection(selectedSection) && (
+                          <>
+                            <input
+                              type="text"
+                              value={(item as ArtworkItem).year}
+                              onChange={(e) => handleUpdateItem(index, 'year', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Year"
+                            />
+                            <input
+                              type="text"
+                              value={(item as ArtworkItem).image}
+                              onChange={(e) => handleUpdateItem(index, 'image', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Image URL"
+                            />
+                            <input
+                              type="text"
+                              value={(item as ArtworkItem).thumbnail}
+                              onChange={(e) => handleUpdateItem(index, 'thumbnail', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Thumbnail URL"
+                            />
+                            <textarea
+                              value={(item as ArtworkItem).description || ''}
+                              onChange={(e) => handleUpdateItem(index, 'description', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400 md:col-span-2"
+                              placeholder="Description"
+                              rows={3}
+                            />
+                          </>
+                        )}
+                        
+                        {isWorkSection(selectedSection) && !isArtworkSection(selectedSection) && !isPhotoSection(selectedSection) && !isShortSection(selectedSection) && (
+                          <>
+                            <input
+                              type="text"
+                              value={(item as WorkItem).year}
+                              onChange={(e) => handleUpdateItem(index, 'year', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Year"
+                            />
+                            <input
+                              type="text"
+                              value={(item as WorkItem).role}
+                              onChange={(e) => handleUpdateItem(index, 'role', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Role"
+                            />
+                            <input
+                              type="text"
+                              value={(item as WorkItem).image}
+                              onChange={(e) => handleUpdateItem(index, 'image', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Image URL"
+                            />
+                            <input
+                              type="text"
+                              value={(item as WorkItem).videoLink || ''}
                               onChange={(e) => handleUpdateItem(index, 'videoLink', e.target.value)}
                               className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
                               placeholder="Video Link"
                             />
                             <select
-                              value={item.category}
+                              value={(item as WorkItem).category || ''}
                               onChange={(e) => handleUpdateItem(index, 'category', e.target.value)}
                               className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900"
                             >
-                              {workCategories.map((cat) => (
-                                <option key={cat} value={cat}>
-                                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                                </option>
+                              <option value="">Select Category</option>
+                              {workCategories.map(cat => (
+                                <option key={cat} value={cat}>{cat}</option>
                               ))}
                             </select>
+                            <textarea
+                              value={(item as WorkItem).description}
+                              onChange={(e) => handleUpdateItem(index, 'description', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400 md:col-span-2"
+                              placeholder="Description"
+                              rows={3}
+                            />
                           </>
                         )}
-                        <textarea
-                          value={item.description}
-                          onChange={(e) => handleUpdateItem(index, 'description', e.target.value)}
-                          className="px-3 py-2 border border-gray-300 rounded md:col-span-2 bg-white text-gray-900 placeholder:text-gray-400"
-                          placeholder="Description"
-                          rows={2}
-                        />
+                        
                         <div className="md:col-span-2 flex justify-end space-x-2">
                           <button
                             onClick={() => setEditingIndex(null)}
@@ -352,10 +590,17 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                           <div className="flex-1">
                             <h5 className="font-semibold text-gray-700">{item.title}</h5>
                             <p className="text-sm text-gray-600">
-                              {item.year} • {item.role} • {item.category}
+                              {isShortSection(selectedSection) && `${(item as ShortItem).year}`}
+                              {isPhotoSection(selectedSection) && ''}
+                              {isArtworkSection(selectedSection) && `${(item as ArtworkItem).year}`}
+                              {isWorkSection(selectedSection) && !isArtworkSection(selectedSection) && !isPhotoSection(selectedSection) && !isShortSection(selectedSection) && 
+                                `${(item as WorkItem).year} • ${(item as WorkItem).role} • ${(item as WorkItem).category || ''}`
+                              }
                             </p>
-                            {item.description && (
-                              <p className="text-sm text-gray-700 mt-1">{item.description}</p>
+                            {((item as ArtworkItem).description || (item as WorkItem).description) && (
+                              <p className="text-sm text-gray-700 mt-1">
+                                {(item as ArtworkItem).description || (item as WorkItem).description}
+                              </p>
                             )}
                           </div>
                         </div>

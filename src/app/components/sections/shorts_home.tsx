@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaPlay, FaTimes } from 'react-icons/fa';
 import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -18,54 +18,27 @@ interface ShortItem {
   videoLink: string;
 }
 
-const shorts: ShortItem[] = [
-  {
-    title: "মেঘ ও মেঘনা",
-    year: "2025", 
-    videoId: "9LfYttJpT-I",
-    videoLink: "https://www.youtube.com/watch?v=9LfYttJpT-I"
-  },
-  {
-    title: "পাহাড়, বৃষ্টি আর আমরা",
-    year: "2025",
-    videoId: "IiE0RAQWcIs",
-    videoLink: "https://www.youtube.com/watch?v=IiE0RAQWcIs"
-  },
-  {
-    title: "দিনান্তে!",
-    year: "2025",
-    videoId: "q6ccNYIl9WU",
-    videoLink: "https://www.youtube.com/watch?v=q6ccNYIl9WU"
-  },
-  {
-    title: "নৈসর্গিক",
-    year: "2024",
-    videoId: "BeHtfa7ZKeU",
-    videoLink: "https://www.youtube.com/watch?v=BeHtfa7ZKeU"
-  },
-  {
-    title: "পৌষ ১৪৩০ | Poush 1430",
-    year: "2023", 
-    videoId: "qSaIH8HF-fk",
-    videoLink: "https://www.youtube.com/shorts/qSaIH8HF-fk"
-  },
-  {
-    title:"হাট",
-    year:"2026",
-    videoId:"4IjWfYvtGkg",
-    videoLink:"https://www.youtube.com/shorts/4IjWfYvtGkg",
-  },
-  {
-    title: "Insaaf for Hadi",
-    videoId:"dJJEYwF9El0",
-    videoLink:"https://www.youtube.com/watch?v=dJJEYwF9El0",
-    year:"2025",
-  }
-];
-
 const Shorts = () => {
   const [modalVideo, setModalVideo] = useState<ShortItem | null>(null);
   const [thumbnailErrors, setThumbnailErrors] = useState<Set<string>>(new Set());
+  const [shorts, setShorts] = useState<ShortItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchShorts = async () => {
+      try {
+        const response = await fetch('/content/shorts_home.json');
+        const data = await response.json();
+        setShorts(data);
+      } catch (error) {
+        console.error('Error fetching shorts data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchShorts();
+  }, []);
 
   const getThumbnailUrl = (videoId: string, quality: string = 'hqdefault') => {
     return `https://img.youtube.com/vi/${videoId}/${quality}.jpg`;
@@ -134,7 +107,12 @@ const Shorts = () => {
 
           {/* Swiper Carousel */}
           <div className="relative px-4 py-4 md:px-20">
-            <Swiper
+            {loading ? (
+              <div className="text-center py-12">
+                <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-amber-400"></div>
+              </div>
+            ) : (
+              <Swiper
               effect="coverflow"
               grabCursor={true}
               centeredSlides={true}
@@ -224,6 +202,7 @@ const Shorts = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
+            )}
           </div>
 
           {/* Bottom Film Strip */}

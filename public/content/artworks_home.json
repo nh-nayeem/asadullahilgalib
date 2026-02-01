@@ -1,0 +1,30 @@
+[
+  {
+    "title": "July Graffiti",
+    "year": "2024",
+    "image": "/artworks/July_Graffitti_02.jpg",
+    "thumbnail": "/artworks/July_Graffitti_02.jpg",
+    "description": "An urban art piece that blends street culture with contemporary design. This graffiti work showcases bold colors and dynamic composition."
+  },
+  {
+    "title": "Intezar",
+    "year": "2025",
+    "image": "/artworks/Intezar.png",
+    "thumbnail": "/artworks/Intezar.png",
+    "description": "Poster of a visual - An artistic representation capturing the essence of anticipation and waiting."
+  },
+  {
+    "title": "Joar",
+    "year": "2025",
+    "image": "/artworks/Joar_Poster.jpg",
+    "thumbnail": "/artworks/Joar_Poster.jpg",
+    "description": "A poster design representing the concept of flow and movement through visual storytelling."
+  },
+  {
+    "title": "Ontosshor",
+    "year": "2025",
+    "image": "/artworks/Ontosshor_Poster.jpg",
+    "thumbnail": "/artworks/Ontosshor_Poster.jpg",
+    "description": "A poster design representing the concept of solitude and introspection through visual storytelling."
+  }
+]

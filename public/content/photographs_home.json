@@ -1,0 +1,22 @@
+[
+  {
+    "title": "July",
+    "image": "/photographs/July.jpg",
+    "imagethumb": "/photographs/July-min.jpg"
+  },
+  {
+    "title": "Flow",
+    "image": "/photographs/Flow.jpg",
+    "imagethumb": "/photographs/Flow-min.jpg"
+  },
+  {
+    "title": "Afra",
+    "image": "/photographs/Afra.jpg",
+    "imagethumb": "/photographs/Afra-min.jpg"
+  },
+  {
+    "title": "Rest",
+    "image": "/photographs/Rest.jpg",
+    "imagethumb": "/photographs/Rest.jpg"
+  }
+]

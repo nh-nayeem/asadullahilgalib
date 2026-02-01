@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaTimes, FaEye } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -14,39 +14,26 @@ interface ArtworkItem {
   description?: string;
 }
 
-const artworks: ArtworkItem[] = [
-  {
-    title: "July Graffiti",
-    year: "2024",
-    image: "/artworks/July_Graffitti_02.jpg",
-    thumbnail: "/artworks/July_Graffitti_02.jpg",
-    description: "An urban art piece that blends street culture with contemporary design. This graffiti work showcases bold colors and dynamic composition."
-  },
-  {
-    title: "Intezar",
-    year: "2025",
-    image: "/artworks/Intezar.png",
-    thumbnail: "/artworks/Intezar.png",
-    description: "Poster of a visual - An artistic representation capturing the essence of anticipation and waiting."
-  },
-  {
-    title: "Joar",
-    year: "2025",
-    image: "/artworks/Joar_Poster.jpg",
-    thumbnail: "/artworks/Joar_Poster.jpg",
-    description: "A poster design representing the concept of flow and movement through visual storytelling."
-  },
-  {
-    title: "Ontosshor",
-    year: "2025",
-    image: "/artworks/Ontosshor_Poster.jpg",
-    thumbnail: "/artworks/Ontosshor_Poster.jpg",
-    description: "A poster design representing the concept of solitude and introspection through visual storytelling."
-  }
-];
-
 const Artworks = () => {
   const [selectedArtwork, setSelectedArtwork] = useState<ArtworkItem | null>(null);
+  const [artworks, setArtworks] = useState<ArtworkItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArtworks = async () => {
+      try {
+        const response = await fetch('/content/artworks_home.json');
+        const data = await response.json();
+        setArtworks(data);
+      } catch (error) {
+        console.error('Error fetching artworks data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArtworks();
+  }, []);
 
   const openModal = (artwork: ArtworkItem) => {
     setSelectedArtwork(artwork);
@@ -86,8 +73,13 @@ const Artworks = () => {
           A collection of my creative designs.
         </motion.p>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {artworks.map((artwork, index) => (
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-amber-400"></div>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {artworks.map((artwork, index) => (
             <motion.div
               key={artwork.title}
               className="group relative overflow-hidden rounded-lg cursor-pointer"
@@ -113,8 +105,9 @@ const Artworks = () => {
                 <p className="text-gray-400">{artwork.year}</p>
               </div>
             </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         <motion.div 
           className="text-center mt-12"

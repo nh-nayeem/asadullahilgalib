@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Validate section name
-    const allowedSections = ['works', 'artworks', 'photographs'];
+    const allowedSections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'shorts-home'];
     if (!allowedSections.includes(section)) {
       return NextResponse.json(
         { error: 'Invalid section' },
@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate section name
-    const allowedSections = ['works', 'artworks', 'photographs'];
+    const allowedSections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'shorts-home'];
     if (!allowedSections.includes(section)) {
       return NextResponse.json(
         { error: 'Invalid section' },
@@ -80,10 +80,16 @@ export async function POST(request: NextRequest) {
 
     // Commit and push to GitHub
     const jsonContent = JSON.stringify(content, null, 2);
+    
+    // Handle special case for home sections
+    const filePath = section.includes('-home') 
+      ? `public/content/${section.replace('-', '_')}.json`
+      : `public/content/${section}.json`;
+    
     try {
       console.log('Attempting to commit to GitHub...');
       const success = await commitToGitHub({
-        path: `public/${section}/${section}.json`,
+        path: filePath,
         content: jsonContent,
         message: `Update ${section} content`,
       });

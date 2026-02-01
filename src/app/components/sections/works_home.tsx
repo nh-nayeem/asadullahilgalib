@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 interface WorkItem {
@@ -13,36 +13,27 @@ interface WorkItem {
   videoLink?: string; 
 }
 
-const works: WorkItem[] = [
-  {
-    title: "Joar - The Tide",
-    year: "2025",
-    role: "Director & Story",
-    description: "Joar (The Tide)— My first fiction film. Made with minimal resources and beginner’s experience, yet carried by passion and sincerity. Despite its imperfections, the film found its own path and received remarkable appreciation, earning multiple selections in international film festivals. It has been honored with the BIFF Best Film Award in the National Short category at the 6th Bogura International Film Festival 2026.",
-    image: "/works/Joar_festival_laurel.jpg",
-    // videoLink: "https://www.youtube.com/watch?v=LVWayznWIlg"
-  },
-  {
-    title: "ONTOSSHOR",
-    year: "2025",
-    role: "Director and Interview",
-    description: "A documentary that uncovers the harsh reality of guestroom culture in Bangladeshi universities. Through Rakib’s harrowing story of survival, the film sheds light on a silenced chapter of student life before the 2024 uprising. Its raw honesty sparked powerful conversations and received an overwhelming audience response online",
-    image: "/works/5 ONTOSSHOR.jpg",
-    videoLink: "https://www.youtube.com/watch?v=mQQ6VeX8e2c"
-  },
-  {
-    title: "Khosh Amded Ramadan",
-    year: "2025",
-    role: "Director",
-    description: "Khosh Amded Ramadan is a music video that celebrates the spirit of Ramadan with a fresh, cinematic approach. Blending festive visuals, warm cultural aesthetics, and heartfelt performances, the video redefined the style of Ramadan-themed productions in Bangladesh. The project reached a wide audience and received an enthusiastic response across social media platforms",
-    image: "/works/2 Qaseeda.jpeg",
-    videoLink: "https://www.youtube.com/watch?v=RfcxyMMCwFk"
-  }
-];
-
 const Works = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null);
+  const [works, setWorks] = useState<WorkItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchWorks = async () => {
+      try {
+        const response = await fetch('/content/works_home.json');
+        const data = await response.json();
+        setWorks(data);
+      } catch (error) {
+        console.error('Error fetching works data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWorks();
+  }, []);
 
   const handleWorkClick = (work: WorkItem, e: React.MouseEvent) => {
     // If there's no video link, show the popup
@@ -80,8 +71,13 @@ const Works = () => {
           A selection of my recent film projects.
         </motion.p>
         
-        <div className="space-y-16">
-          {works.map((work, index) => (
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-amber-400"></div>
+          </div>
+        ) : (
+          <div className="space-y-16">
+            {works.map((work, index) => (
             <div
               key={work.title}
               className={`flex flex-col md:flex-row items-center gap-8 ${
@@ -151,8 +147,9 @@ const Works = () => {
                 </div>
               </motion.div>
             </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         <motion.div 
           className="text-center mt-12"

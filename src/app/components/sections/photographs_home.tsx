@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaTimes, FaEye } from 'react-icons/fa';
 import Link from 'next/link';
 
@@ -11,31 +11,26 @@ interface PhotoItem {
   imagethumb?: string;
 }
 
-const photos: PhotoItem[] = [
-  {
-    title: "July",
-    image: "/photographs/July.jpg",
-    imagethumb: "/photographs/July-min.jpg"
-  },
-  {
-    title: "Flow",
-    image: "/photographs/Flow.jpg",
-    imagethumb: "/photographs/Flow-min.jpg"
-  },
-  {
-    title: "Afra",
-    image: "/photographs/Afra.jpg",
-    imagethumb: "/photographs/Afra-min.jpg"
-  },
-  {
-    title: "Rest",
-    image: "/photographs/Rest.jpg",
-    imagethumb: "/photographs/Rest.jpg"
-  }
-];
-
 const Photographs = () => {
   const [selectedPhoto, setSelectedPhoto] = useState<PhotoItem | null>(null);
+  const [photos, setPhotos] = useState<PhotoItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      try {
+        const response = await fetch('/content/photographs_home.json');
+        const data = await response.json();
+        setPhotos(data);
+      } catch (error) {
+        console.error('Error fetching photographs data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPhotos();
+  }, []);
 
   const openModal = (photo: PhotoItem) => {
     setSelectedPhoto(photo);
@@ -75,8 +70,13 @@ const Photographs = () => {
           A selection of my clicks capturing moments.
         </motion.p>
         
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {photos.map((photo, index) => (
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-amber-400"></div>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {photos.map((photo, index) => (
             <motion.div
               key={photo.title}
               className="group relative overflow-hidden rounded-lg cursor-pointer"
@@ -101,8 +101,9 @@ const Photographs = () => {
                 <h3 className="text-xl text-gray-400">{photo.title}</h3>
               </div>
             </motion.div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         <motion.div 
           className="text-center mt-12"
