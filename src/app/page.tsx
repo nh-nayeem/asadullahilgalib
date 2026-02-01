@@ -2,13 +2,13 @@
 
 import { useEffect } from 'react';
 import Header from './components/layout/Header';
-import Hero from './components/sections/Hero';
-import About from './components/sections/About';
-import Works from './components/sections/Works';
-import Shorts from './components/sections/Shorts';
-import Photographs from './components/sections/Photographs';
-import Artworks from './components/sections/Artworks';
-import Contact from './components/sections/Contact';
+import Hero from './components/sections/hero_home';
+import About from './components/sections/about_home';
+import Works from './components/sections/works_home';
+import Shorts from './components/sections/shorts_home';
+import Photographs from './components/sections/photographs_home';
+import Artworks from './components/sections/artworks_home';
+import Contact from './components/sections/contact_home';
 import Footer from './components/layout/Footer';
 
 export default function Home() {
