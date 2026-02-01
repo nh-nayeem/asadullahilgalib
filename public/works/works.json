@@ -132,5 +132,14 @@
     "videoLink": "https://www.youtube.com/watch?v=FhIzN8UHH3E",
     "category": "direction",
     "description": ""
+  },
+  {
+    "title": "fish",
+    "year": "2026",
+    "role": "pc",
+    "image": "/works/fish_rush_2.jpeg",
+    "videoLink": "/works/fish_rush_2.jpeg",
+    "category": "shorts",
+    "description": "Fishing"
   }
 ]
