@@ -244,11 +244,8 @@ export async function getFilesFromGitHub(folder: string): Promise<GitHubRepoFile
 
     const files: GitHubRepoFile[] = await response.json();
     
-    // Filter out JSON files and directories, return only files
-    return files.filter(file => 
-      file.type === 'file' && 
-      !file.name.endsWith('.json')
-    );
+    // Return all files, including JSON files
+    return files.filter(file => file.type === 'file');
 
   } catch (error) {
     console.error(`Error fetching files from GitHub for folder ${folder}:`, error);

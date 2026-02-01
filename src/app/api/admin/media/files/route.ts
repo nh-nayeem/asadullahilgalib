@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Fetch files from GitHub repository
+    // Fetch files from GitHub repository (including JSON files)
     const githubFiles = await getFilesFromGitHub(folder);
     
     // Transform GitHub file format to match expected response format
@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
       name: file.name,
       path: `/${folder}/${file.name}`,
       size: file.size,
-      type: 'application/octet-stream', // Default type, could be enhanced
+      type: file.name.endsWith('.json') ? 'application/json' : 'application/octet-stream',
       modified: new Date(), // GitHub doesn't provide modification date in contents API
     }));
 

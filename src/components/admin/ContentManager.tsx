@@ -45,10 +45,10 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
   const loadContent = async (section: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`/${section}/${section}.json`);
+      const response = await fetch(`/api/admin/content?section=${section}`);
       if (response.ok) {
         const data = await response.json();
-        setContent(data);
+        setContent(data.content || []);
       } else {
         setContent([]);
       }
