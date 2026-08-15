@@ -4,6 +4,10 @@ import { motion } from 'framer-motion';
 import { FaEnvelope } from 'react-icons/fa';
 import Link from 'next/link';
 import SocialLinks from '@/app/components/common/SocialLinks';
+import profileData from '../../../../public/content/profile.json';
+import type { ProfileContent } from '@/lib/profile-types';
+
+const profile = profileData as ProfileContent;
 
 const About = () => {
   return (
@@ -27,8 +31,8 @@ const About = () => {
             <div className="relative">
               <div className="w-full h-96 bg-gray-800 rounded-lg overflow-hidden">
                 <img
-                  src="/images/galib.jpg"
-                  alt="Asadullahil Galib"
+                  src={profile.profileImage}
+                  alt={profile.name}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -41,12 +45,8 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <p className="text-gray-300 mb-8 text-justify">
-              I am an award-winning filmmaker and cultural activist, driven by a deep love for art and visual storytelling. My work explores human emotion, memory, place, and culture, inspired by everyday life and timeless artistic traditions.
-
-Through cinema, I strive to create intimate, poetic, and visually resonant stories, where image, sound, and rhythm come together to evoke feeling and meaning. For me, filmmaking is an artistic journey of observation and sensitivity, translating lived moments into honest works that connect with people beyond language and borders.
-            </p>
-            <SocialLinks hoverColor="text-amber-400" />
+            <p className="text-gray-300 mb-8 text-justify whitespace-pre-line">{profile.biography}</p>
+            <SocialLinks links={profile.socialLinks} hoverColor="text-amber-400" />
           </motion.div>
         </div>
 

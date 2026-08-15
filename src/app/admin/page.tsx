@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { FiSettings, FiFileText, FiImage, FiMail, FiBarChart2, FiLogOut, FiMenu, FiX, FiTool } from 'react-icons/fi';
+import { FiSettings, FiFileText, FiImage, FiMail, FiBarChart2, FiLogOut, FiMenu, FiX, FiTool, FiUser, FiEye, FiClock } from 'react-icons/fi';
 import LoginForm from '@/components/admin/LoginForm';
 import FileUpload from '@/components/admin/FileUpload';
 import ContentManager from '@/components/admin/ContentManager';
 import Utilities from '@/components/admin/Utilities';
+import ProfileManager from '@/components/admin/ProfileManager';
 
 export default function AdminPanel() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -15,6 +16,8 @@ export default function AdminPanel() {
   const [isUploading, setIsUploading] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [stats, setStats] = useState({ totalContent: 0, totalMedia: 0, totalMessages: 45 });
+  const [analytics, setAnalytics] = useState<{ visitors: number; pageviews: number; lastActivity: string | null } | null>(null);
+  const [analyticsError, setAnalyticsError] = useState('');
 
   useEffect(() => {
     checkAuth();
@@ -46,6 +49,16 @@ export default function AdminPanel() {
       const mediaResponse = await fetch('/api/admin/stats/media');
       const mediaData = mediaResponse.ok ? await mediaResponse.json() : { count: 0 };
 
+      const analyticsResponse = await fetch('/api/admin/stats/analytics');
+      if (analyticsResponse.ok) {
+        const analyticsData = await analyticsResponse.json();
+        setAnalytics({ visitors: analyticsData.visitors, pageviews: analyticsData.pageviews, lastActivity: analyticsData.lastActivity });
+        setAnalyticsError('');
+      } else {
+        const analyticsData = await analyticsResponse.json().catch(() => ({}));
+        setAnalyticsError(analyticsData.error || 'Analytics are temporarily unavailable');
+      }
+
       setStats({
         totalContent,
         totalMedia: mediaData.count || 0,
@@ -71,6 +84,7 @@ export default function AdminPanel() {
 
   const handleLogin = () => {
     setIsAuthenticated(true);
+    fetchStats();
   };
 
   const handleLogout = async () => {
@@ -172,6 +186,7 @@ export default function AdminPanel() {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: FiBarChart2 },
     { id: 'content', label: 'Content', icon: FiFileText },
+    { id: 'about', label: 'About Page', icon: FiUser },
     { id: 'media', label: 'Media', icon: FiImage },
     { id: 'messages', label: 'Messages', icon: FiMail },
     { id: 'utilities', label: 'Utilities', icon: FiTool },
@@ -199,7 +214,25 @@ export default function AdminPanel() {
         return (
           <div className="space-y-6">
             <h2 className="text-3xl font-bold text-gray-900">Dashboard</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                <div className="flex items-center justify-between">
+                  <div><p className="text-sm text-gray-600">Total Visitors</p><p className="text-2xl font-bold text-gray-900">{analytics ? analytics.visitors.toLocaleString() : '—'}</p></div>
+                  <FiUser className="text-3xl text-blue-500" />
+                </div>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                <div className="flex items-center justify-between">
+                  <div><p className="text-sm text-gray-600">Page Views</p><p className="text-2xl font-bold text-gray-900">{analytics ? analytics.pageviews.toLocaleString() : '—'}</p></div>
+                  <FiEye className="text-3xl text-amber-500" />
+                </div>
+              </div>
+              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+                <div className="flex items-center justify-between">
+                  <div><p className="text-sm text-gray-600">Last Activity</p><p className="text-base font-bold text-gray-900">{analytics?.lastActivity ? new Date(analytics.lastActivity).toLocaleString() : 'No visits yet'}</p></div>
+                  <FiClock className="text-3xl text-teal-500" />
+                </div>
+              </div>
               <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
                 <div className="flex items-center justify-between">
                   <div>
@@ -218,16 +251,8 @@ export default function AdminPanel() {
                   <FiImage className="text-3xl text-purple-500" />
                 </div>
               </div>
-              <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm text-gray-600">Messages</p>
-                    <p className="text-2xl font-bold text-gray-900">{stats.totalMessages}</p>
-                  </div>
-                  <FiMail className="text-3xl text-red-500" />
-                </div>
-              </div>
             </div>
+            {analyticsError && <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">Analytics unavailable: {analyticsError}</div>}
           </div>
         );
       case 'content':
@@ -235,6 +260,13 @@ export default function AdminPanel() {
           <div className="space-y-6">
             <h2 className="text-3xl font-bold text-gray-900">Content Management</h2>
             <ContentManager onUpdate={handleContentUpdate} />
+          </div>
+        );
+      case 'about':
+        return (
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold text-gray-900">About Page Content</h2>
+            <ProfileManager />
           </div>
         );
       case 'media':

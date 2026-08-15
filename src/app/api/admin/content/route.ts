@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { validateAdminAuth } from '@/lib/admin-auth';
 import { commitToGitHub, getJsonContentFromGitHub } from '@/lib/github-api';
+import bundledProfile from '../../../../../public/content/profile.json';
 
 export async function GET(request: NextRequest) {
   // Validate admin authentication
@@ -23,7 +24,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Validate section name
-    const allowedSections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'shorts-home'];
+    const allowedSections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'shorts-home', 'profile'];
     if (!allowedSections.includes(section)) {
       return NextResponse.json(
         { error: 'Invalid section' },
@@ -32,13 +33,19 @@ export async function GET(request: NextRequest) {
     }
 
     // Fetch content from GitHub repository
-    const content = await getJsonContentFromGitHub(section);
+    const githubResult = await getJsonContentFromGitHub(section);
+    // The initial About content is bundled with the application. During local
+    // development (or before profile.json reaches the configured GitHub branch),
+    // use it instead of presenting an empty editor.
+    const content = githubResult.status === 'found'
+      ? githubResult.content
+      : section === 'profile' ? bundledProfile : [];
 
     return NextResponse.json({
       success: true,
       section,
       content,
-      count: content.length,
+      count: Array.isArray(content) ? content.length : 1,
     });
 
   } catch (error) {
@@ -62,18 +69,25 @@ export async function POST(request: NextRequest) {
   try {
     const { section, content } = await request.json();
 
-    if (!section || !Array.isArray(content)) {
+    if (!section || content === null || typeof content !== 'object') {
       return NextResponse.json(
-        { error: 'Section and content array are required' },
+        { error: 'Section and content are required' },
         { status: 400 }
       );
     }
 
     // Validate section name
-    const allowedSections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'shorts-home'];
+    const allowedSections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'shorts-home', 'profile'];
     if (!allowedSections.includes(section)) {
       return NextResponse.json(
         { error: 'Invalid section' },
+        { status: 400 }
+      );
+    }
+
+    if ((section === 'profile' && Array.isArray(content)) || (section !== 'profile' && !Array.isArray(content))) {
+      return NextResponse.json(
+        { error: section === 'profile' ? 'Profile content must be an object' : 'Section content must be an array' },
         { status: 400 }
       );
     }
@@ -102,7 +116,7 @@ export async function POST(request: NextRequest) {
           success: false,
           message: 'Failed to commit content to GitHub. Please check your GitHub credentials.',
           section,
-          count: content.length,
+          count: Array.isArray(content) ? content.length : 1,
           gitError: true,
         }, { status: 500 });
       }
@@ -112,7 +126,7 @@ export async function POST(request: NextRequest) {
         success: false,
         message: 'GitHub API error occurred. Please check your GitHub credentials.',
         section,
-        count: content.length,
+        count: Array.isArray(content) ? content.length : 1,
         gitError: true,
         error: githubError instanceof Error ? githubError.message : 'Unknown GitHub error',
       }, { status: 500 });
@@ -122,7 +136,7 @@ export async function POST(request: NextRequest) {
       success: true,
       message: 'Content updated successfully',
       section,
-      count: content.length,
+      count: Array.isArray(content) ? content.length : 1,
     });
 
   } catch (error) {

@@ -6,17 +6,19 @@ interface SocialLinksProps {
   iconSize?: number;
   hoverColor?: string;
   className?: string;
+  links?: Partial<Record<'facebook' | 'youtube' | 'instagram' | 'linkedin', string>>;
 }
 
 const SocialLinks = ({ 
   iconSize = 30, 
   hoverColor = "text-white", 
-  className = "" 
+  className = "",
+  links = {}
 }: SocialLinksProps) => {
   return (
     <div className={`flex space-x-6 ${className}`}>
       <a 
-        href="https://www.facebook.com/asadullahil.galib.01/" 
+        href={links.facebook || "https://www.facebook.com/asadullahil.galib.01/"}
         target="_blank" 
         rel="noopener noreferrer"
         className={`text-gray-300 hover:${hoverColor} transition-colors`}
@@ -25,7 +27,7 @@ const SocialLinks = ({
         <FaFacebook size={iconSize} />
       </a>
       <a 
-        href="https://www.youtube.com/@GalibOnLens" 
+        href={links.youtube || "https://www.youtube.com/@GalibOnLens"}
         target="_blank" 
         rel="noopener noreferrer"
         className={`text-gray-300 hover:${hoverColor} transition-colors`}
@@ -34,7 +36,7 @@ const SocialLinks = ({
         <FaYoutube size={iconSize} />
       </a>
       <a 
-        href="https://www.instagram.com/asadullahil_galib_01/" 
+        href={links.instagram || "https://www.instagram.com/asadullahil_galib_01/"}
         target="_blank" 
         rel="noopener noreferrer"
         className={`text-gray-300 hover:${hoverColor} transition-colors`}
@@ -43,7 +45,7 @@ const SocialLinks = ({
         <FaInstagram size={iconSize} />
       </a>
       <a 
-        href="https://www.linkedin.com/in/asadullahilgalib01/" 
+        href={links.linkedin || "https://www.linkedin.com/in/asadullahilgalib01/"}
         target="_blank" 
         rel="noopener noreferrer"
         className={`text-gray-300 hover:${hoverColor} transition-colors`}

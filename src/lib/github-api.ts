@@ -253,20 +253,22 @@ export async function getFilesFromGitHub(folder: string): Promise<GitHubRepoFile
   }
 }
 
-export async function getJsonContentFromGitHub(section: string): Promise<any[]> {
+export type JsonContentResult =
+  | { status: 'found'; content: unknown }
+  | { status: 'missing' };
+
+export async function getJsonContentFromGitHub(section: string): Promise<JsonContentResult> {
   const token = process.env.GITHUB_TOKEN;
   const repo = process.env.GITHUB_REPO; // format: owner/repo
   const branch = process.env.GITHUB_BRANCH || 'main';
 
   if (!token || !repo) {
-    console.error('GitHub credentials not configured');
-    return [];
+    throw new Error('GitHub credentials are not configured');
   }
 
   const [owner, repoName] = repo.split('/');
   if (!owner || !repoName) {
-    console.error('Invalid GITHUB_REPO format. Expected: owner/repo');
-    return [];
+    throw new Error('Invalid GITHUB_REPO format. Expected: owner/repo');
   }
 
   const baseUrl = 'https://api.github.com';
@@ -287,9 +289,13 @@ export async function getJsonContentFromGitHub(section: string): Promise<any[]> 
       { headers }
     );
 
-    if (!response.ok) {
+    if (response.status === 404) {
       console.log(`JSON content for ${section} not found in GitHub at path: ${filePath}`);
-      return [];
+      return { status: 'missing' };
+    }
+
+    if (!response.ok) {
+      throw new Error(`GitHub returned ${response.status} while loading ${filePath}`);
     }
 
     const fileData = await response.json();
@@ -297,13 +303,13 @@ export async function getJsonContentFromGitHub(section: string): Promise<any[]> 
     if (fileData.content) {
       // Decode base64 content
       const content = Buffer.from(fileData.content, 'base64').toString('utf8');
-      return JSON.parse(content);
+      return { status: 'found', content: JSON.parse(content) };
     }
 
-    return [];
+    throw new Error(`GitHub response for ${filePath} did not contain file content`);
 
   } catch (error) {
     console.error(`Error fetching JSON content from GitHub for section ${section}:`, error);
-    return [];
+    throw error;
   }
 }

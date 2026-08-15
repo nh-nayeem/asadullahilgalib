@@ -1,0 +1,40 @@
+{
+  "name": "ASADULLAHIL GALIB",
+  "tagline": "Visual Storyteller & Filmmaker",
+  "aboutTitle": "About Galib",
+  "biography": "I am an award-winning filmmaker and cultural activist, driven by a deep love for art and visual storytelling. My work explores human emotion, memory, place, and culture, inspired by everyday life and timeless artistic traditions.\n\nThrough cinema, I strive to create intimate, poetic, and visually resonant stories, where image, sound, and rhythm come together to evoke feeling and meaning. For me, filmmaking is an artistic journey of observation and sensitivity, translating lived moments into honest works that connect with people beyond language and borders.",
+  "profileImage": "/images/galib.jpg",
+  "heroImage": "/images/galib_hero.png",
+  "socialLinks": {
+    "facebook": "https://www.facebook.com/asadullahil.galib.01/",
+    "youtube": "https://www.youtube.com/@GalibOnLens",
+    "instagram": "https://www.instagram.com/asadullahil_galib_01/",
+    "linkedin": "https://www.linkedin.com/in/asadullahilgalib01/"
+  },
+  "education": [
+    { "title": "Bachelor of Arts in Islamic History & Culture", "subtitle": "University of Dhaka", "period": "2022 - present", "image": "/logos/DU_Logo.png" }
+  ],
+  "skills": [
+    { "title": "Direction", "icon": "film" }, { "title": "Cinematography", "icon": "camera" }, { "title": "Screenwriting", "icon": "edit" },
+    { "title": "Story Development", "icon": "lightbulb" }, { "title": "Video Editing", "icon": "video" }, { "title": "Graphic Design", "icon": "palette" },
+    { "title": "Photography", "icon": "image" }, { "title": "Leadership", "icon": "users" }, { "title": "Project Management", "icon": "project" }, { "title": "Communication", "icon": "comments" }
+  ],
+  "experiences": [
+    { "title": "Post Baksho - Founder", "description": "A platform producing film and visuals content with enthusiastic young filmmakers.", "image": "/logos/Post_Baksho_Logo.png" },
+    { "title": "Youth Opportunities - Internship", "period": "6-month internship", "description": "An Award winning international youth organization.", "image": "/logos/YO_Logo.png" },
+    { "title": "Qaseeda - Co-Founder", "period": "August 2024 - January 2026", "description": "One of the founders of the famous music band Qaseeda. Worked as an Executive Manager and Creative Director.", "image": "/logos/Qaseeda_Logo.png" },
+    { "title": "Visual Projects Portfolio", "period": "5 years of experience", "description": "Worked on 50+ visual projects across various domains." }
+  ],
+  "certifications": [
+    { "title": "Digital Film and Drama Direction", "subtitle": "CT Media", "period": "2016", "description": "A two-day-long workshop on film and drama direction." },
+    { "title": "Masterclass with Dr. Shi Chuan, Majid Majidi, Anjan Dutt", "subtitle": "Rainbow Film Society", "period": "2024", "description": "Masterclass session at 22nd Dhaka International Film Festival 2024" },
+    { "title": "Aspire Leaders Program", "subtitle": "Aspire Institute", "period": "2025", "description": "A global leadership development program run by Aspire Institute, founded at Harvard University." }
+  ],
+  "awards": [
+    { "title": "Best National Short", "subtitle": "6th Bogura International Film Festival - BIFF 2026, Bangladesh", "description": "Selected for the film \"Joar\"", "icon": "🏆" },
+    { "title": "Official Nomination", "subtitle": "Northwest International Film Festival (NIFF) 2025, USA", "description": "Recognized for the film \"Joar\"", "icon": "⭐" },
+    { "title": "Official Selection", "subtitle": "Cinemaking International Film Festival 2025, Bangladesh", "description": "Selected for the film \"Joar\"", "icon": "⭐" },
+    { "title": "2nd Runner Up (Silver Medal)", "subtitle": "National Acting Competition Sherader Shera 2017", "description": "Achieved silver medal in national-level acting competition", "icon": "🥈" },
+    { "title": "Runner Up", "subtitle": "Cinematography Segment - TALENT FIESTA 2021", "description": "Organized by Sylhet Youth Alliance", "icon": "🥈" }
+  ]
+}
