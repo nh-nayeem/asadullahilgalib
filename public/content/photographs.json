@@ -1,97 +1,97 @@
 [
   {
     "title": "July",
-    "image": "/photographs/July.jpg",
-    "imagethumb": "/photographs/July-min.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799232/photographs/July.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799228/photographs/July-min.jpg"
   },
   {
     "title": "Afra",
-    "image": "/photographs/Afra.jpg",
-    "imagethumb": "/photographs/Afra-min.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786798906/photographs/Afra.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786798899/photographs/Afra-min.jpg"
   },
   {
     "title": "Dinghy",
-    "image": "/photographs/Dinghy.jpg",
-    "imagethumb": "/photographs/Dinghy-min.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786798916/photographs/Dinghy.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786798908/photographs/Dinghy-min.jpg"
   },
   {
     "title": "Flow",
-    "image": "/photographs/Flow.jpg",
-    "imagethumb": "/photographs/Flow-min.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799128/photographs/Flow.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786798919/photographs/Flow-min.jpg"
   },
   {
     "title": "Gaaner Sawgat",
-    "image": "/photographs/Gaaner Sawgat.jpg",
-    "imagethumb": "/photographs/Gaaner Sawgat-min.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799139/photographs/Gaaner%20Sawgat.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799132/photographs/Gaaner%20Sawgat-min.jpg"
   },
   {
     "title": "Hope",
-    "image": "/photographs/Hope.jpg",
-    "imagethumb": "/photographs/Hope-min.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799155/photographs/Hope.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799147/photographs/Hope-min.jpg"
   },
   {
     "title": "I Wish",
-    "image": "/photographs/I Wish.jpg",
-    "imagethumb": "/photographs/I Wish-min.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799168/photographs/I%20Wish.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799157/photographs/I%20Wish-min.jpg"
   },
   {
     "title": "Jahajer Janala",
-    "image": "/photographs/Jahajer Janala.jpg",
-    "imagethumb": "/photographs/Jahajer Janala-min.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799224/photographs/Jahajer%20Janala.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799171/photographs/Jahajer%20Janala-min.jpg"
   },
   {
     "title": "Lalbagh",
-    "image": "/photographs/Lalbagh.jpg",
-    "imagethumb": "/photographs/Lalbagh-min.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799245/photographs/Lalbagh.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799235/photographs/Lalbagh-min.jpg"
   },
   {
     "title": "A Morning",
-    "image": "/photographs/A Morning.jpg",
-    "imagethumb": "/photographs/A Morning.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786798897/photographs/A%20Morning.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786798897/photographs/A%20Morning.jpg"
   },
   {
     "title": "Gaze",
-    "image": "/photographs/Gaze.jpg",
-    "imagethumb": "/photographs/Gaze.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799145/photographs/Gaze.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799145/photographs/Gaze.jpg"
   },
   {
     "title": "Minar",
-    "image": "/photographs/Minar.jpg",
-    "imagethumb": "/photographs/Minar.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799248/photographs/Minar.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799248/photographs/Minar.jpg"
   },
   {
     "title": "Mist",
-    "image": "/photographs/Mist.jpg",
-    "imagethumb": "/photographs/Mist.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799251/photographs/Mist.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799251/photographs/Mist.jpg"
   },
   {
     "title": "Naya Char",
-    "image": "/photographs/Naya Char.jpg",
-    "imagethumb": "/photographs/Naya Char.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799259/photographs/Naya%20Char.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799259/photographs/Naya%20Char.jpg"
   },
   {
     "title": "Phul",
-    "image": "/photographs/Phul.jpg",
-    "imagethumb": "/photographs/Phul.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799265/photographs/Phul.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799265/photographs/Phul.jpg"
   },
   {
     "title": "Reflection",
-    "image": "/photographs/Reflection.jpg",
-    "imagethumb": "/photographs/Reflection.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799267/photographs/Reflection.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799267/photographs/Reflection.jpg"
   },
   {
     "title": "Rest",
-    "image": "/photographs/Rest.jpg",
-    "imagethumb": "/photographs/Rest.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799280/photographs/Rest.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799280/photographs/Rest.jpg"
   },
   {
     "title": "Stairs",
-    "image": "/photographs/Stairs.jpg",
-    "imagethumb": "/photographs/Stairs.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799285/photographs/Stairs.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799285/photographs/Stairs.jpg"
   },
   {
     "title": "The Door of Peace",
-    "image": "/photographs/The Door of Peace.jpg",
-    "imagethumb": "/photographs/The Door of Peace.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799291/photographs/The%20Door%20of%20Peace.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799291/photographs/The%20Door%20of%20Peace.jpg"
   }
 ]

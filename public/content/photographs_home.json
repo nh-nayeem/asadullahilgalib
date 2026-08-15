@@ -1,22 +1,22 @@
 [
   {
     "title": "July",
-    "image": "/photographs/July.jpg",
-    "imagethumb": "/photographs/July-min.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799232/photographs/July.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799228/photographs/July-min.jpg"
   },
   {
     "title": "Flow",
-    "image": "/photographs/Flow.jpg",
-    "imagethumb": "/photographs/Flow-min.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799128/photographs/Flow.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786798919/photographs/Flow-min.jpg"
   },
   {
     "title": "Afra",
-    "image": "/photographs/Afra.jpg",
-    "imagethumb": "/photographs/Afra-min.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786798906/photographs/Afra.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786798899/photographs/Afra-min.jpg"
   },
   {
     "title": "Rest",
-    "image": "/photographs/Rest.jpg",
-    "imagethumb": "/photographs/Rest.jpg"
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799280/photographs/Rest.jpg",
+    "imagethumb": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799280/photographs/Rest.jpg"
   }
 ]
