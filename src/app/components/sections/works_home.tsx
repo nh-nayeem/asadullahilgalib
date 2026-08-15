@@ -104,6 +104,8 @@ const Works = () => {
                       <img
                         src={work.image}
                         alt={work.title}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -120,6 +122,8 @@ const Works = () => {
                       <img
                         src={work.image}
                         alt={work.title}
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                       />
                       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -158,8 +162,9 @@ const Works = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
         >
-          <Link 
+          <Link
             href="/works"
+            prefetch={false}
             className="inline-flex items-center px-8 py-3 bg-amber-400 text-black rounded-full font-medium hover:bg-white transition-colors"
           >
             See More

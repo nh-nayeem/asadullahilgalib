@@ -43,7 +43,7 @@ const Header = () => {
       <div className="backdrop-blur-sm bg-black/30 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <Link href="/" passHref>
+            <Link href="/" prefetch={false}>
               <motion.span 
                 className="text-xl font-light tracking-tight text-white cursor-pointer"
                 initial={{ opacity: 0, y: -20 }}
@@ -58,7 +58,7 @@ const Header = () => {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               {navItems.map((item) => (
-                <Link key={item.name} href={item.path} passHref>
+                <Link key={item.name} href={item.path} prefetch={false}>
                   <motion.span
                     className={`text-sm uppercase tracking-wider ${
                       pathname === item.path
@@ -98,7 +98,7 @@ const Header = () => {
               >
                 <div className="pt-4 pb-6 flex flex-col space-y-4">
                   {navItems.map((item, index) => (
-                    <Link key={item.name} href={item.path} passHref>
+                    <Link key={item.name} href={item.path} prefetch={false}>
                       <motion.span
                         className={`block py-2 text-base uppercase tracking-wider ${
                           pathname === item.path

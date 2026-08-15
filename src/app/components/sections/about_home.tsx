@@ -2,8 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { FaEnvelope } from 'react-icons/fa';
-import Link from 'next/link';
 import SocialLinks from '@/app/components/common/SocialLinks';
+import Link from 'next/link';
 import profileData from '../../../../public/content/profile.json';
 import type { ProfileContent } from '@/lib/profile-types';
 
@@ -33,6 +33,8 @@ const About = () => {
                 <img
                   src={profile.profileImage}
                   alt={profile.name}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -57,8 +59,9 @@ const About = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
         >
-          <Link 
+          <Link
             href="/about"
+            prefetch={false}
             className="inline-flex items-center px-8 py-3 bg-amber-400 text-black rounded-full font-medium hover:bg-white transition-colors"
           >
             See More

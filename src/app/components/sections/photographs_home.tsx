@@ -90,6 +90,8 @@ const Photographs = () => {
                 <img
                   src={photo.imagethumb}
                   alt={photo.title}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                 />
                 {/* Eye icon overlay */}
@@ -112,8 +114,9 @@ const Photographs = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
         >
-          <Link 
+          <Link
             href="/photographs"
+            prefetch={false}
             className="inline-flex items-center px-8 py-3 bg-amber-400 text-black rounded-full font-medium hover:bg-white transition-colors"
           >
             See More

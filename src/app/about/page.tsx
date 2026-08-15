@@ -31,8 +31,8 @@ const SectionHeading = ({ title, icon: Icon }: { title: string; icon: typeof FaA
   </motion.div>
 );
 
-const Card = ({ entry }: { entry: ProfileEntry }) => (
-  <motion.article initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="bg-gray-900 p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-start gap-4">
+const Card = ({ entry, background = 'bg-gray-900' }: { entry: ProfileEntry; background?: 'bg-gray-800' | 'bg-gray-900' }) => (
+  <motion.article initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className={`${background} p-6 rounded-lg border border-gray-700 hover:border-amber-400 transition-colors flex items-start gap-4`}>
     {entry.image ? <img src={entry.image} alt="" className="w-16 h-16 object-contain rounded-lg flex-shrink-0" /> : null}
     <div>
       <h3 className="text-xl font-semibold text-white mb-2">{entry.title}</h3>
@@ -83,7 +83,7 @@ export default function About() {
         </section>
 
         <section className="py-20 px-4 md:px-8 bg-gray-900">
-          <div className="max-w-6xl mx-auto"><SectionHeading title="Certifications" icon={FaCertificate} /><div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">{profile.certifications.map((entry, index) => <Card key={index} entry={entry} />)}</div></div>
+          <div className="max-w-6xl mx-auto"><SectionHeading title="Certifications" icon={FaCertificate} /><div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">{profile.certifications.map((entry, index) => <Card key={index} entry={entry} background="bg-gray-800" />)}</div></div>
         </section>
 
         <section className="py-20 px-4 md:px-8 bg-gray-800">

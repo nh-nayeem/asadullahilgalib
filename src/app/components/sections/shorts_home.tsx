@@ -173,6 +173,8 @@ const Shorts = () => {
                           <img
                             src={getThumbnailUrl(short.videoId)}
                             alt={short.title}
+                            loading="lazy"
+                            decoding="async"
                             className="w-full h-full object-cover"
                             onError={(e) => handleImageError(short.videoId, e)}
                           />
@@ -224,8 +226,9 @@ const Shorts = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
         >
-          <Link 
+          <Link
             href="/works"
+            prefetch={false}
             className="inline-flex items-center px-8 py-3 bg-amber-400 text-black rounded-full font-medium hover:bg-white transition-colors"
           >
             See More
