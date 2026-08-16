@@ -11,20 +11,20 @@ interface WorkItem {
   role: string;
   image: string;
   videoLink?: string; 
-  category: 'filmography' | 'direction' | 'shorts';
+  category: 'filmography' | 'direction' | 'content';
   description?: string;
 }
 
 const categories = [
   { id: 'filmography', name: 'Filmography', icon: '🎬' },
   { id: 'direction', name: 'Direction', icon: '🎥' },
-  { id: 'shorts', name: 'Shorts', icon: '✈️' }
+  { id: 'content', name: 'Content', icon: '✈️' }
 ];
 
 const Works = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null);
-  const [activeCategory, setActiveCategory] = useState<'filmography' | 'direction' | 'shorts' | 'shorts'>('filmography');
+  const [activeCategory, setActiveCategory] = useState<'filmography' | 'direction' | 'content'>('filmography');
   const [works, setWorks] = useState<WorkItem[]>([]);
 
   useEffect(() => {

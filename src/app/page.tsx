@@ -5,7 +5,7 @@ import Header from './components/layout/Header';
 import Hero from './components/sections/hero_home';
 import About from './components/sections/about_home';
 import Works from './components/sections/works_home';
-import Shorts from './components/sections/shorts_home';
+import Content from './components/sections/content_home';
 import Photographs from './components/sections/photographs_home';
 import Artworks from './components/sections/artworks_home';
 import Contact from './components/sections/contact_home';
@@ -38,7 +38,7 @@ export default function Home() {
         <Hero />
         <About />
         <Works />
-        <Shorts />
+        <Content />
         <Photographs />
         <Artworks />
         <Contact />

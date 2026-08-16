@@ -9,35 +9,35 @@ import { Navigation, Autoplay, EffectCoverflow } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/effect-coverflow';
-import styles from './Shorts.module.css';
+import styles from './Content.module.css';
 
-interface ShortItem {
+interface VideoContentItem {
   title: string;
   year: string;
   videoId: string;
   videoLink: string;
 }
 
-const Shorts = () => {
-  const [modalVideo, setModalVideo] = useState<ShortItem | null>(null);
+const Content = () => {
+  const [modalVideo, setModalVideo] = useState<VideoContentItem | null>(null);
   const [thumbnailErrors, setThumbnailErrors] = useState<Set<string>>(new Set());
-  const [shorts, setShorts] = useState<ShortItem[]>([]);
+  const [content, setContent] = useState<VideoContentItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchShorts = async () => {
+    const fetchContent = async () => {
       try {
-        const response = await fetch('/content/shorts_home.json');
+        const response = await fetch('/content/content_home.json');
         const data = await response.json();
-        setShorts(data);
+        setContent(data);
       } catch (error) {
-        console.error('Error fetching shorts data:', error);
+        console.error('Error fetching content data:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchShorts();
+    fetchContent();
   }, []);
 
   const getThumbnailUrl = (videoId: string, quality: string = 'hqdefault') => {
@@ -64,8 +64,8 @@ const Shorts = () => {
     }
   };
 
-  const handleVideoPlay = (short: ShortItem) => {
-    setModalVideo(short);
+  const handleVideoPlay = (item: VideoContentItem) => {
+    setModalVideo(item);
   };
 
   const handleModalClose = () => {
@@ -73,7 +73,7 @@ const Shorts = () => {
   };
 
   return (
-    <section id="shorts" className="py-20 px-4 md:px-8 bg-black">
+    <section id="content" className="py-20 px-4 md:px-8 bg-black">
       <div className="max-w-7xl mx-auto">
         <motion.h2 
           className="text-4xl font-bold mb-4 text-center text-white"
@@ -81,7 +81,7 @@ const Shorts = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          Shorts
+          Content
         </motion.h2>
         <motion.p 
           className="text-center text-gray-400 mb-12 max-w-2xl mx-auto"
@@ -90,7 +90,7 @@ const Shorts = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          Some shorts through my lens while traveling to unknown. 
+          Visual stories and moments through my lens while traveling to the unknown.
         </motion.p>
 
         <div className="relative">
@@ -146,15 +146,15 @@ const Shorts = () => {
                   spaceBetween: 40,
                 },
               }}
-              className={`shorts-swiper ${styles.shortsSwiper}`}
+              className={`content-swiper ${styles['content-swiper']}`}
               style={{
                 '--swiper-navigation-size': '24px',
                 '--swiper-navigation-color': '#facc15',
                 '--swiper-pagination-color': '#facc15',
               } as React.CSSProperties}
             >
-              {shorts.map((short, index) => (
-                <SwiperSlide key={`${short.title}-${index}`}>
+              {content.map((item, index) => (
+                <SwiperSlide key={`${item.title}-${index}`}>
                   <motion.div
                     className="relative transition-all duration-300"
                     initial={{ opacity: 0, y: 0 }}
@@ -167,16 +167,16 @@ const Shorts = () => {
                       {/* Video Container */}
                       <div className="relative aspect-video overflow-hidden bg-black rounded">
                         <div 
-                          onClick={() => handleVideoPlay(short)}
+                          onClick={() => handleVideoPlay(item)}
                           className="block cursor-pointer w-full h-full relative group"
                         >
                           <img
-                            src={getThumbnailUrl(short.videoId)}
-                            alt={short.title}
+                            src={getThumbnailUrl(item.videoId)}
+                            alt={item.title}
                             loading="lazy"
                             decoding="async"
                             className="w-full h-full object-cover"
-                            onError={(e) => handleImageError(short.videoId, e)}
+                            onError={(e) => handleImageError(item.videoId, e)}
                           />
                           {/* Film Overlay */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
@@ -196,8 +196,8 @@ const Shorts = () => {
                       
                       {/* Film Info */}
                       <div className="mt-4 text-center">
-                        <h3 className="text-lg font-bold text-white">{short.title}</h3>
-                        <p className="text-gray-400">{short.year}</p>
+                        <h3 className="text-lg font-bold text-white">{item.title}</h3>
+                        <p className="text-gray-400">{item.year}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -287,4 +287,4 @@ const Shorts = () => {
   );
 };
 
-export default Shorts;
+export default Content;

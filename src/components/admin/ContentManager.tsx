@@ -27,22 +27,22 @@ interface PhotoItem {
   imagethumb?: string;
 }
 
-interface ShortItem {
+interface VideoContentItem {
   title: string;
   year: string;
   videoId: string;
   videoLink: string;
 }
 
-type ContentItem = WorkItem | ArtworkItem | PhotoItem | ShortItem;
+type ContentItem = WorkItem | ArtworkItem | PhotoItem | VideoContentItem;
 
 interface ContentManagerProps {
   onUpdate: (section: string, content: ContentItem[]) => void;
 }
 
-const sections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'shorts-home'];
+const sections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'content-home'];
 
-const workCategories = ['shorts', 'filmography', 'direction'];
+const workCategories = ['content', 'filmography', 'direction'];
 
 export default function ContentManager({ onUpdate }: ContentManagerProps) {
   const [selectedSection, setSelectedSection] = useState('');
@@ -54,17 +54,17 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
   const isWorkSection = (section: string) => section.includes('works');
   const isArtworkSection = (section: string) => section.includes('artworks');
   const isPhotoSection = (section: string) => section.includes('photographs');
-  const isShortSection = (section: string) => section.includes('shorts');
+  const isContentSection = (section: string) => section.includes('content');
 
   // Create new item based on section type
   const createNewItem = (): ContentItem => {
-    if (isShortSection(selectedSection)) {
+    if (isContentSection(selectedSection)) {
       return {
         title: '',
         year: '',
         videoId: '',
         videoLink: ''
-      } as ShortItem;
+      } as VideoContentItem;
     } else if (isPhotoSection(selectedSection)) {
       return {
         title: '',
@@ -170,9 +170,9 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
   const handleAddItem = () => {
     // Validation based on content type
     let isValid = false;
-    if (isShortSection(selectedSection)) {
-      const shortItem = newItem as ShortItem;
-      isValid = !!(shortItem.title && shortItem.year && shortItem.videoId && shortItem.videoLink);
+    if (isContentSection(selectedSection)) {
+      const contentItem = newItem as VideoContentItem;
+      isValid = !!(contentItem.title && contentItem.year && contentItem.videoId && contentItem.videoLink);
     } else if (isPhotoSection(selectedSection)) {
       const photoItem = newItem as PhotoItem;
       isValid = !!(photoItem.title && photoItem.image);
@@ -246,25 +246,25 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                 />
                 
                 {/* Conditional fields based on content type */}
-                {isShortSection(selectedSection) && (
+                {isContentSection(selectedSection) && (
                   <>
                     <input
                       type="text"
-                      value={(newItem as ShortItem).year}
+                      value={(newItem as VideoContentItem).year}
                       onChange={(e) => setNewItem({ ...newItem, year: e.target.value })}
                       className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
                       placeholder="Year"
                     />
                     <input
                       type="text"
-                      value={(newItem as ShortItem).videoId}
+                      value={(newItem as VideoContentItem).videoId}
                       onChange={(e) => setNewItem({ ...newItem, videoId: e.target.value })}
                       className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
                       placeholder="Video ID"
                     />
                     <input
                       type="text"
-                      value={(newItem as ShortItem).videoLink}
+                      value={(newItem as VideoContentItem).videoLink}
                       onChange={(e) => setNewItem({ ...newItem, videoLink: e.target.value })}
                       className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
                       placeholder="Video Link"
@@ -324,7 +324,7 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                   </>
                 )}
                 
-                {isWorkSection(selectedSection) && !isArtworkSection(selectedSection) && !isPhotoSection(selectedSection) && !isShortSection(selectedSection) && (
+                {isWorkSection(selectedSection) && !isArtworkSection(selectedSection) && !isPhotoSection(selectedSection) && !isContentSection(selectedSection) && (
                   <>
                     <input
                       type="text"
@@ -421,25 +421,25 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                         />
                         
                         {/* Conditional fields for editing based on content type */}
-                        {isShortSection(selectedSection) && (
+                        {isContentSection(selectedSection) && (
                           <>
                             <input
                               type="text"
-                              value={(item as ShortItem).year}
+                              value={(item as VideoContentItem).year}
                               onChange={(e) => handleUpdateItem(index, 'year', e.target.value)}
                               className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
                               placeholder="Year"
                             />
                             <input
                               type="text"
-                              value={(item as ShortItem).videoId}
+                              value={(item as VideoContentItem).videoId}
                               onChange={(e) => handleUpdateItem(index, 'videoId', e.target.value)}
                               className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
                               placeholder="Video ID"
                             />
                             <input
                               type="text"
-                              value={(item as ShortItem).videoLink}
+                              value={(item as VideoContentItem).videoLink}
                               onChange={(e) => handleUpdateItem(index, 'videoLink', e.target.value)}
                               className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
                               placeholder="Video Link"
@@ -499,7 +499,7 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                           </>
                         )}
                         
-                        {isWorkSection(selectedSection) && !isArtworkSection(selectedSection) && !isPhotoSection(selectedSection) && !isShortSection(selectedSection) && (
+                        {isWorkSection(selectedSection) && !isArtworkSection(selectedSection) && !isPhotoSection(selectedSection) && !isContentSection(selectedSection) && (
                           <>
                             <input
                               type="text"
@@ -590,10 +590,10 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                           <div className="flex-1">
                             <h5 className="font-semibold text-gray-700">{item.title}</h5>
                             <p className="text-sm text-gray-600">
-                              {isShortSection(selectedSection) && `${(item as ShortItem).year}`}
+                              {isContentSection(selectedSection) && `${(item as VideoContentItem).year}`}
                               {isPhotoSection(selectedSection) && ''}
                               {isArtworkSection(selectedSection) && `${(item as ArtworkItem).year}`}
-                              {isWorkSection(selectedSection) && !isArtworkSection(selectedSection) && !isPhotoSection(selectedSection) && !isShortSection(selectedSection) && 
+                              {isWorkSection(selectedSection) && !isArtworkSection(selectedSection) && !isPhotoSection(selectedSection) && !isContentSection(selectedSection) &&
                                 `${(item as WorkItem).year} • ${(item as WorkItem).role} • ${(item as WorkItem).category || ''}`
                               }
                             </p>

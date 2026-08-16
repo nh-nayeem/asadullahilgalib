@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Validate section name
-    const allowedSections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'shorts-home', 'profile'];
+    const allowedSections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'content-home', 'profile'];
     if (!allowedSections.includes(section)) {
       return NextResponse.json(
         { error: 'Invalid section' },
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate section name
-    const allowedSections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'shorts-home', 'profile'];
+    const allowedSections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'content-home', 'profile'];
     if (!allowedSections.includes(section)) {
       return NextResponse.json(
         { error: 'Invalid section' },

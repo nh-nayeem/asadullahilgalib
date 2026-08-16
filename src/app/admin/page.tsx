@@ -27,7 +27,7 @@ export default function AdminPanel() {
   const fetchStats = async () => {
     try {
       // Fetch content stats
-      const sections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'shorts-home'];
+      const sections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'content-home'];
       let totalContent = 0;
       
       for (const section of sections) {
