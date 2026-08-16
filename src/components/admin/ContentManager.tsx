@@ -42,7 +42,13 @@ interface ContentManagerProps {
 
 const sections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'content-home'];
 
-const workCategories = ['content', 'filmography', 'direction'];
+const workCategories = ['filmography', 'commercial-work', 'content'];
+
+const workCategoryLabels: Record<string, string> = {
+  filmography: 'Filmography',
+  'commercial-work': 'Commercial Work',
+  content: 'Content',
+};
 
 export default function ContentManager({ onUpdate }: ContentManagerProps) {
   const [selectedSection, setSelectedSection] = useState('');
@@ -361,7 +367,7 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                     >
                       <option value="">Select Category</option>
                       {workCategories.map(cat => (
-                        <option key={cat} value={cat}>{cat}</option>
+                        <option key={cat} value={cat}>{workCategoryLabels[cat]}</option>
                       ))}
                     </select>
                     <textarea
@@ -536,7 +542,7 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                             >
                               <option value="">Select Category</option>
                               {workCategories.map(cat => (
-                                <option key={cat} value={cat}>{cat}</option>
+                                  <option key={cat} value={cat}>{workCategoryLabels[cat]}</option>
                               ))}
                             </select>
                             <textarea

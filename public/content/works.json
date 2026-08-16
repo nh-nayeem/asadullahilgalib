@@ -40,7 +40,7 @@
     "role": "Director",
     "image": "/works/2 Qaseeda.jpeg",
     "videoLink": "https://www.youtube.com/watch?v=RfcxyMMCwFk",
-    "category": "direction",
+    "category": "commercial-work",
     "description": ""
   },
   {
@@ -49,7 +49,7 @@
     "role": "Director",
     "image": "/works/4 Ramadan by Junayed.jpeg",
     "videoLink": "https://www.youtube.com/watch?v=yB8Argb2WRo",
-    "category": "direction",
+    "category": "commercial-work",
     "description": ""
   },
   {
@@ -130,7 +130,7 @@
     "role": "Maker",
     "image": "https://img.youtube.com/vi/FhIzN8UHH3E/maxresdefault.jpg",
     "videoLink": "https://www.youtube.com/watch?v=FhIzN8UHH3E",
-    "category": "direction",
+    "category": "commercial-work",
     "description": ""
   }
 ]

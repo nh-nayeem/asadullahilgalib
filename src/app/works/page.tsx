@@ -11,20 +11,20 @@ interface WorkItem {
   role: string;
   image: string;
   videoLink?: string; 
-  category: 'filmography' | 'direction' | 'content';
+  category: 'filmography' | 'commercial-work' | 'content';
   description?: string;
 }
 
 const categories = [
   { id: 'filmography', name: 'Filmography', icon: '🎬' },
-  { id: 'direction', name: 'Direction', icon: '🎥' },
+  { id: 'commercial-work', name: 'Commercial Work', icon: '🎥' },
   { id: 'content', name: 'Content', icon: '✈️' }
 ];
 
 const Works = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null);
-  const [activeCategory, setActiveCategory] = useState<'filmography' | 'direction' | 'content'>('filmography');
+  const [activeCategory, setActiveCategory] = useState<'filmography' | 'commercial-work' | 'content'>('filmography');
   const [works, setWorks] = useState<WorkItem[]>([]);
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const Works = () => {
             >
               <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">Works</h1>
               <p className="text-center text-gray-400 max-w-2xl mx-auto">
-                Explore a collection of my works including filmography, direction projects, mobile cinematography, and travel documentaries that showcase diverse storytelling approaches and visual styles.
+                Explore a collection of my films, commissioned client work, and visual content showcasing diverse storytelling approaches and creative styles.
               </p>
             </motion.div>
 
