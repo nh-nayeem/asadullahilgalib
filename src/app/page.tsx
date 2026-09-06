@@ -8,6 +8,7 @@ import Works from './components/sections/works_home';
 import Content from './components/sections/content_home';
 import Photographs from './components/sections/photographs_home';
 import Artworks from './components/sections/artworks_home';
+import Press from './components/sections/press_home';
 import Contact from './components/sections/contact_home';
 import Footer from './components/layout/Footer';
 
@@ -38,6 +39,7 @@ export default function Home() {
         <Hero />
         <About />
         <Works />
+        <Press />
         <Content />
         <Photographs />
         <Artworks />

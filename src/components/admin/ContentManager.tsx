@@ -34,13 +34,21 @@ interface VideoContentItem {
   videoLink: string;
 }
 
-type ContentItem = WorkItem | ArtworkItem | PhotoItem | VideoContentItem;
+interface PressItem {
+  title: string;
+  url: string;
+  thumbnail?: string;
+  publisher?: string;
+  date?: string;
+}
+
+type ContentItem = WorkItem | ArtworkItem | PhotoItem | VideoContentItem | PressItem;
 
 interface ContentManagerProps {
   onUpdate: (section: string, content: ContentItem[]) => void;
 }
 
-const sections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'content-home'];
+const sections = ['works', 'artworks', 'photographs', 'works-home', 'artworks-home', 'photographs-home', 'content-home', 'press-home'];
 
 const workCategories = ['filmography', 'commercial-work', 'content'];
 
@@ -61,10 +69,13 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
   const isArtworkSection = (section: string) => section.includes('artworks');
   const isPhotoSection = (section: string) => section.includes('photographs');
   const isContentSection = (section: string) => section.includes('content');
+  const isPressSection = (section: string) => section.includes('press');
 
   // Create new item based on section type
   const createNewItem = (): ContentItem => {
-    if (isContentSection(selectedSection)) {
+    if (isPressSection(selectedSection)) {
+      return { title: '', url: '', thumbnail: '', publisher: '', date: '' } as PressItem;
+    } else if (isContentSection(selectedSection)) {
       return {
         title: '',
         year: '',
@@ -176,7 +187,10 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
   const handleAddItem = () => {
     // Validation based on content type
     let isValid = false;
-    if (isContentSection(selectedSection)) {
+    if (isPressSection(selectedSection)) {
+      const pressItem = newItem as PressItem;
+      isValid = !!pressItem.url;
+    } else if (isContentSection(selectedSection)) {
       const contentItem = newItem as VideoContentItem;
       isValid = !!(contentItem.title && contentItem.year && contentItem.videoId && contentItem.videoLink);
     } else if (isPhotoSection(selectedSection)) {
@@ -250,6 +264,39 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                   className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
                   placeholder="Title"
                 />
+
+                {isPressSection(selectedSection) && (
+                  <>
+                    <input
+                      type="url"
+                      value={(newItem as PressItem).url}
+                      onChange={(e) => setNewItem({ ...newItem, url: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Press link"
+                    />
+                    <input
+                      type="text"
+                      value={(newItem as PressItem).publisher || ''}
+                      onChange={(e) => setNewItem({ ...newItem, publisher: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Publisher"
+                    />
+                    <input
+                      type="text"
+                      value={(newItem as PressItem).date || ''}
+                      onChange={(e) => setNewItem({ ...newItem, date: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Date (optional)"
+                    />
+                    <input
+                      type="url"
+                      value={(newItem as PressItem).thumbnail || ''}
+                      onChange={(e) => setNewItem({ ...newItem, thumbnail: e.target.value })}
+                      className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                      placeholder="Thumbnail URL (optional)"
+                    />
+                  </>
+                )}
                 
                 {/* Conditional fields based on content type */}
                 {isContentSection(selectedSection) && (
@@ -425,6 +472,39 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                           className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
                           placeholder="Title"
                         />
+
+                        {isPressSection(selectedSection) && (
+                          <>
+                            <input
+                              type="url"
+                              value={(item as PressItem).url}
+                              onChange={(e) => handleUpdateItem(index, 'url', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Press link"
+                            />
+                            <input
+                              type="text"
+                              value={(item as PressItem).publisher || ''}
+                              onChange={(e) => handleUpdateItem(index, 'publisher', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Publisher"
+                            />
+                            <input
+                              type="text"
+                              value={(item as PressItem).date || ''}
+                              onChange={(e) => handleUpdateItem(index, 'date', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Date (optional)"
+                            />
+                            <input
+                              type="url"
+                              value={(item as PressItem).thumbnail || ''}
+                              onChange={(e) => handleUpdateItem(index, 'thumbnail', e.target.value)}
+                              className="px-3 py-2 border border-gray-300 rounded bg-white text-gray-900 placeholder:text-gray-400"
+                              placeholder="Thumbnail URL"
+                            />
+                          </>
+                        )}
                         
                         {/* Conditional fields for editing based on content type */}
                         {isContentSection(selectedSection) && (
@@ -596,6 +676,7 @@ export default function ContentManager({ onUpdate }: ContentManagerProps) {
                           <div className="flex-1">
                             <h5 className="font-semibold text-gray-700">{item.title}</h5>
                             <p className="text-sm text-gray-600">
+                              {isPressSection(selectedSection) && `${(item as PressItem).publisher || 'Press'}${(item as PressItem).date ? ` • ${(item as PressItem).date}` : ''}`}
                               {isContentSection(selectedSection) && `${(item as VideoContentItem).year}`}
                               {isPhotoSection(selectedSection) && ''}
                               {isArtworkSection(selectedSection) && `${(item as ArtworkItem).year}`}
