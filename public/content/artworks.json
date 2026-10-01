@@ -21,13 +21,6 @@
     "description": "A poster design representing the concept of solitude and introspection through visual storytelling."
   },
   {
-    "title": "Banda Korei Rakho",
-    "year": "2023",
-    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799297/artworks/Banda_Korei_Rakho.jpg",
-    "thumbnail": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799297/artworks/Banda_Korei_Rakho.jpg",
-    "description": "Poster design for 'Banda Korei Rakho' - a promotional artwork with bold visual composition."
-  },
-  {
     "title": "Amanat Book Cover",
     "year": "2024",
     "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799294/artworks/Amanat_Book_Cover.jpg",
@@ -54,5 +47,12 @@
     "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799359/artworks/Sizzle_Logo.png",
     "thumbnail": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799359/artworks/Sizzle_Logo.png",
     "description": "Contemporary logo design for 'Sizzle' brand - featuring dynamic visual elements."
+  },
+  {
+    "title": "বারুদ উপত্যকার ওপারে",
+    "year": "2026",
+    "image": "artworks/Barud_Upottokar_Opare .png",
+    "thumbnail": " ",
+    "description": " "
   }
 ]
