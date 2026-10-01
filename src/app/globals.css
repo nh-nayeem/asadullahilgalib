@@ -5,6 +5,8 @@
 @layer base {
   html {
     @apply scroll-smooth;
+    /* Keep scrollbar space reserved so the page doesn't shift when a modal locks scrolling */
+    scrollbar-gutter: stable;
   }
   
   body {
