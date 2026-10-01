@@ -208,6 +208,109 @@ export async function commitToGitHub(file: GitHubFile): Promise<boolean> {
   }
 }
 
+export async function renameOnGitHub(oldPath: string, newPath: string, message: string): Promise<boolean> {
+  const token = process.env.GITHUB_TOKEN;
+  const repo = process.env.GITHUB_REPO; // format: owner/repo
+  const branch = process.env.GITHUB_BRANCH || 'main';
+
+  if (!token || !repo) {
+    console.error('GitHub credentials not configured');
+    return false;
+  }
+
+  const [owner, repoName] = repo.split('/');
+  if (!owner || !repoName) {
+    console.error('Invalid GITHUB_REPO format. Expected: owner/repo');
+    return false;
+  }
+
+  const baseUrl = `https://api.github.com/repos/${owner}/${repoName}`;
+  const headers = {
+    'Authorization': `Bearer ${token}`,
+    'Accept': 'application/vnd.github.v3+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'Content-Type': 'application/json',
+  };
+
+  try {
+    // Get the existing file's blob SHA so the content is reused, not re-uploaded
+    const fileResponse = await fetch(`${baseUrl}/contents/${oldPath}?ref=${branch}`, { headers });
+    if (!fileResponse.ok) {
+      console.error('File to rename not found in GitHub:', oldPath);
+      return false;
+    }
+    const { sha: blobSha } = await fileResponse.json();
+
+    // Get the latest commit on the branch
+    const refResponse = await fetch(`${baseUrl}/git/ref/heads/${branch}`, { headers });
+    if (!refResponse.ok) {
+      console.error('Failed to get branch ref:', await refResponse.text());
+      return false;
+    }
+    const { object: { sha: parentSha } } = await refResponse.json();
+
+    const commitResponse = await fetch(`${baseUrl}/git/commits/${parentSha}`, { headers });
+    if (!commitResponse.ok) {
+      console.error('Failed to get parent commit:', await commitResponse.text());
+      return false;
+    }
+    const { tree: { sha: baseTreeSha } } = await commitResponse.json();
+
+    // New tree: add the blob at the new path and remove it from the old path
+    const treeResponse = await fetch(`${baseUrl}/git/trees`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        base_tree: baseTreeSha,
+        tree: [
+          { path: newPath, mode: '100644', type: 'blob', sha: blobSha },
+          { path: oldPath, mode: '100644', type: 'blob', sha: null },
+        ],
+      }),
+    });
+    if (!treeResponse.ok) {
+      console.error('Failed to create tree:', await treeResponse.text());
+      return false;
+    }
+    const { sha: treeSha } = await treeResponse.json();
+
+    const newCommitResponse = await fetch(`${baseUrl}/git/commits`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({
+        message,
+        tree: treeSha,
+        parents: [parentSha],
+        committer: {
+          name: 'Admin Panel',
+          email: 'admin@asadullahilgalib.com',
+        },
+      }),
+    });
+    if (!newCommitResponse.ok) {
+      console.error('Failed to create commit:', await newCommitResponse.text());
+      return false;
+    }
+    const { sha: newCommitSha } = await newCommitResponse.json();
+
+    const updateRefResponse = await fetch(`${baseUrl}/git/refs/heads/${branch}`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify({ sha: newCommitSha }),
+    });
+    if (!updateRefResponse.ok) {
+      console.error('Failed to update branch ref:', await updateRefResponse.text());
+      return false;
+    }
+
+    console.log(`Successfully renamed ${oldPath} to ${newPath} on GitHub`);
+    return true;
+  } catch (error) {
+    console.error('Error renaming file on GitHub:', error);
+    return false;
+  }
+}
+
 export async function getFilesFromGitHub(folder: string): Promise<GitHubRepoFile[]> {
   const token = process.env.GITHUB_TOKEN;
   const repo = process.env.GITHUB_REPO; // format: owner/repo

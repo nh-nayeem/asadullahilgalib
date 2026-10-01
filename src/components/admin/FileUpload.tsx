@@ -78,12 +78,27 @@ export default function FileUpload({ onUpload, onUpdate, isLoading = false, isUp
     setFileName('');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedFolder && fileName && selectedFile) {
+    if (editingFile && !selectedFile && fileName.trim()) {
+      // No new file selected: just rename the existing file
+      const fullFileName = `${fileName.trim()}.${editingFile.split('.').pop()}`;
+      const response = await fetch('/api/admin/media/rename', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ folder: selectedFolder, oldFileName: editingFile, newFileName: fullFileName }),
+      });
+      const data = await response.json();
+      alert(response.ok ? 'File renamed successfully!' : `Failed to rename file: ${data.message || data.error}`);
+      setEditingFile(null);
+      setFileName('');
+      loadMediaFiles();
+      return;
+    }
+    if (selectedFolder && fileName.trim() && selectedFile) {
       // Get the original file extension
       const fileExtension = selectedFile.name.split('.').pop() || '';
-      const fullFileName = `${fileName}.${fileExtension}`;
+      const fullFileName = `${fileName.trim()}.${fileExtension}`;
       
       if (editingFile) {
         // Update existing file - use the same filename logic as upload
@@ -172,7 +187,7 @@ export default function FileUpload({ onUpload, onUpdate, isLoading = false, isUp
                 type="file"
                 onChange={handleFileChange}
                 className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent file:mr-4 file:py-1 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                required
+                required={!editingFile}
               />
             </div>
             {selectedFile && (
@@ -196,14 +211,14 @@ export default function FileUpload({ onUpload, onUpdate, isLoading = false, isUp
             />
             {selectedFile && (
               <p className="mt-1 text-sm text-gray-500">
-                Will be saved as: <span className="font-mono">{fileName}.{selectedFile.name.split('.').pop()}</span>
+                Will be saved as: <span className="font-mono">{fileName.trim()}.{selectedFile.name.split('.').pop()}</span>
               </p>
             )}
           </div>
 
           <button
             type="submit"
-            disabled={isLoading || isUpdating || !selectedFolder || !fileName || !selectedFile}
+            disabled={isLoading || isUpdating || !selectedFolder || !fileName.trim() || (!selectedFile && !editingFile)}
             className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
           >
             {(isLoading || isUpdating) ? (

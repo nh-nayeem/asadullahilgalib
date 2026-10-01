@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
     
     // Transform GitHub file format to match expected response format and filter out JSON files
     const fileList = githubFiles
-      .filter(file => !file.name.endsWith('.json'))
+      .filter(file => !file.name.endsWith('.json') && file.name !== '.gitkeep')
       .map(file => ({
         name: file.name,
         path: `/${folder}/${file.name}`,

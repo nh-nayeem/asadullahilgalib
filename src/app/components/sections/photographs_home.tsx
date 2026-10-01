@@ -88,7 +88,7 @@ const Photographs = () => {
             >
               <div className="relative h-60 overflow-hidden">
                 <img
-                  src={photo.imagethumb}
+                  src={photo.imagethumb || photo.image}
                   alt={photo.title}
                   loading="lazy"
                   decoding="async"

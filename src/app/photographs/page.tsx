@@ -92,7 +92,7 @@ export default function Photographs() {
             >
               <div className="relative h-96 overflow-hidden">
                 <img
-                  src={photo.imagethumb}
+                  src={photo.imagethumb || photo.image}
                   alt={photo.title}
                   className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                 />

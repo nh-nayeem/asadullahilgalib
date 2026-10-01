@@ -95,7 +95,7 @@ export default function ArtworksPage() {
                   >
                     <div className="relative w-full aspect-[3/4] overflow-hidden">
                       <img
-                        src={artwork.thumbnail}
+                        src={artwork.thumbnail || artwork.image}
                         alt={artwork.title}
                         className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                       />

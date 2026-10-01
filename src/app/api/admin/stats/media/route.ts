@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
       try {
         const files = await getFilesFromGitHub(folder);
         // Filter out JSON files for the count
-        const nonJsonFiles = files.filter(file => !file.name.endsWith('.json'));
+        const nonJsonFiles = files.filter(file => !file.name.endsWith('.json') && file.name !== '.gitkeep');
         totalFiles += nonJsonFiles.length;
       } catch (error) {
         // Folder might not exist or not be accessible, continue with others
