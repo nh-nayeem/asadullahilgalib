@@ -21,13 +21,6 @@
     "description": "A poster design representing the concept of solitude and introspection through visual storytelling."
   },
   {
-    "title": "Amanat Book Cover",
-    "year": "2024",
-    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799294/artworks/Amanat_Book_Cover.jpg",
-    "thumbnail": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799294/artworks/Amanat_Book_Cover.jpg",
-    "description": "Book cover design for 'Amanat' - a literary work featuring contemporary visual elements and typography."
-  },
-  {
     "title": "RBP Logo",
     "year": "2024",
     "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799322/artworks/Reframing_Bangladesh_Podcast.png",
@@ -42,18 +35,25 @@
     "description": "A powerful visual piece representing protection and rights through contemporary artistic expression."
   },
   {
-    "title": "Logo for Sizzle",
-    "year": "2025",
-    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799359/artworks/Sizzle_Logo.png",
-    "thumbnail": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799359/artworks/Sizzle_Logo.png",
-    "description": "Contemporary logo design for 'Sizzle' brand - featuring dynamic visual elements."
-  },
-  {
-    "title": "বারুদ উপত্যকার ওপারে",
+    "title": "বারুদ উপত্যকার ওপারে | Book cover design",
     "year": "2026",
     "image": "artworks/Barud_Upottokar_Opare.png",
     "thumbnail": "artworks/Barud_Upottokar_Opare.png",
     "description": " "
+  },
+  {
+    "title": "Amanat | Book cover design",
+    "year": "2024",
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799294/artworks/Amanat_Book_Cover.jpg",
+    "thumbnail": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799294/artworks/Amanat_Book_Cover.jpg",
+    "description": "Book cover design for 'Amanat' - a literary work featuring contemporary visual elements and typography."
+  },
+  {
+    "title": "Sizzle | Logo design for Sizzle streetwear ",
+    "year": "2025",
+    "image": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799359/artworks/Sizzle_Logo.png",
+    "thumbnail": "https://res.cloudinary.com/dzo0mp9ly/image/upload/v1786799359/artworks/Sizzle_Logo.png",
+    "description": "Contemporary logo design for 'Sizzle' brand - featuring dynamic visual elements."
   },
   {
     "title": "প্রতি-পাঠ | Logo design for Proti-Path",
