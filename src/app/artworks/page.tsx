@@ -121,6 +121,8 @@ export default function ArtworksPage() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
+                  // onUpdate keeps the fade on the main thread; the browser-accelerated fade flashes on its last frame
+                  onUpdate={() => {}}
                 >
                   <div className="relative max-w-[90vw] max-h-[90vh] flex flex-col items-center">
                     <div className="relative bg-black/80 p-4 rounded-lg flex flex-col items-center">

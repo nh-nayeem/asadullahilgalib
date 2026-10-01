@@ -178,6 +178,8 @@ const Works = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              // onUpdate keeps the fade on the main thread; the browser-accelerated fade flashes on its last frame
+              onUpdate={() => {}}
               onClick={closePopup}
             >
               <motion.div 
